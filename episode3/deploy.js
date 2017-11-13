@@ -15,7 +15,7 @@ var contractSrc = fs.readFileSync('./HelloWorld.sol').toString();
 var contractCom = solc.compile(contractSrc);
 
 //Create contract object
-var abi = contractCom.contracts[':HelloWorld'].interface;
+var abi = JSON.parse(contractCom.contracts[':HelloWorld'].interface);
 var HelloWorld = new web3.eth.Contract(abi);
 
 //Build transaction object;
