@@ -7,7 +7,8 @@
 var Web3 = require('web3'); //need web3 1.0
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 web3.eth.net.isListening().then(console.log); //Check that we are connected;
-web3.eth.getAccounts(console.log); // show all our available accounts
+var accounts; // show all our available accounts
+web3.eth.getAccounts().then((acc) => {accounts = acc; console.log(acc)});
 
 //Compile contracts with solc, the solidity compiler
 var solc = require('solc');
