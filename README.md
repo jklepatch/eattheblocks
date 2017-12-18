@@ -1,7 +1,7 @@
 # Eat The Blocks
-Source code for the blockchain / Ethereum screencast (Eat The Blocks)[https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA]
+Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA), a screencast for Ethereum and blockchain developers
 
 Links:
 
-* https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA
-* https://www.eattheblocks.com
+* YouTube Channel: https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA
+* Website: https://www.eattheblocks.com
