@@ -1,0 +1,1155 @@
+{
+  "contractName": "Kid1",
+  "abi": [],
+  "bytecode": "0x60606040526040805190810160405280600981526020017f706172656e7456617200000000000000000000000000000000000000000000008152506000908051906020019061004f9291906100ac565b506040805190810160405280600781526020017f6b696431566172000000000000000000000000000000000000000000000000008152506001908051906020019061009b9291906100ac565b5034156100a757600080fd5b610151565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100ed57805160ff191683800117855561011b565b8280016001018555821561011b579182015b8281111561011a5782518255916020019190600101906100ff565b5b509050610128919061012c565b5090565b61014e91905b8082111561014a576000816000905550600101610132565b5090565b90565b60358061015f6000396000f3006060604052600080fd00a165627a7a72305820b3584ffee4efb6198764980346edcd0d42f87c74cc1de2e21a1adaf322e41b4f0029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820b3584ffee4efb6198764980346edcd0d42f87c74cc1de2e21a1adaf322e41b4f0029",
+  "sourceMap": "80:57:0:-;;;45:30;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;108:26;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;80:57;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;",
+  "deployedSourceMap": "80:57:0:-;;;;;",
+  "source": "pragma solidity ^0.4.4;\n\ncontract Parent {\n  string parentVar = \"parentVar\";\n}\n\ncontract Kid1 is Parent {\n  string kid1Var = \"kid1Var\";\n}\n\ncontract Kid2 {\n  string kid2Var = \"kid2Var\";\n}\n\ncontract MyContract is Kid1, Kid2 {\n  string myContractVar = \"myContractVar\";\n\n  function getMyContractVar() constant returns(string) {\n    return myContractVar;\n  }\n\n  function getKid1Var() constant returns(string) {\n    return kid1Var;\n  }\n\n  function getKid2Var() constant returns(string) {\n    return kid2Var;\n  }\n\n  function getParentVar() constant returns(string) {\n    return parentVar;\n  }\n}\n",
+  "sourcePath": "D:\\ETB\\code\\episode7\\contracts\\MyContract.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/D/ETB/code/episode7/contracts/MyContract.sol",
+      "exportedSymbols": {
+        "Kid1": [
+          11
+        ],
+        "Kid2": [
+          15
+        ],
+        "MyContract": [
+          55
+        ],
+        "Parent": [
+          5
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".4"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "0:23:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            5
+          ],
+          "name": "Parent",
+          "scope": 56
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "parentVar",
+              "scope": 5,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "string storage ref",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "string",
+                  "type": "string storage pointer"
+                },
+                "id": 2,
+                "name": "ElementaryTypeName",
+                "src": "45:6:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "706172656e74566172",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "string",
+                  "type": "literal_string \"parentVar\"",
+                  "value": "parentVar"
+                },
+                "id": 3,
+                "name": "Literal",
+                "src": "64:11:0"
+              }
+            ],
+            "id": 4,
+            "name": "VariableDeclaration",
+            "src": "45:30:0"
+          }
+        ],
+        "id": 5,
+        "name": "ContractDefinition",
+        "src": "25:53:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            5
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            11,
+            5
+          ],
+          "name": "Kid1",
+          "scope": 56
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "kid2Var",
+              "scope": 9,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "string storage ref",
+              "visibility": "internal",
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "Parent",
+                  "type": "contract Parent",
+                  "contractScope": null,
+                  "referencedDeclaration": 5
+                },
+                "id": 6,
+                "name": "UserDefinedTypeName",
+                "src": "97:6:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "6b696432566172",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "string",
+                  "type": "literal_string \"kid2Var\"",
+                  "value": "kid2Var"
+                },
+                "id": 7,
+                "name": "Literal",
+                "src": "109:9:0"
+              }
+            ],
+            "id": 7,
+            "name": "InheritanceSpecifier",
+            "src": "97:6:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "kid1Var",
+              "scope": 11,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "string storage ref",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "string",
+                  "type": "string storage pointer"
+                },
+                "id": 8,
+                "name": "ElementaryTypeName",
+                "src": "108:6:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "6b696431566172",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "string",
+                  "type": "literal_string \"kid1Var\"",
+                  "value": "kid1Var"
+                },
+                "id": 9,
+                "name": "Literal",
+                "src": "125:9:0"
+              }
+            ],
+            "id": 10,
+            "name": "VariableDeclaration",
+            "src": "108:26:0"
+          }
+        ],
+        "id": 11,
+        "name": "ContractDefinition",
+        "src": "80:57:0"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            null,
+            9
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            15,
+            9,
+            5
+          ],
+          "name": "Kid2",
+          "scope": 56,
+          "baseContracts": [
+            null
+          ]
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ],
+              "constant": false,
+              "name": "kid2Var",
+              "scope": 15,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "string storage ref",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "string",
+                  "referencedDeclaration": 5,
+                  "type": "string storage pointer"
+                },
+                "id": 12,
+                "name": "ElementaryTypeName",
+                "src": "157:6:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "6b696432566172",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "string",
+                  "type": "literal_string \"kid2Var\"",
+                  "value": "kid2Var"
+                },
+                "id": 13,
+                "name": "Literal",
+                "src": "174:9:0"
+              }
+            ],
+            "id": 14,
+            "name": "VariableDeclaration",
+            "src": "157:26:0"
+          },
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Kid2",
+                  "referencedDeclaration": 9,
+                  "type": "contract Kid2"
+                },
+                "id": 12,
+                "name": "UserDefinedTypeName",
+                "src": "152:4:0"
+              }
+            ],
+            "id": 13,
+            "name": "InheritanceSpecifier",
+            "src": "152:4:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "myContractVar",
+              "scope": 41,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "string storage ref",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "string",
+                  "type": "string storage pointer"
+                },
+                "id": 14,
+                "name": "ElementaryTypeName",
+                "src": "161:6:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "6d79436f6e7472616374566172",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "string",
+                  "type": "literal_string \"myContractVar\"",
+                  "value": "myContractVar"
+                },
+                "id": 15,
+                "name": "Literal",
+                "src": "184:15:0"
+              }
+            ],
+            "id": 16,
+            "name": "VariableDeclaration",
+            "src": "161:38:0"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getMyContractVar",
+              "payable": false,
+              "scope": 41,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 17,
+                "name": "ParameterList",
+                "src": "229:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 24,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 18,
+                        "name": "ElementaryTypeName",
+                        "src": "249:6:0"
+                      }
+                    ],
+                    "id": 19,
+                    "name": "VariableDeclaration",
+                    "src": "249:6:0"
+                  }
+                ],
+                "id": 20,
+                "name": "ParameterList",
+                "src": "248:8:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 20
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 16,
+                          "type": "string storage ref",
+                          "value": "myContractVar"
+                        },
+                        "id": 21,
+                        "name": "Identifier",
+                        "src": "270:13:0"
+                      }
+                    ],
+                    "id": 22,
+                    "name": "Return",
+                    "src": "263:20:0"
+                  }
+                ],
+                "id": 23,
+                "name": "Block",
+                "src": "257:31:0"
+              }
+            ],
+            "id": 24,
+            "name": "FunctionDefinition",
+            "src": "204:84:0"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getKid1Var",
+              "payable": false,
+              "scope": 41,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 25,
+                "name": "ParameterList",
+                "src": "311:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 32,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 26,
+                        "name": "ElementaryTypeName",
+                        "src": "331:6:0"
+                      }
+                    ],
+                    "id": 27,
+                    "name": "VariableDeclaration",
+                    "src": "331:6:0"
+                  }
+                ],
+                "id": 28,
+                "name": "ParameterList",
+                "src": "330:8:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 28
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 4,
+                          "type": "string storage ref",
+                          "value": "kid1Var"
+                        },
+                        "id": 29,
+                        "name": "Identifier",
+                        "src": "352:7:0"
+                      }
+                    ],
+                    "id": 30,
+                    "name": "Return",
+                    "src": "345:14:0"
+                  }
+                ],
+                "id": 31,
+                "name": "Block",
+                "src": "339:25:0"
+              }
+            ],
+            "id": 32,
+            "name": "FunctionDefinition",
+            "src": "292:72:0"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getKid2Var",
+              "payable": false,
+              "scope": 41,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 33,
+                "name": "ParameterList",
+                "src": "387:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 40,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 34,
+                        "name": "ElementaryTypeName",
+                        "src": "407:6:0"
+                      }
+                    ],
+                    "id": 35,
+                    "name": "VariableDeclaration",
+                    "src": "407:6:0"
+                  }
+                ],
+                "id": 36,
+                "name": "ParameterList",
+                "src": "406:8:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 36
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 8,
+                          "type": "string storage ref",
+                          "value": "kid2Var"
+                        },
+                        "id": 37,
+                        "name": "Identifier",
+                        "src": "428:7:0"
+                      }
+                    ],
+                    "id": 38,
+                    "name": "Return",
+                    "src": "421:14:0"
+                  }
+                ],
+                "id": 39,
+                "name": "Block",
+                "src": "415:25:0"
+              }
+            ],
+            "id": 40,
+            "name": "FunctionDefinition",
+            "src": "368:72:0"
+          }
+        ],
+        "id": 15,
+        "name": "ContractDefinition",
+        "src": "139:47:0"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            5,
+            11,
+            15
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            55,
+            15,
+            11,
+            5
+          ],
+          "name": "MyContract",
+          "scope": 56
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Kid1",
+                  "referencedDeclaration": 11,
+                  "type": "contract Kid1"
+                },
+                "id": 16,
+                "name": "UserDefinedTypeName",
+                "src": "211:4:0"
+              }
+            ],
+            "id": 17,
+            "name": "InheritanceSpecifier",
+            "src": "211:4:0"
+          },
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Kid2",
+                  "referencedDeclaration": 15,
+                  "type": "contract Kid2"
+                },
+                "id": 18,
+                "name": "UserDefinedTypeName",
+                "src": "217:4:0"
+              }
+            ],
+            "id": 19,
+            "name": "InheritanceSpecifier",
+            "src": "217:4:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "myContractVar",
+              "scope": 55,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "string storage ref",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "string",
+                  "type": "string storage pointer"
+                },
+                "id": 20,
+                "name": "ElementaryTypeName",
+                "src": "226:6:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "6d79436f6e7472616374566172",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "string",
+                  "type": "literal_string \"myContractVar\"",
+                  "value": "myContractVar"
+                },
+                "id": 21,
+                "name": "Literal",
+                "src": "249:15:0"
+              }
+            ],
+            "id": 22,
+            "name": "VariableDeclaration",
+            "src": "226:38:0"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getMyContractVar",
+              "payable": false,
+              "scope": 55,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 23,
+                "name": "ParameterList",
+                "src": "294:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 30,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 24,
+                        "name": "ElementaryTypeName",
+                        "src": "314:6:0"
+                      }
+                    ],
+                    "id": 25,
+                    "name": "VariableDeclaration",
+                    "src": "314:6:0"
+                  }
+                ],
+                "id": 26,
+                "name": "ParameterList",
+                "src": "313:8:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 26
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 22,
+                          "type": "string storage ref",
+                          "value": "myContractVar"
+                        },
+                        "id": 27,
+                        "name": "Identifier",
+                        "src": "335:13:0"
+                      }
+                    ],
+                    "id": 28,
+                    "name": "Return",
+                    "src": "328:20:0"
+                  }
+                ],
+                "id": 29,
+                "name": "Block",
+                "src": "322:31:0"
+              }
+            ],
+            "id": 30,
+            "name": "FunctionDefinition",
+            "src": "269:84:0"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getKid1Var",
+              "payable": false,
+              "scope": 55,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 31,
+                "name": "ParameterList",
+                "src": "376:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 38,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 32,
+                        "name": "ElementaryTypeName",
+                        "src": "396:6:0"
+                      }
+                    ],
+                    "id": 33,
+                    "name": "VariableDeclaration",
+                    "src": "396:6:0"
+                  }
+                ],
+                "id": 34,
+                "name": "ParameterList",
+                "src": "395:8:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 34
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 10,
+                          "type": "string storage ref",
+                          "value": "kid1Var"
+                        },
+                        "id": 35,
+                        "name": "Identifier",
+                        "src": "417:7:0"
+                      }
+                    ],
+                    "id": 36,
+                    "name": "Return",
+                    "src": "410:14:0"
+                  }
+                ],
+                "id": 37,
+                "name": "Block",
+                "src": "404:25:0"
+              }
+            ],
+            "id": 38,
+            "name": "FunctionDefinition",
+            "src": "357:72:0"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getKid2Var",
+              "payable": false,
+              "scope": 55,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 39,
+                "name": "ParameterList",
+                "src": "452:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 46,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 40,
+                        "name": "ElementaryTypeName",
+                        "src": "472:6:0"
+                      }
+                    ],
+                    "id": 41,
+                    "name": "VariableDeclaration",
+                    "src": "472:6:0"
+                  }
+                ],
+                "id": 42,
+                "name": "ParameterList",
+                "src": "471:8:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 42
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 14,
+                          "type": "string storage ref",
+                          "value": "kid2Var"
+                        },
+                        "id": 43,
+                        "name": "Identifier",
+                        "src": "493:7:0"
+                      }
+                    ],
+                    "id": 44,
+                    "name": "Return",
+                    "src": "486:14:0"
+                  }
+                ],
+                "id": 45,
+                "name": "Block",
+                "src": "480:25:0"
+              }
+            ],
+            "id": 46,
+            "name": "FunctionDefinition",
+            "src": "433:72:0"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getParentVar",
+              "payable": false,
+              "scope": 55,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 47,
+                "name": "ParameterList",
+                "src": "530:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 54,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 48,
+                        "name": "ElementaryTypeName",
+                        "src": "550:6:0"
+                      }
+                    ],
+                    "id": 49,
+                    "name": "VariableDeclaration",
+                    "src": "550:6:0"
+                  }
+                ],
+                "id": 50,
+                "name": "ParameterList",
+                "src": "549:8:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 50
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 4,
+                          "type": "string storage ref",
+                          "value": "parentVar"
+                        },
+                        "id": 51,
+                        "name": "Identifier",
+                        "src": "571:9:0"
+                      }
+                    ],
+                    "id": 52,
+                    "name": "Return",
+                    "src": "564:16:0"
+                  }
+                ],
+                "id": 53,
+                "name": "Block",
+                "src": "558:27:0"
+              }
+            ],
+            "id": 54,
+            "name": "FunctionDefinition",
+            "src": "509:76:0"
+          }
+        ],
+        "id": 55,
+        "name": "ContractDefinition",
+        "src": "188:399:0"
+      }
+    ],
+    "id": 56,
+    "name": "SourceUnit",
+    "src": "0:588:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-12-19T07:46:12.051Z"
+}
