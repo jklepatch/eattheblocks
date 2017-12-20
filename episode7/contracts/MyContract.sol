@@ -12,7 +12,7 @@ contract Kid2 is Parent {
   string kid2Var = "kid2Var";
 }
 
-contract MyContract is Kid1, Kid2, Parent {
+contract MyContract is Kid1, Kid2 {
   string myContractVar = "myContractVar";
 
   function getMyContractVar() constant returns(string) {
