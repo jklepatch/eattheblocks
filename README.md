@@ -28,7 +28,7 @@ Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2El
 * Episode 7: Multiple Inheritance In Solidit
     - [Video](https://www.youtube.com/watch?v=D9YFgLfK9uc&t=2s)
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/episode7)
-* Special Episode 1:
+* Special Episode 1: ETB Ethereum ToDo List
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1)
 
 
