@@ -38,7 +38,7 @@ can see an address in this file).
 
 ## Links
 * Eat The Blocks [website](https://eattheblocks.com)
-* Eat The Blocks [YouTube Channel] (https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA)
+* Eat The Blocks [YouTube Channel](https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA)
 * Truffle framework [website](http://truffleframework.com)
 * Ethereumjs testnet [website](https://www.npmjs.com/package/ethereumjs-testrpc)
 * Solidity docs [website](https://solidity.readthedocs.io/en/develop)
