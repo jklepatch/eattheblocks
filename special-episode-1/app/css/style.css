@@ -1,0 +1,98 @@
+/**
+ * CSS of ToDo App
+ *
+ * Blue: #29b6f6
+ * Orange: #ff9800
+ */
+
+/**
+ * HTML elements 
+ */
+body {
+  background-color: #fcfcfc;
+}
+
+footer {
+  background-color: #ff9800;
+  color: white;
+  padding: 25px 15px;
+}
+
+footer a {
+ color: black;
+ font-weight: bold;
+}
+
+/**
+ * Generic Styles 
+ */
+.orange {
+  color: #ff9800;
+}
+
+/* Inspiration: Google material design */
+.card {
+  background-color: white;
+  border-radius: 2px;
+  padding: 0 15px 15px 15px;
+  margin-bottom: 25px;
+  webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
+                     0 1px 5px 0 rgba(0,0,0,0.12), 
+                     0 3px 1px -2px rgba(0,0,0,0.2);
+
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
+              0 1px 5px 0 rgba(0,0,0,0.12), 
+              0 3px 1px -2px rgba(0,0,0,0.2);
+}
+
+.task-done {
+  text-decoration: line-through;
+  background-color: #eee;
+}
+
+.btn-primary {
+  background-color: #ff9800;;
+  border-color: #d17906
+}
+
+.btn-primary:hover {
+  background-color: #d17906;
+  border-color: #d17906;
+}
+
+.btn-primary:active {
+  background-color: #d17906;
+  border-color: #d17906;
+}
+
+.btn-primary:focus {
+  background-color: #d17906 !important;
+  border-color: #d17906;
+}
+
+/**
+ * Components 
+ */
+
+/* By default the message wrapper is hidden
+ * It is displayed only when there is a message
+ * to be shown
+ */
+#message-wrapper {
+  display: none;
+}
+
+#page-header {
+  margin-top: 0;
+  margin-bottom: 25px;
+  background: #29b6f6;
+  color: white;
+  border-bottom: none;
+  webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
+                     0 1px 5px 0 rgba(0,0,0,0.12), 
+                     0 3px 1px -2px rgba(0,0,0,0.2);
+
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
+              0 1px 5px 0 rgba(0,0,0,0.12), 
+              0 3px 1px -2px rgba(0,0,0,0.2);
+}

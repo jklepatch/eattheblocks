@@ -1,0 +1,29 @@
+{
+  "name": "etb-ethereum-todolist",
+  "version": "1.0.0",
+  "description": "ETB Ethereum ToDo List is a simple task management application built on Ethereum, with Truffle, Solidity, Express and Jquery. You can create tasks, manage their status, and see a full list of them.",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "truffle-contract": "^3.0.1",
+    "web3": "^0.19.0",
+    "webpack": "^3.10.0"
+  },
+  "scripts": {
+    "dev-back": "nodemon server.js",
+    "dev-front": "node_modules/.bin/webpack --watch",
+    "start": "node server.js",
+    "build": "node_modules/.bin/webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Julien Klepatch, https://eattheblocks.com",
+  "license": "ISC"
+}
