@@ -1,0 +1,771 @@
+{
+  "contractName": "Bet",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "ppl1",
+          "type": "address"
+        },
+        {
+          "name": "ppl2",
+          "type": "address"
+        }
+      ],
+      "name": "betForThreePeople",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_betType",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b60405160208061011a83398101604052808051906020019091905050806000819055505060d9806100416000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063fd3d2cdc146044575b600080fd5b3415604e57600080fd5b6097600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506099565b005b600160005414151560a957600080fd5b50505600a165627a7a7230582074ba4910e36b1925675464761086cd8c35dfb7c5f76d91e5a4f63b2af40092280029",
+  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063fd3d2cdc146044575b600080fd5b3415604e57600080fd5b6097600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506099565b005b600160005414151560a957600080fd5b50505600a165627a7a7230582074ba4910e36b1925675464761086cd8c35dfb7c5f76d91e5a4f63b2af40092280029",
+  "sourceMap": "25:272:0:-;;;59:57;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;103:8;93:7;:18;;;;59:57;25:272;;;;;;",
+  "deployedSourceMap": "25:272:0:-;;;;;;;;;;;;;;;;;;;;;;;;120:103;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;281:1;270:7;;:12;262:21;;;;;;;;120:103;;:::o",
+  "source": "pragma solidity ^0.4.4;\n\ncontract Bet {\n  uint betType;\n\n  function Bet(uint _betType) {\n    betType = _betType;\n  }\n\n  function betForThreePeople(address ppl1, address ppl2) isBetForTwoPeople() {\n    //Perform bet here\n  }\n\n  modifier isBetForTwoPeople() {\n    require(betType == 1);\n    _;\n  }\n}\n\ncontract MyBet is Bet {\n\n  function MyBet(uint _betType) public Bet(_betType) {\n    //do other things\n  }\n\n  function whatsMyBetType() returns(uint) {\n    return Bet.betType;\n  }\n}\n",
+  "sourcePath": "D:\\ETB\\code\\episode8\\contracts\\MyContract.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/D/ETB/code/episode8/contracts/MyContract.sol",
+      "exportedSymbols": {
+        "Bet": [
+          34
+        ],
+        "MyBet": [
+          55
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".4"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "0:23:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            34
+          ],
+          "name": "Bet",
+          "scope": 56
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "betType",
+              "scope": 34,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 2,
+                "name": "ElementaryTypeName",
+                "src": "42:4:0"
+              }
+            ],
+            "id": 3,
+            "name": "VariableDeclaration",
+            "src": "42:12:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "modifiers": [
+                null
+              ],
+              "name": "Bet",
+              "payable": false,
+              "scope": 34,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_betType",
+                      "scope": 13,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 4,
+                        "name": "ElementaryTypeName",
+                        "src": "72:4:0"
+                      }
+                    ],
+                    "id": 5,
+                    "name": "VariableDeclaration",
+                    "src": "72:13:0"
+                  }
+                ],
+                "id": 6,
+                "name": "ParameterList",
+                "src": "71:15:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7,
+                "name": "ParameterList",
+                "src": "87:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 3,
+                              "type": "uint256",
+                              "value": "betType"
+                            },
+                            "id": 8,
+                            "name": "Identifier",
+                            "src": "93:7:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 5,
+                              "type": "uint256",
+                              "value": "_betType"
+                            },
+                            "id": 9,
+                            "name": "Identifier",
+                            "src": "103:8:0"
+                          }
+                        ],
+                        "id": 10,
+                        "name": "Assignment",
+                        "src": "93:18:0"
+                      }
+                    ],
+                    "id": 11,
+                    "name": "ExpressionStatement",
+                    "src": "93:18:0"
+                  }
+                ],
+                "id": 12,
+                "name": "Block",
+                "src": "87:29:0"
+              }
+            ],
+            "id": 13,
+            "name": "FunctionDefinition",
+            "src": "59:57:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "betForThreePeople",
+              "payable": false,
+              "scope": 34,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "ppl1",
+                      "scope": 23,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 14,
+                        "name": "ElementaryTypeName",
+                        "src": "147:7:0"
+                      }
+                    ],
+                    "id": 15,
+                    "name": "VariableDeclaration",
+                    "src": "147:12:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "ppl2",
+                      "scope": 23,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 16,
+                        "name": "ElementaryTypeName",
+                        "src": "161:7:0"
+                      }
+                    ],
+                    "id": 17,
+                    "name": "VariableDeclaration",
+                    "src": "161:12:0"
+                  }
+                ],
+                "id": 18,
+                "name": "ParameterList",
+                "src": "146:28:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 21,
+                "name": "ParameterList",
+                "src": "195:0:0"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 33,
+                      "type": "modifier ()",
+                      "value": "isBetForTwoPeople"
+                    },
+                    "id": 19,
+                    "name": "Identifier",
+                    "src": "175:17:0"
+                  }
+                ],
+                "id": 20,
+                "name": "ModifierInvocation",
+                "src": "175:19:0"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 22,
+                "name": "Block",
+                "src": "195:28:0"
+              }
+            ],
+            "id": 23,
+            "name": "FunctionDefinition",
+            "src": "120:103:0"
+          },
+          {
+            "attributes": {
+              "name": "isBetForTwoPeople",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 24,
+                "name": "ParameterList",
+                "src": "253:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 235,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 25,
+                            "name": "Identifier",
+                            "src": "262:7:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 3,
+                                  "type": "uint256",
+                                  "value": "betType"
+                                },
+                                "id": 26,
+                                "name": "Identifier",
+                                "src": "270:7:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "31",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 1",
+                                  "value": "1"
+                                },
+                                "id": 27,
+                                "name": "Literal",
+                                "src": "281:1:0"
+                              }
+                            ],
+                            "id": 28,
+                            "name": "BinaryOperation",
+                            "src": "270:12:0"
+                          }
+                        ],
+                        "id": 29,
+                        "name": "FunctionCall",
+                        "src": "262:21:0"
+                      }
+                    ],
+                    "id": 30,
+                    "name": "ExpressionStatement",
+                    "src": "262:21:0"
+                  },
+                  {
+                    "id": 31,
+                    "name": "PlaceholderStatement",
+                    "src": "289:1:0"
+                  }
+                ],
+                "id": 32,
+                "name": "Block",
+                "src": "256:39:0"
+              }
+            ],
+            "id": 33,
+            "name": "ModifierDefinition",
+            "src": "227:68:0"
+          }
+        ],
+        "id": 34,
+        "name": "ContractDefinition",
+        "src": "25:272:0"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            34
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            55,
+            34
+          ],
+          "name": "MyBet",
+          "scope": 56
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Bet",
+                  "referencedDeclaration": 34,
+                  "type": "contract Bet"
+                },
+                "id": 35,
+                "name": "UserDefinedTypeName",
+                "src": "317:3:0"
+              }
+            ],
+            "id": 36,
+            "name": "InheritanceSpecifier",
+            "src": "317:3:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "name": "MyBet",
+              "payable": false,
+              "scope": 55,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_betType",
+                      "scope": 45,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 37,
+                        "name": "ElementaryTypeName",
+                        "src": "341:4:0"
+                      }
+                    ],
+                    "id": 38,
+                    "name": "VariableDeclaration",
+                    "src": "341:13:0"
+                  }
+                ],
+                "id": 39,
+                "name": "ParameterList",
+                "src": "340:15:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 43,
+                "name": "ParameterList",
+                "src": "377:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 34,
+                      "type": "type(contract Bet)",
+                      "value": "Bet"
+                    },
+                    "id": 40,
+                    "name": "Identifier",
+                    "src": "363:3:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 38,
+                      "type": "uint256",
+                      "value": "_betType"
+                    },
+                    "id": 41,
+                    "name": "Identifier",
+                    "src": "367:8:0"
+                  }
+                ],
+                "id": 42,
+                "name": "ModifierInvocation",
+                "src": "363:13:0"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 44,
+                "name": "Block",
+                "src": "377:27:0"
+              }
+            ],
+            "id": 45,
+            "name": "FunctionDefinition",
+            "src": "326:78:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "whatsMyBetType",
+              "payable": false,
+              "scope": 55,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 46,
+                "name": "ParameterList",
+                "src": "431:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 54,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 47,
+                        "name": "ElementaryTypeName",
+                        "src": "442:4:0"
+                      }
+                    ],
+                    "id": 48,
+                    "name": "VariableDeclaration",
+                    "src": "442:4:0"
+                  }
+                ],
+                "id": 49,
+                "name": "ParameterList",
+                "src": "441:6:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 49
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "betType",
+                          "referencedDeclaration": 3,
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34,
+                              "type": "type(contract Bet)",
+                              "value": "Bet"
+                            },
+                            "id": 50,
+                            "name": "Identifier",
+                            "src": "461:3:0"
+                          }
+                        ],
+                        "id": 51,
+                        "name": "MemberAccess",
+                        "src": "461:11:0"
+                      }
+                    ],
+                    "id": 52,
+                    "name": "Return",
+                    "src": "454:18:0"
+                  }
+                ],
+                "id": 53,
+                "name": "Block",
+                "src": "448:29:0"
+              }
+            ],
+            "id": 54,
+            "name": "FunctionDefinition",
+            "src": "408:69:0"
+          }
+        ],
+        "id": 55,
+        "name": "ContractDefinition",
+        "src": "299:180:0"
+      }
+    ],
+    "id": 56,
+    "name": "SourceUnit",
+    "src": "0:480:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-01-07T11:34:34.170Z"
+}
