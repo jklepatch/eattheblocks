@@ -3,7 +3,11 @@
 ## Description
 Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA), a screencast for Ethereum and blockchain developers.
 
-## Episodes
+## Playlists (2)
+* ToDo List Ethereum Dapp Tutorial (3 videos): [Link](https://www.youtube.com/playlist?list=PLbbtODcOYIoGfbrnfxgwva0Fktju0L449)
+* Contract Inheritance in Solidity (4 videos) : [Link](https://www.youtube.com/playlist?list=PLbbtODcOYIoH2Dvos3Jhy48kKfYO-o0We)
+
+## Episodes (13)
 
 * Episode 0: Intro
     - [Video](https://www.youtube.com/watch?v=S4Q9T4EZjSs)
@@ -25,11 +29,28 @@ Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2El
 * Episode 6: Contract Inheritance In Solidity
     - [Video](https://www.youtube.com/watch?v=BIHNMvbqr0k&t=13s)
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/episode6)
-* Episode 7: Multiple Inheritance In Solidit
+* Episode 7: Multiple Inheritance In Solidity
     - [Video](https://www.youtube.com/watch?v=D9YFgLfK9uc&t=2s)
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/episode7)
-* Special Episode 1: ETB Ethereum ToDo List
-    - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1)
+* Episode 8: Polymorphism In Solidity + Solution To Last Episode Challenge
+    - [Video](https://www.youtube.com/watch?v=NN7Q4hO6wXM&t=4s)
+    - [Code](https://github.com/jklepatch/eattheblocks/tree/master/episode8)
+* Episode 9: Instantiate An Inherited Solidity Contract
+    - [Video](https://www.youtube.com/watch?v=YBSD1z96Tic)
+    - [Code](https://github.com/jklepatch/eattheblocks/tree/master/episode9)
+* Special Episode 1: ETB Ethereum ToDo List - Intro
+    - [Video](https://www.youtube.com/watch?v=-1c5hb_Y2MM&t=1s)
+    - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/finished)
+    - [Article](https://eattheblocks.com/etb-ethereum-todo-list-app-special-episode-1) 
+
+* Special Episode 1: ETB Ethereum ToDo List - Step 1
+    - [Video](https://www.youtube.com/watch?v=-1c5hb_Y2MM)
+    - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/step1)
+    - [Article](https://eattheblocks.com/todo-list-ethereum-dapp-step1-special-episode-1)
+* Special Episode 1: ETB Ethereum ToDo List - Step 2
+    - [Video](https://www.youtube.com/watch?v=xd-9h0sLRAI)
+    - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/step2)
+    - [Article](https://eattheblocks.com/todo-list-ethereum-dapp-step2-special-episode-1)
 
 
 ## Links:
