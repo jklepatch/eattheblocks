@@ -7,7 +7,7 @@ Source code for [Eat The Blocks](https://www.youtube.com/c/EatTheBlocks), the sc
 * ToDo List Ethereum Dapp Tutorial (4 videos): [Link](https://www.youtube.com/playlist?list=PLbbtODcOYIoGfbrnfxgwva0Fktju0L449)
 * Contract Inheritance in Solidity (4 videos) : [Link](https://www.youtube.com/playlist?list=PLbbtODcOYIoH2Dvos3Jhy48kKfYO-o0We)
 
-## Episodes (16)
+## Episodes (17)
 
 * Episode 0: Intro
     - [Video](https://www.youtube.com/watch?v=S4Q9T4EZjSs)
@@ -49,6 +49,10 @@ Source code for [Eat The Blocks](https://www.youtube.com/c/EatTheBlocks), the sc
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/finished)
     - [Article](https://eattheblocks.com/etb-ethereum-todo-list-app-special-episode-1) 
 
+* Special Episode 1: ETB Ethereum ToDo List - Intro
+    - [Video](https://youtu.be/-1c5hb_Y2MM)
+    - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/finished)
+    - [Article](https://eattheblocks.com/etb-ethereum-todo-list-app-special-episode-1)
 * Special Episode 1: ETB Ethereum ToDo List - Step 1
     - [Video](https://www.youtube.com/watch?v=-1c5hb_Y2MM)
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/step1)
