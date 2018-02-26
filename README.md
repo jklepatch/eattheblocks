@@ -4,10 +4,10 @@
 Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA), a screencast for Ethereum and blockchain developers.
 
 ## Playlists (2)
-* ToDo List Ethereum Dapp Tutorial (3 videos): [Link](https://www.youtube.com/playlist?list=PLbbtODcOYIoGfbrnfxgwva0Fktju0L449)
+* ToDo List Ethereum Dapp Tutorial (4 videos): [Link](https://www.youtube.com/playlist?list=PLbbtODcOYIoGfbrnfxgwva0Fktju0L449)
 * Contract Inheritance in Solidity (4 videos) : [Link](https://www.youtube.com/playlist?list=PLbbtODcOYIoH2Dvos3Jhy48kKfYO-o0We)
 
-## Episodes (13)
+## Episodes (16)
 
 * Episode 0: Intro
     - [Video](https://www.youtube.com/watch?v=S4Q9T4EZjSs)
@@ -38,6 +38,12 @@ Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2El
 * Episode 9: Instantiate An Inherited Solidity Contract
     - [Video](https://www.youtube.com/watch?v=YBSD1z96Tic)
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/episode9)
+* Episode 10: Intro To Remix, The Solidity IDE
+    - [Video](https://youtu.be/4CsH5xTxhSA)
+* Episode 11: The File Explorer Of The Remix IDE
+    - [Video](https://youtu.be/xKzNNh_Lc8k)
+* Episode 12: Scaffold your Dapp with Truffle Unbox 
+    - [Video](https://youtu.be/LlVj1wAEMAU)
 * Special Episode 1: ETB Ethereum ToDo List - Intro
     - [Video](https://www.youtube.com/watch?v=-1c5hb_Y2MM&t=1s)
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/finished)
@@ -54,7 +60,7 @@ Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2El
 * Special Episode 1: ETB Ethereum ToDo List - Step 3
     - [Video](https://youtu.be/82LeAnXe3SE)
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/step3)
-
+    - [Article](https://eattheblocks.com/todo-list-ethereum-dapp-step3-special-episode-1)
 ## Links:
 
 * YouTube Channel: https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA
