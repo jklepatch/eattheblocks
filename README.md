@@ -51,7 +51,9 @@ Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2El
     - [Video](https://www.youtube.com/watch?v=xd-9h0sLRAI)
     - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/step2)
     - [Article](https://eattheblocks.com/todo-list-ethereum-dapp-step2-special-episode-1)
-
+* Special Episode 1: ETB Ethereum ToDo List - Step 3
+    - [Video](https://youtu.be/82LeAnXe3SE)
+    - [Code](https://github.com/jklepatch/eattheblocks/tree/master/special-episode-1/step3)
 
 ## Links:
 
