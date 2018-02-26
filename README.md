@@ -1,7 +1,7 @@
 # Eat The Blocks
 
 ## Description
-Source code for [Eat The Blocks](https://www.youtube.com/channel/UCZM8XQjNOyG2ElPpEUtNasA), a screencast for Ethereum and blockchain developers.
+Source code for [Eat The Blocks](https://www.youtube.com/c/EatTheBlocks), the screencast for Ethereum and blockchain developers.
 
 ## Playlists (2)
 * ToDo List Ethereum Dapp Tutorial (4 videos): [Link](https://www.youtube.com/playlist?list=PLbbtODcOYIoGfbrnfxgwva0Fktju0L449)
