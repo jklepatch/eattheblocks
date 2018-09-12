@@ -12,5 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "truffle-contract": "^3.0.1",
+    "web3": "^0.19.0"
   }
 }
