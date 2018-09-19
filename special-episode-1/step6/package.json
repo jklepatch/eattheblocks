@@ -5,6 +5,7 @@
   "main": "truffle.js",
   "scripts": {
     "dev-front": "ENV=development node_modules/.bin/webpack --watch",
+    "dev-back": "nodemon server.js",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
