@@ -13,7 +13,12 @@ contract ToDo {
   uint[] taskIds;
   mapping(uint => Task) tasks;
 
-  event TaskCreated(uint lastTaskId, uint date, string content, string, bool);
+  event TaskCreated(
+    uint id, 
+    uint date, 
+    string content,
+    string author, 
+    bool done);
 
   constructor() public {
     lastTaskId = 0;
@@ -23,24 +28,23 @@ contract ToDo {
     lastTaskId++;
     tasks[lastTaskId] = Task(lastTaskId, now, _content, _author, false);
     taskIds.push(lastTaskId);
-    TaskCreated(lastTaskId, now, _content, _author, false);
+    emit TaskCreated(lastTaskId, now, _content, _author, false);
   }
 
   function getTaskIds() public constant returns(uint[]) {
     return taskIds;
   }
 
-  function getTaskFixtures(uint _id) public constant 
-    returns(
+  function getTaskFixtures(uint _id) public constant returns(
       uint,
       uint,
       string,
       string,
       bool
-    ) {
-    return (0, now, "Create more tutorials for ETB", "Julien", false);
+     ) {
+    return (0, now, "Create more tutorials for ETB", "Julien", false); 
   }
-    
+
   function getTask(uint id) taskExists(id) public constant 
     returns(
       uint,
