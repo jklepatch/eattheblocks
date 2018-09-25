@@ -47,17 +47,7 @@ class App {
 
   getAndRenderTasks() {
     getTasks(this.todo)
-      .then((tasks) => {
-        renderTasks(this.$tasks, tasks);
-        tasks.forEach((task, i) => {
-          i += 1
-          $(`#checkbox-${i}`).on('change', (event) => {
-            console.log('changing status!')
-            this.todo.toggleDone(i, { from: this.account, gas: 1000000 })
-              .then(() => this.getAndRenderTasks())
-          })
-        })
-      })
+      .then((tasks) => renderTasks(this.$tasks, tasks));
   }
 
   init() {
@@ -74,6 +64,14 @@ class App {
         this.getAndRenderTasks()
       })
     });
+
+    this.$tasks.on('click', (event) => {
+      if($(event.target).is('input')) {
+        const [,id] = event.target.id.split('-')
+        this.todo.toggleDone(id, { from: this.account, gas: 1000000 })
+          .then(() => this.getAndRenderTasks())
+      }
+    })
 
     this.getAndRenderTasks()
   }
