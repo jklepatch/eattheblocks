@@ -1,5 +1,5 @@
 pragma solidity ^0.4.24;
-//
+
 contract ToDo {
   struct Task {
     uint id;
@@ -71,11 +71,7 @@ contract ToDo {
     function toggleDone(uint id) taskExists(id) public {
       Task task = tasks[id];
       task.done = !task.done;
-      if (task.done) {
-        task.dateComplete = now;
-      } else {
-        task.dateComplete = 0;
-      }
+      task.dateComplete = task.done ? now : 0;
       TaskStatusToggled(id, task.done, task.dateComplete);
     }
 
