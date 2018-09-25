@@ -19,8 +19,9 @@ contract ToDo {
     uint date,
     string content,
     string author,
-    bool done,
-    uint dateComplete);
+    bool done);
+
+  event TaskStatusToggled(uint id, bool done, uint date);
 
   constructor() public {
     lastTaskId = 0;
@@ -30,7 +31,7 @@ contract ToDo {
     lastTaskId++;
     tasks[lastTaskId] = Task(lastTaskId, now, _content, _author, false, 0);
     taskIds.push(lastTaskId);
-    emit TaskCreated(lastTaskId, now, _content, _author, false, 0);
+    emit TaskCreated(lastTaskId, now, _content, _author, false);
   }
 
   function getTaskIds() public constant returns(uint[]) {
@@ -67,14 +68,15 @@ contract ToDo {
       );
     }
 
-    function changeDoneProperty(uint id) taskExists(id) public {
-      Task storage task = tasks[id];
+    function toggleDone(uint id) taskExists(id) public {
+      Task task = tasks[id];
       task.done = !task.done;
       if (task.done) {
         task.dateComplete = now;
       } else {
         task.dateComplete = 0;
       }
+      TaskStatusToggled(id, task.done, task.dateComplete);
     }
 
     modifier taskExists(uint id) {

@@ -53,7 +53,7 @@ class App {
           i += 1
           $(`#checkbox-${i}`).on('change', (event) => {
             console.log('changing status!')
-            this.todo.changeDoneProperty(i, { from: this.account, gas: 1000000 })
+            this.todo.toggleDone(i, { from: this.account, gas: 1000000 })
               .then(() => this.getAndRenderTasks())
           })
         })
