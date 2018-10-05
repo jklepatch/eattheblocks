@@ -4,20 +4,20 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      accountAddress: null,
-      todoAddress: null
+      accounts: [],
+      address: null,
     };
-  };
+  }
 
   async componentDidMount(){
-    const [ accountAddress ] = await this.props.web3.eth.getAccounts();
-    const { address: todoAddress } = this.props.todo;
-    this.setState({ accountAddress, todoAddress });
+    const { accounts, todo } = this.props;
+    const { address } = todo;
+    this.setState({ accounts, address });
   }
 
   render() {
-    return <div>{this.state.accountAddress}, {this.state.todoAddress}</div>;
+    return <div>{this.state.accounts[0]}, {this.state.address}</div>;
   }
-};
+}
 
 export default App;
