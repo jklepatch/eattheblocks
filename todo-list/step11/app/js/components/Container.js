@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from './Header'
-import Form from './Form'
-import List from './List'
+import NewTask from './NewTask'
+import Tasks from './Tasks'
 
 export default (props) => (
   <div>
     <Header/>
-    <Form/>
-    <List/>
+    <NewTask/>
+    <Tasks/>
   </div>
 )

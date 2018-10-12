@@ -38,16 +38,6 @@ contract ToDo {
     return taskIds;
   }
 
-  function getTaskFixtures(uint _id) public constant returns(
-      uint,
-      uint,
-      string,
-      string,
-      bool
-     ) {
-    return (0, now, "Create more tutorials for ETB", "Julien", false);
-  }
-
   function getTask(uint id) taskExists(id) public constant
     returns(
       uint,
