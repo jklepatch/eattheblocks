@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Form extends React.Component {
+class NewTask extends React.Component {
   render() {
     return (
       <div class="card">
@@ -27,4 +27,4 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+export default NewTask;

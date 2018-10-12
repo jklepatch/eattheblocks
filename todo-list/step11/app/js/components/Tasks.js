@@ -1,6 +1,6 @@
 import React from 'react';
 
-const List = () => (
+const Tasks = () => (
   <div class="card">
     <div class="row">
       <div class="col-sm-12">
@@ -28,4 +28,4 @@ const List = () => (
   </div>
 )
 
-export default List;
+export default Tasks;
