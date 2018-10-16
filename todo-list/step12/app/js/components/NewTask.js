@@ -19,7 +19,14 @@ class NewTask extends React.Component {
   onsubmit(e) {
     e.preventDefault()
     const { drizzle } = this.props.drizzleContext
-    const stackId = drizzle.contracts.ToDo.methods.createTask.cacheSend()
+    const { content, author } = this.state
+
+    drizzle.contracts.ToDo.methods.createTask.cacheSend(content, author)
+
+    this.setState({
+      content: '',
+      author: ''
+    })
   }
 
   render() {
@@ -34,7 +41,12 @@ class NewTask extends React.Component {
           <form id="new-task" class="col-sm-12">
             <div class="form-group">
               <label for="task-content">Content</label>
-              <input id="task-content" type="text" class="form-control"></input>
+              <input
+              id="task-content"
+              type="text"
+              class="form-control"
+              onChange={e => onchange(e, 'content')}
+              ></input>
             </div>
             <div class="form-group">
               <label for="task-author">Author</label>
