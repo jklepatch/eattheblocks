@@ -1,4 +1,5 @@
 import React from 'react';
+import Task from './Task';
 
 class Tasks extends React.Component {
   constructor() {
@@ -15,12 +16,16 @@ class Tasks extends React.Component {
   }
 
   render() {
-    const { drizzle, drizzleState } = this.props.drizzleContext
-    try{
-      const taskIds = drizzleState.contracts.ToDo.getTaskIds[this.state.dataKey].value
-      const dataKeys = taskIds.map(drizzle.contracts.ToDo.methods.getTaskIds.cacheCall)
-      console.log(dataKeys)
-    } catch (e) { console.log(e)}
+    const { drizzleState, drizzle } = this.props.drizzleContext
+
+    let tasks
+    try {
+      tasks = drizzleState.contracts.ToDo.getTaskIds[this.state.dataKey].value
+        .map(tid =><Task tid={tid} drizzle={drizzle} drizzleState={drizzleState}/>)
+    } catch (e) {
+      tasks = []
+    }
+
     return (
       <div class="card">
         <div class="row">
@@ -42,6 +47,7 @@ class Tasks extends React.Component {
                 </tr>
               </thead>
               <tbody id="tasks">
+                {tasks}
               </tbody>
             </table>
           </div>
