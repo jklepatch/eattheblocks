@@ -7,24 +7,17 @@ class NewTask extends React.Component {
       content: '',
       author: ''
     }
-
-    this.onchange = this.onchange.bind(this)
+    this.onInput = this.onInput.bind(this)
     this.onsubmit = this.onsubmit.bind(this)
   }
 
-  onchange(e, fieldName) {
-    this.setState({
-      ...this.state,
-      [fieldName]: e.target.value,
-    })
+  onInput(e, fieldName) {
+    this.setState({ ...this.state, [fieldName]: e.target.value })
   }
 
   onsubmit(e) {
     e.preventDefault()
-    const {
-      drizzle,
-      drizzleState: { accounts }
-    } = this.props.drizzleContext
+    const { drizzle, drizzleState: { accounts } } = this.props.drizzleContext
     const { content, author } = this.state
 
     drizzle.contracts.ToDo.methods.createTask
@@ -49,7 +42,7 @@ class NewTask extends React.Component {
                 id="task-content"
                 type="text"
                 class="form-control"
-                onChange={e => this.onchange(e, 'content')}
+                onChange={e => this.onInput(e, 'content')}
                 value={this.state.content}
               ></input>
             </div>
@@ -59,7 +52,7 @@ class NewTask extends React.Component {
                 id="task-author"
                 type="text"
                 class="form-control"
-                onChange={e => this.onchange(e, 'author')}
+                onChange={e => this.onInput(e, 'author')}
                 value={this.state.author}
               ></input>
             </div>
