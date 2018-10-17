@@ -7,6 +7,9 @@ class NewTask extends React.Component {
       content: '',
       author: ''
     }
+
+    this.onchange = this.onchange.bind(this)
+    this.onsubmit = this.onsubmit.bind(this)
   }
 
   onchange(e, fieldName) {
@@ -18,15 +21,15 @@ class NewTask extends React.Component {
 
   onsubmit(e) {
     e.preventDefault()
-    const { drizzle } = this.props.drizzleContext
+    const { 
+      drizzle, 
+      drizzleState: { accounts } 
+    } = this.props.drizzleContext
     const { content, author } = this.state
 
-    drizzle.contracts.ToDo.methods.createTask.cacheSend(content, author)
+    drizzle.contracts.ToDo.methods.createTask.cacheSend(content, author, { from: accounts[0], gas: '5000000' })
 
-    this.setState({
-      content: '',
-      author: ''
-    })
+    this.setState({ content: '', author: '' })
   }
 
   render() {
@@ -38,19 +41,26 @@ class NewTask extends React.Component {
           </div>
         </div>
         <div class="row">
-          <form id="new-task" class="col-sm-12">
+          <form id="new-task" class="col-sm-12" onSubmit={this.onsubmit}>
             <div class="form-group">
               <label for="task-content">Content</label>
               <input
-              id="task-content"
-              type="text"
-              class="form-control"
-              onChange={e => onchange(e, 'content')}
+                id="task-content"
+                type="text"
+                class="form-control"
+                onChange={e => this.onchange(e, 'content')}
+                value={this.state.content}
               ></input>
             </div>
             <div class="form-group">
               <label for="task-author">Author</label>
-              <input id="task-author" type="text" class="form-control"></input>
+              <input 
+                id="task-author" 
+                type="text" 
+                class="form-control"
+                onChange={e => this.onchange(e, 'author')}
+                value={this.state.author}
+              ></input>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
