@@ -15,11 +15,12 @@ class Tasks extends React.Component {
   }
 
   render() {
-    const { drizzleState } = this.props.drizzleContext
+    const { drizzle, drizzleState } = this.props.drizzleContext
     try{
-      console.log(drizzleState.contracts.ToDo.getTaskIds[this.state.dataKey].value)
+      const taskIds = drizzleState.contracts.ToDo.getTaskIds[this.state.dataKey].value
+      const dataKeys = taskIds.map(drizzle.contracts.ToDo.methods.getTaskIds.cacheCall)
+      console.log(dataKeys)
     } catch (e) { console.log(e)}
-
     return (
       <div class="card">
         <div class="row">
