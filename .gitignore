@@ -3,3 +3,4 @@ node_modules
 tags
 build
 dist
+**/build
