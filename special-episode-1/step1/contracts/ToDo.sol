@@ -32,7 +32,8 @@ contract ToDo {
       );
     }
 
-    function getTasks() public constant returns(Task[]) {
-      return tasks;
-    }
+    //will not work because cant return array of struct yet in Solidity
+    //function getTasks() public constant returns(Task[]) {
+    //  return tasks;
+    //}
 }
