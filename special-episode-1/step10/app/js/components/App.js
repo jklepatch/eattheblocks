@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 
 class App extends Component {
   constructor(props) {
@@ -13,19 +11,14 @@ class App extends Component {
 
   async componentDidMount(){
     const { web3, todo } = this.props;
-    const accounts = await  web3.eth.getAccounts();
+    const accounts = await web3.eth.getAccounts();
     this.setState({ accounts, address: todo.address });
   }
 
   render() {
     const { accounts, address } = this.state;
     if(accounts.length === 0) return <div>Loading...</div>;
-    return (
-      <Fragment>
-        <Header address={address} />
-        <Footer />
-      </Fragment>
-    );
+    return <div>{accounts[0]}, {address}</div>;
   }
 }
 
