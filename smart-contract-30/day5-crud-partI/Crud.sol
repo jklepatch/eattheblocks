@@ -5,8 +5,8 @@ contract Crud {
     uint id;
     string name;
   }
-  User[] users;
-  uint nextId;
+  User[] public users;
+  uint public nextId;
 
   function create(string memory name) public {
     users.push(User(nextId, name));
@@ -19,17 +19,5 @@ contract Crud {
         return(users[i].id, users[i].name);
       }
     }
-  }
-
-  function update(uint id, string memory name) public {
-    for(uint i = 0; i < users.length; i++) {
-      if(users[i].id == id) {
-        users[i].name = name;
-      }
-    }
-  }
-
-  function destroy(uint id) public {
-    delete users[id];
   }
 }
