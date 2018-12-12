@@ -5,26 +5,26 @@ contract Crud {
     uint id;
     string name;
   }
-  uint[] users;
+  User[] users;
   uint nextId;
 
-  function create(string name) public {
+  function create(string memory name) public {
     users.push(User(nextId, name));
     nextId++;
   }
 
-  function read(uint id) view public returns(uint, string) {
+  function read(uint id) view public returns(uint, string memory) {
     for(uint i = 0; i < users.length; i++) {
       if(users[i].id == id) {
-        return(users[id].id, users[id].name);
+        return(users[i].id, users[i].name);
       }
     }
   }
 
-  function update(uint id, string name) public {
+  function update(uint id, string memory name) public {
     for(uint i = 0; i < users.length; i++) {
       if(users[i].id == id) {
-        users[id].name = name;
+        users[i].name = name;
       }
     }
   }
