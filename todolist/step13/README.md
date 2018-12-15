@@ -1,10 +1,3 @@
-# Step 13 - Contract testing
+# Step 10 - Pro Episode
 
-## Dev
-Installed `mocha`, `expect`, `ganache-cli`
-
-Added `test` script
-
-## ToDo.sol
-Gave the return values of `getTask` parameter names. This returns an object with real keys instead of just numbers!
-
+Video tutorial available to members of [EatTheBlocks Pro](https://eattheblocks.com/pro")

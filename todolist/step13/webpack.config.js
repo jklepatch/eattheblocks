@@ -11,17 +11,13 @@ module.exports = {
     path: path.resolve(__dirname, 'app/dist'),
     filename: 'bundle.js'
   },
-  devtool: ' inline-source-map',
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
-          query: {
-            plugins:[ 'transform-object-rest-spread' ]
-          }
+          loader: "babel-loader"
         }
       },
       {

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Component, Fragment } from 'react';
 
-class App extends React.Component {
-  constructor() {
-    super();
+class App extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       accounts: [],
       address: null,
@@ -10,13 +10,15 @@ class App extends React.Component {
   }
 
   async componentDidMount(){
-    const { accounts, todo } = this.props;
-    const { address } = todo;
-    this.setState({ accounts, address });
+    const { web3, todo } = this.props;
+    const accounts = await web3.eth.getAccounts();
+    this.setState({ accounts, address: todo.address });
   }
 
   render() {
-    return <div>{this.state.accounts[0]}, {this.state.address}</div>;
+    const { accounts, address } = this.state;
+    if(accounts.length === 0) return <div>Loading...</div>;
+    return <div>{accounts[0]}, {address}</div>;
   }
 }
 

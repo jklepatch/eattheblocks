@@ -1,12 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import store from './store';
+import eth from './ethereum';
 import App from './components/App';
-import { DrizzleContext } from 'drizzle-react';
 
 render(
-  <DrizzleContext.Provider drizzle={store}>
-    <App/>
-  </DrizzleContext.Provider>,
-  document.getElementById('app')
+  <App web3={eth.web3} todo={eth.todo} />,
+    document.getElementById('app')
 );

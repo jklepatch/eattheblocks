@@ -1,59 +1,63 @@
-import React from 'react';
-import Task from './Task';
+import React, { Component } from 'react';
+import { formatDate } from '../utils';
 
-class Tasks extends React.Component {
-  constructor() {
-    super()
-    this.state = { dataKey: null }
+class Tasks extends Component {
+  constructor(props) {
+    super(props);
+    this.renderTask = this.renderTask.bind(this);
   }
 
-  componentDidMount() {
-    const { initialized, drizzle } = this.props.drizzleContext
-    if (initialized) {
-      const dataKey = drizzle.contracts.ToDo.methods.getTaskIds.cacheCall()
-      this.setState({ dataKey })
-    }
+  renderTask(task, i) {
+    return (
+      <tr key={i} >
+        <td>{task[0]}</td>
+        <td>{formatDate(task[1])}</td>
+        <td>{task[2]}</td>
+        <td>{task[3]}</td>
+        <td>
+          <input 
+            type="checkbox" 
+            checked={!!task[4]}
+            onChange={() => this.props.toggleDone(task[0])}
+          />
+        </td>
+        <td>
+          {task[5] != '0' ? formatDate(task[5]) : ''}
+        </td>
+      </tr>
+    );
   }
-
   render() {
-    const { drizzleState, drizzle } = this.props.drizzleContext
-
-    let tasks
-    try {
-      tasks = drizzleState.contracts.ToDo.getTaskIds[this.state.dataKey].value
-        .map(tid =><Task tid={tid} drizzle={drizzle} drizzleState={drizzleState}/>)
-    } catch (e) {
-      tasks = []
-    }
+    const { tasks } = this.props;
 
     return (
-      <div class="card">
-        <div class="row">
-          <div class="col-sm-12">
-            <h2 class="orange">Tasks</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Date</th>
-                  <th>Content</th>
-                  <th>Author</th>
-                  <th>Done</th>
-                  <th>Date Complete</th>
-                </tr>
-              </thead>
-              <tbody id="tasks">
-                {tasks}
-              </tbody>
-            </table>
-          </div>
+    <div className="card">
+      <div className="row">
+        <div className="col-sm-12">
+          <h2 className="orange">Tasks</h2>
         </div>
       </div>
-    )
+      <div className="row">
+        <div className="col-sm-12">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Content</th>
+                <th>Author</th>
+                <th>Done</th>
+                <th>Date Complete</th>
+              </tr>
+            </thead>
+            <tbody id="tasks">
+              {tasks.map((task, i) => this.renderTask(task, i))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    );
   }
 }
 

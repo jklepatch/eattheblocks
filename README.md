@@ -1,7 +1,4 @@
-# EaTheBlocks Pro
+# EaTheBlocks
 
-Code for the private videos of EatTheBlocks pro. Code is organized by series:
+Code for EatTheBlocks (free & Pro content)
 
-* ToDo List Dapp
-* ERC721 Game
-* etc...

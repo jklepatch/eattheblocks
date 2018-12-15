@@ -1,11 +1,15 @@
 import React from 'react';
 
-const Header = () => (
-  <div id="page-header" class="row">
-    <div class="col-sm-12">
-      <h1 class="text-center">ETB Ethereum ToDo List App</h1>
+const Header = ({address}) => {
+  return (
+    <div id="page-header" className="row">
+      <div className="col-sm-12">
+        <h1 className="text-center">ETB Ethereum ToDo List App <br />
+          <span className="small">Address: {address}</span>
+        </h1>
+      </div>
     </div>
-  </div>
-)
+  );
+};
 
 export default Header;

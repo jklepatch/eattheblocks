@@ -12,6 +12,5 @@ const { address } = artifact.networks[network];
 const Todo = new TruffleContract(artifact);
 Todo.setProvider(web3.currentProvider);
 const todo = Todo.at(address);
-const getAccounts = web3.eth.getAccounts();
 
-export default { web3, todo, getAccounts };
+export default { web3, todo };
