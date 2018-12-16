@@ -4,3 +4,5 @@ tags
 build
 dist
 **/build
+.DS_STORE
+tags.*
