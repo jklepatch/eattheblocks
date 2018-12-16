@@ -15,6 +15,10 @@ contract EtherWallet {
       to.transfer(amount);
       return;
     } 
-    revert('only owner can send transfers');
+    revert('sender is not allowed');
+  }
+
+  function balanceOf() view public returns(uint) {
+    return address(this).balance;
   }
 }
