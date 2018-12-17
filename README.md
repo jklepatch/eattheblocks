@@ -1,4 +1,3 @@
-# EaTheBlocks
+# EaTheBlocks Pro
 
-Code for EatTheBlocks (free & Pro content)
-
+Code for EatTheBlocks Pro
