@@ -24,15 +24,12 @@ contract DeedMultiPayout {
   function withdraw() public {
     require(msg.sender == beneficiary, 'beneficiary only');
     require(now >= earliest, 'too early');
-    require(paidPayouts < PAYOUTS, 'no payout left');
+    require(paidPayouts < PAYOUTS);
     
     uint elligiblePayouts = (now - earliest) / INTERVAL;
     uint duePayouts = elligiblePayouts - paidPayouts;
     duePayouts = duePayouts + paidPayouts > PAYOUTS ? PAYOUTS - paidPayouts : duePayouts;
-    
-    if(duePayouts > 0) {
-      paidPayouts += duePayouts;
-      beneficiary.transfer(duePayouts * amount);
-    }
+    paidPayouts += duePayouts;
+    beneficiary.transfer(duePayouts * amount);
   }
 }
