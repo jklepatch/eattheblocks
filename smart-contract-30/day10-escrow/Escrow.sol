@@ -1,9 +1,9 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.2;
 
 contract Escrow{
-  address public thirdParty;
   address public payer;
   address payable public payee;
+  address public lawyer;
   uint public amount;
   
   constructor(
@@ -11,27 +11,24 @@ contract Escrow{
     address payable _payee, 
     uint _amount) 
     public {
-    thirdParty = msg.sender; 
     payer = _payer;
     payee = _payee;
+    lawyer = msg.sender; 
     amount = _amount;
   }
 
-  function deposit() payable public only(payer) {
+  function deposit() payable public {
+    require(msg.sender = payer, 'Sender must be the payer');
     require(address(this).balance <= amount, 'Cant send more than escrow amount');
   }
 
-  function release() public only(thirdParty) {
-    require(address(this).balance == amount, 'Cant release before all money received');
+  function release() public {
+    require(address(this).balance == amount, 'cannot release funds before full amount is sent');
+    require(msg.sender == lawyer, 'only lawyer can release funds');
     payee.transfer(amount);
   }
   
   function balanceOf() view public returns(uint) {
     return address(this).balance;
-  }
-  
-  modifier only(address _payer) {
-    require(msg.sender == _payer, 'unauthorized sender');
-     _;
   }
 }
