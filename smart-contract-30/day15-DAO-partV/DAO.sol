@@ -2,7 +2,7 @@ pragma solidity ^0.5.2;
 
 /**
  * DAO contract:
- * 1. Collects investors money (ether)
+ * 1. Collects investors money (ether) & allocate shares
  * 2. Keep track of investor contributions with shares
  * 3. Allow investors to transfer shares
  * 4. allow investment proposals to be created and voted
@@ -95,8 +95,36 @@ contract DAO {
     proposal.votes += shares[msg.sender];
   }
 
+  function executeProposal(uint proposalId) external {
+    Proposal storage proposal = proposals[proposalId];
+    require(now >= proposal.end, 'cannot execute proposal before end date');
+    require(proposal.executed == false, 'cannot execute proposal already executed');
+    require((proposal.votes / totalShares) * 100 >= quorum, 'cannot execute proposal with votes # below quorum');
+    _transferEther(proposal.amount, proposal.recipient);
+  }
+
+  function withdrawEther(uint amount, address payable to) external onlyAdmin() {
+    _transferEther(amount, to);
+  }
+  
+  function _transferEther(uint amount, address payable to) internal {
+    require(amount <= availableFunds, 'not enough availableFunds');
+    availableFunds -= amount;
+    to.transfer(amount);
+  }
+
+  //For ether returns of proposal investments
+  function() payable external {
+    availableFunds += msg.value;
+  }
+
   modifier onlyInvestors() {
-     require(investors[msg.sender] == true, 'only investors');
-     _;
+    require(investors[msg.sender] == true, 'only investors');
+    _;
+  }
+
+  modifier onlyAdmin() {
+    require(msg.sender == admin, 'only admin');
+    _;
   }
 }
