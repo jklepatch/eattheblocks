@@ -95,7 +95,7 @@ contract DAO {
     proposal.votes += shares[msg.sender];
   }
 
-  function executeProposal(uint proposalId) external {
+  function executeProposal(uint proposalId) external onlyAdmin() {
     Proposal storage proposal = proposals[proposalId];
     require(now >= proposal.end, 'cannot execute proposal before end date');
     require(proposal.executed == false, 'cannot execute proposal already executed');
