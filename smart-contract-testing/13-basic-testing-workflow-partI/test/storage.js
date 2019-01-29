@@ -5,6 +5,6 @@ contract('storage', function(accounts) {
     const storage = await Storage.deployed();
     await storage.set("Hello World");
     const result = await storage.get();
-    assert(result == "Hello World", 'Should be equal');
+    assert(result == "Hello World", 'Should be equal to Hello World');
   });
 });
