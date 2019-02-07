@@ -1,7 +1,7 @@
-import ContractT = require('web3-eth-contract');
+import Contract = require('web3-eth-contract');
 
-export interface Todo extends ContractT.Contract {
-  createTask: (content: string, author: string) => ContractT.DeployTransactionResponse 
+export interface Todo extends Contract.Contract {
+  createTask: (content: string, author: string) => Contract.DeployTransactionResponse 
 }
 
 export interface Task {

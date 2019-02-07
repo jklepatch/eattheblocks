@@ -1,13 +1,11 @@
 import * as React from 'react';
-import Web3CoreT = require('web3-core');
-import ContractT = require('web3-eth-contract');
+import Contract from 'web3-eth-contract';
 
 interface NewTaskProps {
-  createTask: (content: string, author: string) => Promise<ContractT.Contract>
+  createTask: (content: string, author: string) => Promise<Contract.Contract>
 };
 
 class NewTask extends React.Component<NewTaskProps> {
-
   onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as HTMLFormElement;

@@ -22,8 +22,6 @@ contract ToDo {
     string author,
     bool done);
 
-  event TaskStatusToggled(uint id, bool done, uint date);
-
   constructor() public {
     lastTaskId = 0;
   }
@@ -32,21 +30,10 @@ contract ToDo {
     lastTaskId++;
     tasks[lastTaskId] = Task(lastTaskId, now, _content, _author, false, 0);
     taskIds.push(lastTaskId);
-    emit TaskCreated(lastTaskId, now, _content, _author, false);
   }
 
   function getTaskIds() external view returns(uint[] memory) {
     return taskIds;
-  }
-
-  function getTaskFixtures(uint _id) external view returns(
-      uint,
-      uint,
-      string memory,
-      string memory,
-      bool
-     ) {
-    return (0, now, "Create more tutorials for ETB", "Julien", false);
   }
 
   function getTasks() external view returns(Task[] memory) {

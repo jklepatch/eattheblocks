@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Task } from '../types';
-//import { formatDate } from '../utils';
-
-const formatDate = (d: string): string => d;
+import { formatDate } from '../utils';
 
 interface TaskListProps {
   tasks: Task[]

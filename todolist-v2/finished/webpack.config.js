@@ -7,6 +7,7 @@ const envVariables = new webpack.DefinePlugin({
 
 module.exports = {
   entry: './app/index.tsx',
+  mode: 'development',
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js'
@@ -23,18 +24,18 @@ module.exports = {
           loader: "awesome-typescript-loader"
         },
       },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              '@babel/preset-env'
-            ]
-          }
-        },
-      }
+      //{
+      //  test: /\.js$/,
+      //  exclude: /node_modules/,
+      //  use: {
+      //    loader: "babel-loader",
+      //    options: {
+      //      presets: [
+      //        '@babel/preset-env'
+      //      ]
+      //    }
+      //  },
+      //}
     ]
   },
   plugins: [
