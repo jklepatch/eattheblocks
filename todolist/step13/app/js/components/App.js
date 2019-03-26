@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Main from './Main';
+import NewTask from './NewTask';
+import Tasks from './Tasks';
 
 class App extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class App extends Component {
     this.state = {
       accounts: [],
       address: null,
-      tasks: [],
+      tasks: []
     };
     this.getTasks = this.getTasks.bind(this);
     this.createTask = this.createTask.bind(this);
@@ -21,9 +22,9 @@ class App extends Component {
     const taskIds = await todo.methods.getTaskIds().call();
     const promises = [];
     taskIds.forEach((taskId) => {
-        promises.push(todo.methods.getTask(taskId).call());
+      promises.push(todo.methods.getTask(taskId).call());
     });
-    return await Promise.all(promises);
+    return Promise.all(promises);
   }
 
   async createTask(content, author) {
@@ -35,7 +36,7 @@ class App extends Component {
         gas: 1000000
       });
     console.log(receipt);
-    const tasks = await this.getTasks();
+    const tasks = await this.getTasks(); 
     this.setState({tasks});
   }
 
@@ -48,7 +49,7 @@ class App extends Component {
         gas: 1000000
       });
     console.log(receipt);
-    const tasks = await this.getTasks();
+    const tasks = await this.getTasks(); 
     this.setState({tasks});
   }
 
@@ -57,25 +58,31 @@ class App extends Component {
     const accounts = await web3.eth.getAccounts();
     const tasks = await this.getTasks();
     this.setState({ 
-      accounts,
+      accounts, 
       address: todo.options.address, 
-      tasks
+      tasks 
     });
   }
 
   render() {
     const { accounts, address, tasks } = this.state;
-
     if(accounts.length === 0) return <div>Loading...</div>;
     return (
       <Fragment>
         <Header address={address} />
-        <Main 
-          tasks={tasks} 
-          createTask={this.createTask} 
-          toggleDone={this.toggleDone} 
-        />
-        <Footer />
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12">
+              <NewTask createTask={this.createTask} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12">
+              <Tasks tasks={tasks} toggleDone={this.toggleDone} />
+            </div>
+          </div>
+        </div>
+        <Footer/>
       </Fragment>
     );
   }
