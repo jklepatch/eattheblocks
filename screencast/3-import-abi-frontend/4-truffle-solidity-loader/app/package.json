@@ -1,0 +1,19 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ethereum.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "json-loader": "^0.5.7",
+    "truffle-legacy-system": "^1.0.6",
+    "truffle-solidity-loader": "^0.1.11",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
+}
