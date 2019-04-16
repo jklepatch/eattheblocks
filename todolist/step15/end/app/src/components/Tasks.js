@@ -1,31 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { formatDate } from '../utils';
 
-class Tasks extends Component {
-  renderTask = (task) => {
-    return (
-      <tr key={task.id} >
-        <td>{task[0]}</td>
-        <td>{formatDate(task[1])}</td>
-        <td>{task[2]}</td>
-        <td>{task[3]}</td>
-        <td>
-          <input 
-            type="checkbox" 
-            checked={!!task[4]}
-            onChange={() => this.props.toggleDone(task[0])}
-          />
-        </td>
-        <td>
-          {task[5] != '0' ? formatDate(task[5]) : ''}
-        </td>
-      </tr>
-    );
-  }
-  render() {
-    const { tasks } = this.props;
-
-    return (
+const Tasks = (props) => {
+  const renderTask = (task) => (
+    <tr key={task.id}>
+      <td>{task.id}</td>
+      <td>{formatDate(task.date)}</td>
+      <td>{task.content}</td>
+      <td>{task.author}</td>
+      <td>
+        <input
+          type='checkbox'
+          onChange={() => props.toggleDone(task.id)}
+          checked={!!task.done}
+        />
+      </td>
+      <td>{task.completeDate != '0' ? formatDate(task.completeDate) : ''}</td>
+    </tr>
+  );
+  return (
     <div className="card">
       <div className="row">
         <div className="col-sm-12">
@@ -46,14 +39,13 @@ class Tasks extends Component {
               </tr>
             </thead>
             <tbody id="tasks">
-              {tasks.map((task) => this.renderTask(task))}
+              {props.tasks.map((task) => renderTask(task))}
             </tbody>
           </table>
         </div>
       </div>
     </div>
-    );
-  }
-}
+  );
+};
 
 export default Tasks;
