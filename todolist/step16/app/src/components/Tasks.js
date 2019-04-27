@@ -9,8 +9,17 @@ class Tasks extends Component {
 
   componentDidMount() {
     const Todo = this.props.drizzle.contracts.ToDo;
-    const tasksKey = Todo.methods['getTasks'].cacheChall();
+    const tasksKey = Todo.methods['getTasks'].cacheCall();
     this.setState({tasksKey});
+  }
+
+  toggleDone = (id) => {
+    const Todo = this.props.drizzle.contracts.ToDo;
+    Todo
+      .methods['toggleDone']
+      .cacheSend({
+        from: this.props.drizzleState.accounts[0]
+      });
   }
 
   renderTask = (task) => (
@@ -22,7 +31,7 @@ class Tasks extends Component {
       <td>
         <input
           type='checkbox'
-          onChange={() => props.toggleDone(task.id)}
+          onChange={() => this.toggleDone(task.id)}
           checked={!!task.done}
         />
       </td>

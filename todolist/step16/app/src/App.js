@@ -5,8 +5,8 @@ import drizzleOptions from './drizzleOptions';
 import LoadingComponent from './components/LoadingComponent';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import NewTask from './NewTask';
-import Tasks from './Tasks';
+import NewTask from './components/NewTask';
+import Tasks from './components/Tasks';
 
 const drizzleStore = generateStore(drizzleOptions);
 const drizzle = new Drizzle(drizzleOptions, drizzleStore);

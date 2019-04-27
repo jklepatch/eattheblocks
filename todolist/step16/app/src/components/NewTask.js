@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withDrizzle from './DrizzleContainer';
 
 class NewTask extends Component {
   state = {
@@ -63,4 +64,4 @@ class NewTask extends Component {
   }
 }
 
-export default NewTask;
+export default withDrizzle(NewTask);
