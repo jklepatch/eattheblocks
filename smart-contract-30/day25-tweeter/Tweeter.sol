@@ -10,6 +10,7 @@ contract Tweeter {
   }
 
   struct Message {
+    address author;
     string content;
     uint createdAt;
   }
@@ -17,7 +18,7 @@ contract Tweeter {
   mapping(uint => Tweet) private tweets;
   mapping(address => uint[]) private tweetsOf;
   mapping(address => address[]) private following;
-  mapping(address => string[]) private conversations;
+  mapping(address => Message[]) private conversations;
   mapping(address => mapping(address => bool)) private operators;
   uint private nextId;
   address public admin;
@@ -124,7 +125,8 @@ contract Tweeter {
     address _from) 
     internal 
     canOperate(_from) {
-    conversations[_from][_to].push(Message(_content, now));
+    uint id = uint(_from) + uint(_to);
+    conversations[id].push(Message(_from, _content, now));
     emit MessageSent(_from, _to, _content);
   }
 
