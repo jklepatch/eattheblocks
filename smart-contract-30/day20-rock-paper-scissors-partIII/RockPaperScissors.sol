@@ -18,8 +18,8 @@ contract RockPaperScissors {
     uint value;
   }
   mapping(uint => Game) public games;
-  mapping(uint => uint) public moves;
-  mapping(uint => mapping(uint => bool)) public winningMoves;
+  mapping(uint => mapping(address => Move)) public moves;
+  mapping(uint => uint) public winningMoves;
   uint public gameId;
   
   constructor() public {
