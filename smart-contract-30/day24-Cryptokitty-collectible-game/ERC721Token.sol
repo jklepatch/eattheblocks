@@ -170,7 +170,7 @@ contract ERC721Token is ERC721 {
         return ownerToTokenCount[_owner];
     }
     
-    function ownerOf(uint256 _tokenId) external view returns (address) {
+    function ownerOf(uint256 _tokenId) public view returns (address) {
         return idToOwner[_tokenId];
     }
     
@@ -225,9 +225,10 @@ contract ERC721Token is ERC721 {
     }
 
     function _mint(address _owner, uint _tokenId) internal {
-      ownerToTokenCount[_owner] += 1;
-      idToOwner[_tokenId] = _owner;
-      emit Transfer(0, _owner, _tokenId);
+        require(idToOwner[_tokenId] == address(0), 'This token already exist..');
+        idToOwner[_tokenId] = owner;
+        ownerToTokenCount[owner] += 1;
+        emit Transfer(address(0), owner, _tokenId);
     }
     
     modifier canTransfer(uint _tokenId) {
