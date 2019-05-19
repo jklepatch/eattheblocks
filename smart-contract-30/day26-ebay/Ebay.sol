@@ -1,142 +1,115 @@
-pragma solidity ^0.5.6;
+pragma solidity ^0.5.8;
+pragma experimental ABIEncoderV2;
 
-contract Market {
-    enum Status { //used both for Trade and Offer. For Trade 'DONE' means settled, and for
-        PENDING,  // Offer it means the offer was taken already.
-        DONE
-    }
-    struct Trade {
+contract Ebay {
+    //1. Allow seller to create auctions
+    //2. Allow buyers make offer for an auctions
+    //3. Allow seller and buyers to trade at the end of an auction
+    //4. Create some getter functions for auctions and offers
+    
+    struct Auction {
         uint id;
-        uint offerId;
-        address buyer;
-        address seller;
-        uint price;
-        Status status;
+        address payable seller;
+        string name;
+        string description;
+        uint min;
+        uint end;
+        uint bestOfferId;
+        uint[] offerIds;
     }
+    
     struct Offer {
         uint id;
-        address seller;
-        string description;
+        uint auctionId;
+        address payable buyer;
         uint price;
-        Status status;
     }
-    mapping(uint => Trade) public trades;
-    mapping(uint => Offer) public offers;
-    mapping(address => uint) public balances;
-    mapping(address => uint) public availableBalances; //take into consideration pending trades
-    mapping(address => bool) public members;
-    address admin;
+    mapping(uint => Auction) private auctions;
+    mapping(uint => Offer) private offers;
+    mapping(address => uint[]) private userAuctions;
+    mapping(address => uint[]) private userOffers;
+    uint private nextAuctionId = 1;
+    uint private nextOfferId = 1;
     
-    uint lastOfferId = 1;
-    uint lastTradeId = 1;
-    
-    constructor() public {
-        admin = msg.sender;
-    }
-    
-    /*
-     * Members functions
-     */
-    
-    // called by seller
-    function sell(string calldata description, uint price) 
-        external 
-        onlyMember(msg.sender, true) {
-        require(price > 0, 'cannot sell free items');
-        uint offerId = lastOfferId++;
-        offers[offerId] = Offer(
-            offerId, 
+    function createAuction(
+        string calldata _name,
+        string calldata _description,
+        uint _min,
+        uint _duration)
+        external {
+        require(_min > 0, '_min must be > 0');
+        require(_duration > 86400 && _duration < 864000, '_duration must be comprised between 1 to 10 days');
+        uint[] memory offerIds = new uint[](0);
+        auctions[nextAuctionId] = Auction(
+            nextAuctionId,
             msg.sender,
-            description, 
-            price, 
-            Status.PENDING
+            _name,
+            _description,
+            _min,
+            now + _duration,
+            0,
+            offerIds
         );
+        userAuctions[msg.sender].push(nextAuctionId);
+        nextAuctionId++;
     }
     
-    //called by buyer
-    function buy(uint offerId)
-        external 
-        onlyMember(msg.sender, true) {
-        Offer storage offer = offers[offerId];
-        require(offer.id > 0, 'offer must exist');
-        require(offer.status == Status.PENDING, 'offer must be pending');
-        require(availableBalances[msg.sender] >= offer.price);
-        availableBalances[msg.sender] -= offer.price;
-        offer.status = Status.DONE;
-        uint tradeId = lastTradeId++;
-        trades[lastTradeId++] = Trade(
-            tradeId, 
-            offer.id, 
-            msg.sender,
-            offer.seller, 
-            offer.price,
-            Status.PENDING
-        );
-    }
-        
-    function deposit() 
-        external 
-        payable 
-        onlyMember(msg.sender, true) {
-        balances[msg.sender] += msg.value;
-        availableBalances[msg.sender] += msg.value;
+    function createOffer(uint _auctionId) external payable auctionExists(_auctionId) {
+        Auction storage auction = auctions[_auctionId];
+        Offer storage bestOffer = offers[auction.bestOfferId];
+        require(now < auction.end, 'Auction has expired');
+        require(msg.value >= auction.min && msg.value > bestOffer.price, 'msg.value must be superior to min and bestOffer');
+        auction.bestOfferId = nextOfferId;
+        auction.offerIds.push(nextOfferId);
+        offers[nextOfferId] = Offer(nextOfferId, _auctionId, msg.sender, msg.value);
+        userOffers[msg.sender].push(nextOfferId);
+        nextOfferId++;
     }
     
-    /*
-     * Admin functions
-     */
-    
-    function settle(uint txId) 
-        external 
-        onlyAdmin() {
-        Trade storage trade = trades[txId];
-        require(trade.id != 0, 'trade must exist');
-        require(trade.status == Status.PENDING, 'trade must be in PENDING state');
-        trade.status = Status.DONE;
-        availableBalances[msg.sender] += trade.price;
-        _transfer(trade.buyer, trade.seller, trade.price);
-    }
-    
-    function register(address member) 
-        external 
-        onlyMember(member, false)
-        onlyAdmin() {
-        members[member] = true;
-        balances[member] += 500;
-        availableBalances[member] += 500;
-    }
-    
-    function unregister(address member) 
-        external 
-        onlyMember(member, true)
-        onlyAdmin() {
-        uint memberBalance = balances[member];
-        members[member] = false;
-        _transfer(member, address(this), memberBalance);
-    }
-    
-    function _transfer(address from, address to, uint amount) internal {
-        require(balances[from] >= amount, 'cannot transfer more than current balance');
-        balances[from] -= amount;
-        availableBalances[from] -= amount;
-        balances[to] += amount;
-        availableBalances[to] += amount;
-    }
-    
-    //Can send ether to smart contract
-    function() external payable {}
-    
-    modifier onlyMember(address member, bool registered) {
-        if(registered) {
-            require(members[member] == true, 'must be registered');
-        } else {
-            require(members[member] == false, 'must NOT be registered');
+    function trade(uint _auctionId) external auctionExists(_auctionId) {
+        Auction storage auction = auctions[_auctionId];
+        Offer storage bestOffer = offers[auction.bestOfferId];
+        require(now > auction.end, 'Auction is still active');
+        for(uint i = 0; i < auction.offerIds.length; i++) {
+            uint offerId = auction.offerIds[i];
+            if(offerId != auction.bestOfferId) {
+                Offer storage offer = offers[offerId];
+                offer.buyer.transfer(offer.price);
+            }
         }
-        _;
+        auction.seller.transfer(bestOffer.price);
     }
     
-    modifier onlyAdmin() {
-        require(msg.sender == admin, 'only admin');
+    function getAuctions() view external returns(Auction[] memory) {
+        Auction[] memory _auctions = new Auction[](nextAuctionId - 1);
+        for(uint i = 1; i < nextAuctionId  + 1; i++) {
+            _auctions[i-1] = auctions[i];  
+        }
+        return _auctions;
+    }
+    
+    function getUserAuctions(address _user) view external returns(Auction[] memory) {
+        uint[] storage userAuctionIds = userAuctions[_user];
+        Auction[] memory _auctions = new Auction[](userAuctionIds.length);
+        for(uint i = 0; i < userAuctionIds.length; i++) {
+            uint auctionId = userAuctionIds[i];
+            _auctions[i] = auctions[auctionId];
+        }
+        return _auctions;
+    }
+    
+    function getUserOffers(address _user) view external returns(Offer[] memory) {
+        uint[] storage userOfferIds = userOffers[_user];
+        Offer[] memory _offers = new Offer[](userOfferIds.length);
+        for(uint i = 0; i < userOfferIds.length; i++) {
+            uint offerId = userOfferIds[i];
+            _offers[i] = offers[offerId];
+        }
+        return _offers;
+    }
+    
+    modifier auctionExists(uint _auctionId) {
+        require(_auctionId > 0 && _auctionId < nextAuctionId, 'Auction does not exist');
         _;
     }
 }
