@@ -83,5 +83,3 @@ contract Voting {
     _;
   }
 }
-
-
