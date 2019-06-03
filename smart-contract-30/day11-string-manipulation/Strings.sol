@@ -9,7 +9,7 @@ contract Strings {
   function concatenate(string memory str1, string memory str2) pure public returns(string memory) {
     bytes memory str_bytes1 = bytes(str1);
     bytes memory str_bytes2 = bytes(str2);
-    string memory str = new string(str_bytes1 + str_bytes2);
+    string memory str = new string(str_bytes1.length + str_bytes2.length);
     bytes memory str_bytes = bytes(str);
 
     uint k = 0;
