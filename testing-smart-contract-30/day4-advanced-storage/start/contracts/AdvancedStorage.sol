@@ -1,13 +1,21 @@
 pragma solidity ^0.5.0;
 
-contract SimpleStorage {
-  string public data;
+contract AdvancedStorage {
+  uint[] public ids;
 
-  function set(string memory _data) public {
-    data = _data;
+  function add(uint id) public {
+    ids.push(id);
   }
 
-  function get() view public returns(string memory) {
-    return data;
+  function get(uint i) view public returns(uint) {
+    return ids[i];
+  }
+  
+  function getAll() view public returns(uint[] memory) {
+    return ids;
+  }
+
+  function length() view public returns(uint) {
+    return ids.length;
   }
 }
