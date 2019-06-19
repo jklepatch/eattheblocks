@@ -1,0 +1,16 @@
+{
+  "name": "8-code-tracking-basic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eth-block-tracker": "^4.4.1",
+    "ethjs-provider-http": "^0.1.6"
+  }
+}
