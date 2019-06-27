@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div v-if="isDrizzleInitialized" id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
 
     <div class="section">
@@ -12,11 +12,15 @@
       <!--@TODO-->
     </div>
   </div>
+  <div v-else>Loading...</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'app',
+  computed: mapGetters('drizzle', ['isDrizzleInitialized'])
 }
 </script>
 

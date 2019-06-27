@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 export default {
-  name: 'Accounts',
+  name: 'Account',
   computed: {
     ...mapGetters('accounts', ['activeAccount', 'activeBalance'])
   }
-}
+};
 </script>

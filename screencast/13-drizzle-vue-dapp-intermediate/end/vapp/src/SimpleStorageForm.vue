@@ -13,6 +13,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
+  name: 'SimpleStorageForm',
   computed: {
     ...mapGetters('drizzle', ['drizzleInstance'])
   },

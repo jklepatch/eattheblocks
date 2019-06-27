@@ -13,16 +13,14 @@ const args = {
   methodArgs: ''
 };
 export default {
+  name: 'SimpleStorage',
   computed: {
-    ...mapGetters('contracts', ['getContractData', 'contractInstances']),
+    ...mapGetters('contracts', ['getContractData']),
     contractData() {
-      const t = this.getContractData({
+      return this.getContractData({
         contract: args.contractName,
         method: args.method
       });
-      //eslint-disable-next-line
-      console.log(t);
-      return t;
     }
   },
   created() {
