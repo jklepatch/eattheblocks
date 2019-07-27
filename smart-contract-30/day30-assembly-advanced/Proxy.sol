@@ -7,6 +7,7 @@ contract Proxy {
   constructor() public {
     admin = msg.sender;
   }
+
   function update(address _implementation) external {
     implementation = _implementation;
   }
@@ -16,11 +17,12 @@ contract Proxy {
   */
   function () payable public {
     require(implementation != address(0));
+    address impl = implementation;
 
     assembly {
       let ptr := mload(0x40)
       calldatacopy(ptr, 0, calldatasize)
-      let result := delegatecall(gas, implementation, ptr, calldatasize, 0, 0)
+      let result := delegatecall(gas, impl, ptr, calldatasize, 0, 0)
       let size := returndatasize
       returndatacopy(ptr, 0, size)
 
