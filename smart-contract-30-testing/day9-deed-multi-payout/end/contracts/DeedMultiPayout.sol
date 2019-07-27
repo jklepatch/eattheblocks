@@ -5,8 +5,8 @@ contract DeedMultiPayout {
   address payable public beneficiary;
   uint public earliest;
   uint public amount;
-  uint constant public PAYOUTS = 10;
-  uint constant public INTERVAL = 10;
+  uint constant public PAYOUTS = 4;
+  uint constant public INTERVAL = 1;
   uint public paidPayouts;
   
   constructor(
@@ -22,11 +22,11 @@ contract DeedMultiPayout {
     }
   
   function withdraw() public {
-    require(msg.sender == beneficiary, 'beneficiary only');
+    require(msg.sender == lawyer, 'lawyer only');
     require(now >= earliest, 'too early');
     require(paidPayouts < PAYOUTS, 'no payout left');
     
-    uint elligiblePayouts = (now - earliest) / INTERVAL;
+    uint elligiblePayouts = 1 + (now - earliest) / INTERVAL;
     uint duePayouts = elligiblePayouts - paidPayouts;
     duePayouts = duePayouts + paidPayouts > PAYOUTS ? PAYOUTS - paidPayouts : duePayouts;
     paidPayouts += duePayouts;
