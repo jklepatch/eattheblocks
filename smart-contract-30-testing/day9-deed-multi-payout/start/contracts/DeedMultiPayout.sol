@@ -22,7 +22,7 @@ contract DeedMultiPayout {
     }
   
   function withdraw() public {
-    require(msg.sender == beneficiary, 'beneficiary only');
+    require(msg.sender == lawyer, 'lawyer only');
     require(now >= earliest, 'too early');
     require(paidPayouts < PAYOUTS, 'no payout left');
     
