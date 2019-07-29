@@ -2,6 +2,16 @@ const Voting = artifacts.require('Voting');
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const assertError = async (promise, error) => {
+  try {
+    await promise;
+  } catch(e) {
+    assert(e.message.includes(error))
+    return;
+  }
+  assert(false);
+}
+
 contract('Voting', (accounts) => {
   let voting = null;
   const admin = accounts[0];
@@ -34,18 +44,15 @@ contract('Voting', (accounts) => {
   });
 
   it('should NOT let non-admin create ballot', async () => {
-    try {
-      await voting.createBallot(
+    assertError(
+      voting.createBallot(
         'Ballot2',
         ['choice1', 'choice2', 'choice3'], 
         10, 
         {from: nonVoter}
-      );
-    } catch(e) {
-      assert(e.message.includes('only admin'));
-      return;
-    }
-    assert(false);
+      ),
+      'only admin'
+    );
   });
 
   it('should NOT let non-voters vote', async () => {
@@ -55,13 +62,10 @@ contract('Voting', (accounts) => {
       10, 
       {from: admin}
     );
-    try {
-      await voting.vote(1, 1, {from: nonVoter});
-    } catch(e) {
-      assert(e.message.includes('only voters can vote'));
-      return;
-    }
-    assert(false);
+    assertError(
+      voting.vote(1, 1, {from: nonVoter}),
+      'only voters can vote'
+    );
   });
 
   it('should NOT let voters vote after end of ballot', async () => {
@@ -71,14 +75,11 @@ contract('Voting', (accounts) => {
       1, 
       {from: admin}
     );
-    try {
-      await sleep(1001);
-      await voting.vote(2, 1, {from: voter1});
-    } catch(e) {
-      assert(e.message.includes('can only vote until ballot end date'));
-      return;
-    }
-    assert(false);
+    await sleep(1001);
+    assertError(
+     voting.vote(2, 1, {from: voter1}),
+      'can only vote until ballot end date'
+    );
   });
 
   it('should NOT let voters vote twice', async () => {
@@ -88,14 +89,11 @@ contract('Voting', (accounts) => {
       2, 
       {from: admin}
     );
-    try {
-      await voting.vote(3, 1, {from: voter1});
-      await voting.vote(3, 1, {from: voter1});
-    } catch(e) {
-      assert(e.message.includes('voter can only vote once for a ballot'));
-      return;
-    }
-    assert(false);
+    await voting.vote(3, 1, {from: voter1});
+    assertError(
+      voting.vote(3, 1, {from: voter1}),
+      'voter can only vote once for a ballot'
+    );
   });
 
   it('should vote', async () => {

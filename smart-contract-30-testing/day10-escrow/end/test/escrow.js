@@ -1,5 +1,15 @@
 const Escrow = artifacts.require('Escrow');
 
+const assertError = async (promise, error) => {
+  try {
+    await promise;
+  } catch(e) {
+    assert(e.message.includes(error))
+    return;
+  }
+  assert(false);
+}
+
 contract('Escrow', (accounts) => {
   let escrow = null;
   const lawyer = accounts[0];
@@ -16,44 +26,32 @@ contract('Escrow', (accounts) => {
   });
 
   it('should NOT deposit if transfer exceed total escrow amount', async () => {
-    try {
-      await escrow.deposit({from: payer, value: 1000});
-    } catch(e) {
-      assert(e.message.includes('Cant send more than escrow amount'));
-      return;
-    }
-    assert(false);
+    assertError(
+      escrow.deposit({from: payer, value: 1000}),
+      'Cant send more than escrow amount'
+    );
   });
 
   it('should NOT deposit if not sending from payer', async () => {
-    try {
-      await escrow.deposit({from: accounts[5]});
-    } catch(e) {
-      assert(e.message.includes('Sender must be the payer'));
-      return;
-    }
-    assert(false);
+    assertError(
+      escrow.deposit({from: accounts[5]});
+      'Sender must be the payer'
+    );
   });
 
   it('should NOT release if full amount not received', async () => {
-    try {
-      await escrow.release({from: lawyer});
-    } catch(e) {
-      assert(e.message.includes('cannot release funds before full amount is sent'));
-      return;
-    }
-    assert(false);
+    assertError(
+      escrow.release({from: lawyer}),
+      'cannot release funds before full amount is sent'
+    );
   });
 
   it('should NOT release if not lawyer', async () => {
     await escrow.deposit({from: payer, value: 100}); //We are missing 100 wei
-    try {
+    assertError(
       await escrow.release({from: payer});
-    } catch(e) {
-      assert(e.message.includes('only lawyer can release funds'));
-      return;
-    }
-    assert(false);
+      'only lawyer can release funds'
+    );
   });
 
   it('should release', async () => {

@@ -145,8 +145,9 @@ contract('DAO', (accounts) => {
     const balanceBefore = await web3.eth.getBalance(accounts[8]);
     await dao.withdrawEther(10, accounts[8]);
     const balanceAfter = await web3.eth.getBalance(accounts[8]);
-    //To fix: toNumber() is not a function??
-    assert(balanceAfter.sub(balanceBefore).toNumber() === 10);
+    balanceAfterBN = web3.utils.toBN(balanceAfter);
+    balanceBeforeBN = web3.utils.toBN(balanceBefore);
+    assert(balanceAfterBN.sub(balanceBeforeBN).toNumber() === 10);
   });
 
   it('Should NOT withdraw ether if not admin', async () => {
