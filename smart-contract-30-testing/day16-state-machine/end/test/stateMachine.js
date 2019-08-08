@@ -1,6 +1,6 @@
 const StateMachine = artifacts.require('StateMachine');
+const timeHelper = require('ganache-time-traveler');
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms)); 
 const assertError = async (promise, error) => {
   try {
     await promise;
@@ -101,7 +101,8 @@ contract('StateMachine', (accounts) => {
     const balanceBefore = web3.utils.toBN(
       await web3.eth.getBalance(lender)
     );
-    await sleep(2000);
+    //await sleep(2000);
+    timeHelper.advanceTime(2);
     await stateMachine.reimburse({
       from: borrower,
       value: 11
