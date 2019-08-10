@@ -1,4 +1,4 @@
-const EventContract = artifacts.require('EventContract');
+const Lottery = artifacts.require('Lottery');
 const timeHelper = require('ganache-time-traveler');
 
 const assertError = async (promise, error) => {
@@ -11,9 +11,10 @@ const assertError = async (promise, error) => {
   assert(false);
 }
 
-contract('EventContract', (accounts) => {
-  let eventContract = null;
+contract('Lottery', (accounts) => {
+  let lottery = null;
   before(async () => {
-    eventContract = await EventContract.deployed();
+    lottery = await Lottery.deployed();
   });
 });
+  
