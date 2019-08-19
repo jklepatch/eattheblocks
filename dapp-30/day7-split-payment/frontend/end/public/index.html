@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="bundle.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>Split Payment</h1>
+
+          <form id="send">
+            <h2>Send</h2>
+            <div class="form-group">
+              <label for="send-to">To</label>
+              <input id="send-to" type="text" class="form-control"></input>
+            </div>
+            <div class="form-group">
+              <label for="send-amount">Amount</label>
+              <input id="send-amount" type="text" class="form-control"></input>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <div>
+            <p id="send-result"></p>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

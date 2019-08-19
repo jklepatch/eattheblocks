@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="web3.js"></script>
+    <script src="bundle.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>Simple storage</h1>
+          <form id="setData">
+            <div class="form-group">
+              <label for="setDataInput">Set data (number)</label>
+              <input id="setDataInput" type="number" class="form-control"></input>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          <div>Data: <span id="data"></span></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

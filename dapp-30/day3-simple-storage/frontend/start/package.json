@@ -1,0 +1,14 @@
+{
+  "name": "day3-simple-storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "static-server public"
+  },
+  "author": "",
+  "license": "ISC"
+}
