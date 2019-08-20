@@ -8,8 +8,8 @@ class Tasks extends Component {
   }
 
   componentDidMount() {
-    const Todo = this.props.drizzle.contracts.ToDo;
-    const tasksKey = Todo.methods['getTasks'].cacheCall();
+    const ToDo = this.props.drizzle.contracts.ToDo;
+    const tasksKey = ToDo.methods['getTasks'].cacheCall();
     this.setState({tasksKey});
   }
 
@@ -35,14 +35,15 @@ class Tasks extends Component {
           checked={!!task.done}
         />
       </td>
-      <td>{task.completeDate != '0' ? formatDate(task.completeDate) : ''}</td>
+      <td>{task.completeDate !== '0' ? formatDate(task.completeDate) : ''}</td>
     </tr>
   );
 
   render() {
-    const { Todo } = this.props.drizzleState.contracts;
+    const { ToDo } = this.props.drizzleState.contracts;
     const { tasksKey } = this.state;
-    const tasks = Todo.getTasks[tasksKey];
+    //const tasks = ToDo.getTasks[tasksKey];
+    const tasks = null;
     return (
       <div className="card">
         <div className="row">
@@ -64,7 +65,7 @@ class Tasks extends Component {
                 </tr>
               </thead>
               <tbody id="tasks">
-                {tasks && tasks.value.map((task) => renderTask(task))}
+                {tasks && tasks.value.map((task) => this.renderTask(task))}
               </tbody>
             </table>
           </div>

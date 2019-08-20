@@ -38,7 +38,7 @@ class NewTask extends Component {
         <div className="row">
           <form id="new-task" className="col-sm-12" onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label for="task-content">Content</label>
+              <label htmlFor="task-content">Content</label>
               <input 
                 id="task-content" 
                 type="text" 
@@ -46,7 +46,7 @@ class NewTask extends Component {
                 onChange={(e) => this.handleChange('content', e)} />
             </div>
             <div className="form-group">
-              <label for="task-author">Author</label>
+              <label htmlFor="task-author">Author</label>
               <input 
                 id="task-author" 
                 type="text" 
