@@ -1,4 +1,4 @@
-var simpleStorageABI = [
+const simpleStorageABI = [
   {
     "constant": false,
     "inputs": [
@@ -30,33 +30,36 @@ var simpleStorageABI = [
     "signature": "0x6d4ce63c"
   }
 ];
-var simpleStorageAddress = '0x63569cbe2609D35f8822B6217737922537785C5d';
-var web3 = new Web3('http://localhost:9545');
-var simpleStorage = new web3.eth.Contract(simpleStorageABI, simpleStorageAddress);
+const simpleStorageAddress = '0x63569cbe2609D35f8822B6217737922537785C5d';
+const web3 = new Web3('http://localhost:9545');
+const simpleStorage = new web3.eth.Contract(simpleStorageABI, simpleStorageAddress);
 
 document.addEventListener('DOMContentLoaded', () => {
-  var $setData = document.getElementById('setData');
-  var $data = document.getElementById('data');
-  var accounts = [];
+  const $setData = document.getElementById('setData');
+  const $data = document.getElementById('data');
+  let accounts = [];
 
   web3.eth.getAccounts()
   .then(_accounts => {
     accounts = _accounts;
-    return simpleStorage.methods.get().call();
-  })
-  .then(result => {
-    $data.innerHTML = result;
   });
 
-  $setData.addEventListener('submit', (e) => {
+  const getData = () => {
+    simpleStorage.methods
+      .get()
+      .call()
+      .then(result => {
+        $data.innerHTML = result;
+      })
+  };
+  getData();
+
+  $setData.addEventListener('submit', e => {
     e.preventDefault();
-    var data = e.target.elements[0].value;
-    simpleStorage.methods.set(data).send({from: accounts[0]})
-    .then(result => {
-      return simpleStorage.methods.get().call();
-    })
-    .then(result => {
-      $data.innerHTML = result;
-    });
+    const data = e.target.elements[0].value;
+    simpleStorage.methods
+      .set(data)
+      .send({from: accounts[0]})
+      .then(getData);
   });
 });
