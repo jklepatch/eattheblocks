@@ -1,28 +1,20 @@
 
 # Index
 
-## T
+## Big Number
 
-### Truffle
-* Introduction to Truffle framework - Day 1 / Tests
-* Introduction to testing with Truffle - Day 1 / Tests
-* Run test in Truffle - Day 1 / Tests
-* Generate an empty Truffle project with CLI - Day 1 / Tests 
-* Testing read-only functions with Truffle - Day 2 / Tests
+* Introduction to Big Number library (BN) - Day 4 / Tests
 
-## G
+## Gas
 
 * Introduction to Gas: Day 11 / Smart contract - part IV
+* Gas limit: Day 4 / smart contract
 
-## R
-
-### Remix
+## Remix
 
 * Intro to Remix - Day 1 / Smart contract
 * Call functions in Remix - Day 2 / Smart contract
 * Send transaction in Remix - Day 3 / Smart contract
-
-## S
 
 ## Solidity
 
@@ -30,10 +22,19 @@
 * Read-only functions with Solidity - Day 2 / Smart contract
 * Write Solidity functions that can store and modify data in the Blockchain - Day 3 / smart contract - part I
 * Difference between read-only and transaction functions in Solidity - Day 3 / Smart contract - part II
+* Introduction to Array - Day 4 / smart contract
+* Introduction to testing arrays - Day 4 / Tests
 
-## W
+## Truffle
 
-### Web3
+* Introduction to Truffle framework - Day 1 / Tests
+* Introduction to testing with Truffle - Day 1 / Tests
+* Run test in Truffle - Day 1 / Tests
+* Generate an empty Truffle project with CLI - Day 1 / Tests 
+* Testing read-only functions with Truffle - Day 2 / Tests
+
+## Web3
+
 * Introduction to Web3 - Day 1 / Frontend 
 * Instantiate contract with Web3 - Day 1 / Frontend 
 * Get accounts info from Web3 - Day 1 / Frontend 
@@ -77,7 +78,7 @@
 
 ---
 
-## Day 3: Simple sotrage
+## Day 3: Simple storage
 
 ### Smart contract
 
@@ -91,6 +92,23 @@
 ### Frontend
 
 * Send transactions with Web3 to modify values in smart contract
+
+---
+
+## Day 4: Advanced storage
+
+### Smart contract
+
+* Introduction to Solidity arrays
+* Gas Limit
+
+### Testing
+
+* Introduction to Big Number library (bn.js)
+* Testing Solidity arrays
+* Refactor tests with before() hooks
+
+### Frontend
 
 ## Day 10: Escrow
 
