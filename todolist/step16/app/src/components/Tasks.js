@@ -15,11 +15,16 @@ class Tasks extends Component {
 
   toggleDone = (id) => {
     const Todo = this.props.drizzle.contracts.ToDo;
-    Todo
+    const txId = Todo
       .methods['toggleDone']
-      .cacheSend({
-        from: this.props.drizzleState.accounts[0]
-      });
+      .cacheSend(
+        id,
+        {
+          from: this.props.drizzleState.accounts[0],
+          gas: 200000
+        }
+      );
+    this.setState({txId});
   }
 
   renderTask = (task) => (
@@ -35,15 +40,33 @@ class Tasks extends Component {
           checked={!!task.done}
         />
       </td>
-      <td>{task.completeDate !== '0' ? formatDate(task.completeDate) : ''}</td>
+      <td>{task.dateComplete !== '0' ? formatDate(task.dateComplete) : ''}</td>
     </tr>
   );
 
   render() {
     const { ToDo } = this.props.drizzleState.contracts;
+    const { transactions, transactionStack } = this.props.drizzleState;
+    const txHash = transactionStack[this.state.txId];
     const { tasksKey } = this.state;
-    //const tasks = ToDo.getTasks[tasksKey];
-    const tasks = null;
+
+    //Raw values from smart contract
+    let _tasks = ToDo.getTasks[tasksKey];
+    //Format these values into usable array of tasks
+    const tasks = [];
+    if(_tasks && _tasks.value) {
+      for(let [i, _] of _tasks.value[0]) {
+        const hexToUtf8 = this.props.drizzle.web3.utils.hexToUtf8;
+        tasks.push({
+          id: _tasks.value[0][i],
+          date: _tasks.value[1][i],
+          content: hexToUtf8(_tasks.value[2][i]), 
+          author: hexToUtf8(_tasks.value[3][i]), 
+          done: _tasks.value[4][i],
+          dateComplete: _tasks.value[5][i]
+         });
+      }
+    }
     return (
       <div className="card">
         <div className="row">
@@ -65,10 +88,13 @@ class Tasks extends Component {
                 </tr>
               </thead>
               <tbody id="tasks">
-                {tasks && tasks.value.map((task) => this.renderTask(task))}
+                {tasks && tasks.map((task) => this.renderTask(task))}
               </tbody>
             </table>
           </div>
+          <p>
+            {txHash ? `Transaction status: ${transactions[txHash] && transactions[txHash].status}` : null}
+          </p>
         </div>
       </div>
     );

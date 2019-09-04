@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import { Drizzle, generateStore } from 'drizzle';
-import { DrizzleContext } from 'drizzle-react';
+import { Drizzle, generateStore } from '@drizzle/store';
+import { DrizzleContext } from '@drizzle/react-plugin';
 import drizzleOptions from './drizzleOptions';
 import LoadingComponent from './components/LoadingComponent';
 import Header from './components/Header';

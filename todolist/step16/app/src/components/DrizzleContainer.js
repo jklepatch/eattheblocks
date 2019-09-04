@@ -1,5 +1,5 @@
 import React from 'react';
-import { DrizzleContext } from 'drizzle-react';
+import { DrizzleContext } from '@drizzle/react-plugin';
 
 const Container = (Component) => props => (
   <DrizzleContext.Consumer>

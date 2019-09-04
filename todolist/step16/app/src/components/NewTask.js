@@ -15,12 +15,15 @@ class NewTask extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { drizzle, drizzleState } = this.props;
-    const { content, author } = this.state;
-    const { Todo } = this.drizzle.contracts;
-    const txId = Todo
+    let { content, author } = this.state;
+    const { ToDo } = this.props.drizzle.contracts;
+    content = drizzle.web3.utils.utf8ToHex(content);
+    author = drizzle.web3.utils.utf8ToHex(author);
+    const txId = ToDo
       .methods['createTask']
       .cacheSend(content, author, {
-        from: drizzleState.accounts[0]
+        from: drizzleState.accounts[0],
+        gas: 200000
       });
     this.setState({txId});
   }
