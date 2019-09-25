@@ -1,14 +1,44 @@
-import EtherWallet from '../build/contracts/EtherWallet.json';
 import Web3 from 'web3';
+import EtherWallet from '../build/contracts/EtherWallet.json';
 
-const web3 = new Web3('http://localhost:9545');
-const deploymentKey = Object.keys(EtherWallet.networks)[0];
-const etherWallet = new web3.eth.Contract(
-  EtherWallet.abi, 
-  EtherWallet.networks[deploymentKey].address
-);
+let web3;
+let EtherWallet;
 
-document.addEventListener('DOMContentLoaded', () => {
+const initWeb3 = () => {
+  return new Promise((resolve, reject) => {
+    if(typeof window.ethereum !== 'undefined') {
+      const web3 = new Web3(window.ethereum);
+      window.ethereum.enable()
+        .then(() => {
+          resolve(
+            new Web3(window.ethereum)
+          );
+        })
+        .catch(e => {
+          reject(e);
+        });
+      return;
+    }
+    if(typeof window.web3 !== 'undefined') {
+      return resolve(
+        new Web3(window.web3.currentProvider)
+      );
+    }
+    resolve(new Web3('http://localhost:9545'));
+  });
+};
+
+const initContract = async () => {
+  const networkId = await web3.eth.net.getId();
+  return new web3.eth.Contract(
+    EtherWallet.abi, 
+    EtherWallet
+      .networks[networkId]
+      .address
+  );
+};
+
+const initApp = () => {
   const $deposit = document.getElementById('deposit');
   const $depositResult = document.getElementById('deposit-result');
   const $send = document.getElementById('send');
@@ -20,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
   .then(_accounts => {
     accounts = _accounts;
   });
-
 
   const refreshBalance = () => {
     etherWallet.methods
@@ -62,5 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
         $sendResult.innerHTML = `Ooops... there was an error while trying to send ether from the contract...`;
       });
   });
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+  initWeb3()
+    .then(_web3 => {
+      web3 = _web3;
+      return initContract();
+    })
+    .then(_crud => {
+      crud = _crud;
+      initApp(); 
+    })
+    .catch(e => console.log(e.message));
 });

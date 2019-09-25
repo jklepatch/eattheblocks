@@ -1,14 +1,23 @@
-
 # Index
 
 ## Big Number
 
 * Introduction to Big Number library (BN) - Day 4 / Tests
 
+## Deployment
+
+* Deployment to Ropsten (public testnet) and Mainnet - Day 5 / Frontend
+* Using a faucet to get fake Ether on Ropsten
+
 ## Gas
 
 * Introduction to Gas: Day 11 / Smart contract - part IV
 * Gas limit: Day 4 / smart contract
+
+## Metamask
+
+* Introduction to Metamask - Day 4 / Frontend
+* Synchronize Metamask with Ganache - Day 4 / Frontend
 
 ## Remix
 
@@ -22,8 +31,10 @@
 * Read-only functions with Solidity - Day 2 / Smart contract
 * Write Solidity functions that can store and modify data in the Blockchain - Day 3 / smart contract - part I
 * Difference between read-only and transaction functions in Solidity - Day 3 / Smart contract - part II
-* Introduction to Array - Day 4 / smart contract
+* Introduction to Array - Day 4 / Smart contract
 * Introduction to testing arrays - Day 4 / Tests
+* Introduction to structs - Day 5 / Smart contract - part I
+* Testing errors - Day 5 / Tests
 
 ## Truffle
 
@@ -39,6 +50,10 @@
 * Instantiate contract with Web3 - Day 1 / Frontend 
 * Get accounts info from Web3 - Day 1 / Frontend 
 * Read values from a smart contract, with Web3 - Day 2 / Frontend
+
+## Webpack & ES6
+
+* Use Webpack & ES6 to build a Dapp - Day 4 / Frontend 
 
 ---
 
@@ -109,6 +124,29 @@
 * Refactor tests with before() hooks
 
 ### Frontend
+
+* Use Webpack & ES6 to build Dapp 
+* Introduction to Metamask
+* Synchronize Metamask to Ganache
+
+---
+
+## Day 5: Crud 
+
+### Smart contract
+
+* Solidity structs
+
+### Testing
+
+* Test errors
+
+### Frontend
+
+* Deployment to Ropsten & Mainnet
+* Using a faucet to get fake Ether on Ropsten
+
+---
 
 ## Day 10: Escrow
 

@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "web3": "^1.0.0-beta.35",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.2.1",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.4.1"
