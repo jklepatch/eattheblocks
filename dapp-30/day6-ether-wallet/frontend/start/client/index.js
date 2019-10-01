@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
       web3 = _web3;
       return initContract();
     })
-    .then(_crud => {
-      crud = _crud;
+    .then(_etherWallet => {
+      etherWallet = _etherWallet;
       initApp(); 
     })
     .catch(e => console.log(e.message));
