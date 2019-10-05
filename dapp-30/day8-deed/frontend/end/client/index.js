@@ -1,8 +1,8 @@
 import Web3 from 'web3';
-import Wallet from '../build/contracts/Wallet.json';
+import Deed from '../build/contracts/Deed.json';
 
 let web3;
-let wallet;
+let deed;
 
 const initWeb3 = () => {
   return new Promise((resolve, reject) => {
@@ -31,8 +31,8 @@ const initWeb3 = () => {
 const initContract = async () => {
   const networkId = await web3.eth.net.getId();
   return new web3.eth.Contract(
-    Wallet.abi, 
-    Wallet
+    Deed.abi, 
+    Deed
       .networks[networkId]
       .address
   );
@@ -50,7 +50,7 @@ const initApp = () => {
   });
 
   const refreshBalance = () => {
-    web3.eth.getBalance(wallet.options.address)
+    web3.eth.getBalance(deed.options.address)
     .then(balance => {
       $balance.innerHTML = balance;
     });
@@ -58,7 +58,7 @@ const initApp = () => {
 
   $widthdraw.addEventListener('submit', (e) => {
     e.preventDefault();
-    wallet.methods
+    deed.methods
       .withdraw()
       .then(result => {
         $widthdrawResult.innerHTML = `Withdrawal succesful!`;
@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
       web3 = _web3;
       return initContract();
     })
-    .then(_wallet => {
-      wallet = _wallet;
+    .then(_deed => {
+      deed = _deed;
       initApp(); 
     })
     .catch(e => console.log(e.message));
