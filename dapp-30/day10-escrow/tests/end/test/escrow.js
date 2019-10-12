@@ -10,19 +10,17 @@ const assertError = async (promise, error) => {
   assert(false);
 }
 
-contract('Escrow', (accounts) => {
+contract('Escrow', accounts => {
   let escrow = null;
-  const lawyer = accounts[0];
-  const payer = accounts[1];
-  const recipient = accounts[2];
+  const [lawyer, payer, recipient] = accounts;
   before(async () => {
     escrow = await Escrow.deployed();
   });
 
   it('should deposit', async () => {
     await escrow.deposit({from: payer, value: 900});
-    const escrowBalance = web3.utils.toBN(await web3.eth.getBalance(escrow.address));
-    assert(escrowBalance.toNumber() === 900);
+    const escrowBalance = parseInt(await web3.eth.getBalance(escrow.address));
+    assert(escrowBalance === 900);
   });
 
   it('should NOT deposit if transfer exceed total escrow amount', async () => {
@@ -34,7 +32,7 @@ contract('Escrow', (accounts) => {
 
   it('should NOT deposit if not sending from payer', async () => {
     assertError(
-      escrow.deposit({from: accounts[5]});
+      escrow.deposit({from: accounts[5]}),
       'Sender must be the payer'
     );
   });
@@ -49,7 +47,7 @@ contract('Escrow', (accounts) => {
   it('should NOT release if not lawyer', async () => {
     await escrow.deposit({from: payer, value: 100}); //We are missing 100 wei
     assertError(
-      await escrow.release({from: payer});
+      escrow.release({from: payer}),
       'only lawyer can release funds'
     );
   });
