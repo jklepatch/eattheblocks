@@ -4,23 +4,16 @@ import { getWeb3 } from './utils.js';
 
 class App extends Component {
   state = {
-    web3: null,
+    web3: undefined,
     accounts: [],
-    currentAccount: null,
-    contract: null,
-    balance: null
+    currentAccount: undefined,
+    contract: undefined,
+    balance: undefined
   }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     const web3 = await getWeb3();
     const accounts = await web3.eth.getAccounts();
-
-    setInterval(async () => {
-      const accounts = await web3.eth.getAccounts()
-      if (accounts[0] !== this.state.accounts[0]) {
-        this.setState({accounts}, this.updateBalance);
-      }
-    }, 1000);
 
     const networkId = await web3.eth.net.getId();
     const deployedNetwork = Escrow.networks[networkId];
@@ -32,13 +25,13 @@ class App extends Component {
     this.setState({ web3, accounts, contract }, this.updateBalance);
   };
 
-  updateBalance = async () => {
+  async updateBalance() {
     const { contract } = this.state;
     const balance = await contract.methods.balanceOf().call();
     this.setState({ balance });
   };
 
-  deposit = async e => {
+  async deposit(e) {
     e.preventDefault();
     const { contract, accounts } = this.state;
     await contract.methods.deposit().send({
@@ -48,7 +41,7 @@ class App extends Component {
     this.updateBalance();
   }
 
-  release = async () => {
+  async release() {
     const { contract, accounts } = this.state;
     await contract.methods.release().send({
       from: accounts[0], 

@@ -5,7 +5,7 @@ module.exports = function(deployer, _network, accounts) {
     Escrow, 
     accounts[1], //payer
     accounts[2], //payee 
-    100,
+    1000,
     {from: accounts[0]}
   );
 };
