@@ -1,16 +1,5 @@
+const { expectRevert, time } = require('@openzeppelin/test-helpers');
 const Voting = artifacts.require('Voting');
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const assertError = async (promise, error) => {
-  try {
-    await promise;
-  } catch(e) {
-    assert(e.message.includes(error))
-    return;
-  }
-  assert(false);
-}
 
 contract('Voting', (accounts) => {
   let voting = null;
@@ -44,7 +33,7 @@ contract('Voting', (accounts) => {
   });
 
   it('should NOT let non-admin create ballot', async () => {
-    assertError(
+    await expectRevert(
       voting.createBallot(
         'Ballot2',
         ['choice1', 'choice2', 'choice3'], 
@@ -62,7 +51,7 @@ contract('Voting', (accounts) => {
       10, 
       {from: admin}
     );
-    assertError(
+    await expectRevert(
       voting.vote(1, 1, {from: nonVoter}),
       'only voters can vote'
     );
@@ -75,8 +64,8 @@ contract('Voting', (accounts) => {
       1, 
       {from: admin}
     );
-    await sleep(1001);
-    assertError(
+    await time.increase(1001);
+    await expectRevert(
      voting.vote(2, 1, {from: voter1}),
       'can only vote until ballot end date'
     );
@@ -90,7 +79,7 @@ contract('Voting', (accounts) => {
       {from: admin}
     );
     await voting.vote(3, 1, {from: voter1});
-    assertError(
+    await expectRevert(
       voting.vote(3, 1, {from: voter1}),
       'voter can only vote once for a ballot'
     );
@@ -106,7 +95,7 @@ contract('Voting', (accounts) => {
     await voting.vote(4, 1, {from: voter1});
     await voting.vote(4, 1, {from: voter2});
     await voting.vote(4, 2, {from: voter3});
-    await sleep(2001);
+    await time.increase(2001);
     const result = await voting.results(4);
     assert(result[1].votes === '2');
     assert(result[2].votes === '1');
