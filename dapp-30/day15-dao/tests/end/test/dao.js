@@ -1,15 +1,5 @@
+const { expectRevert, time } = require('@openzeppelin/test-helpers');
 const DAO = artifacts.require('DAO');
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms)); 
-const assertError = async (promise, error) => {
-  try {
-    await promise;
-  } catch(e) {
-    assert(e.message.includes(error))
-    return;
-  }
-  assert(false);
-}
 
 contract('DAO', (accounts) => {
   let dao = null;
@@ -47,8 +37,8 @@ contract('DAO', (accounts) => {
   });
 
   //it('Should NOT accept contribution after contributionTime', async () => {
-  //  await sleep(2001); 
-  //  await assertError(
+  //  await time.increase(2001); 
+  //  await expectRevert(
   //    dao.contribute({from: investor1, value: 100}), 
   //    'cannot contribute after contributionEnd'
   //  );
@@ -65,14 +55,14 @@ contract('DAO', (accounts) => {
   });
 
   it('Should NOT create proposal if not from investor', async () => {
-    assertError(
+    expectRevert(
       dao.createProposal('proposal 2', 10, accounts[8], {from: accounts[5]}),
       'only investors'
     );
   });
 
   it('Should NOT create proposal if amount too big', async () => {
-    assertError(
+    expectRevert(
       dao.createProposal('proposal 2', 1000, accounts[8], {from: investor1}),
       'amount too big'
     );
@@ -83,22 +73,22 @@ contract('DAO', (accounts) => {
   });
 
   it('Should NOT vote if not investor', async () => {
-    assertError(
+    expectRevert(
       dao.vote(0, {from: accounts[8]}), 
       'only investors'
     );
   });
 
   it('Should NOT vote if already voted', async () => {
-    assertError(
+    expectRevert(
       dao.vote(0, {from: investor1}), 
       'investor can only vote once for a proposal'
     );
   });
 
   it('Should NOT vote if after proposal end date', async () => {
-    await sleep(2001); 
-    assertError(
+    await time.increase(2001); 
+    expectRevert(
       dao.vote(0, {from: investor1}), 
       'investor can only vote once for a proposal'
     );
@@ -109,7 +99,7 @@ contract('DAO', (accounts) => {
     //total shares = 600. 50% * 600 = 300
     await dao.vote(1, {from: investor1}); //100 shares
     await dao.vote(1, {from: investor3}); //300 shares
-    await sleep(2001);
+    await time.increase(2001);
     await dao.executeProposal(1);
   });
 
@@ -117,15 +107,15 @@ contract('DAO', (accounts) => {
     await dao.createProposal('proposal 3', 100, accounts[8], {from: investor1});
     //total shares = 600. 50% * 600 = 300
     await dao.vote(2, {from: investor1}); //100 shares
-    await sleep(2001);
-    await assertError(
+    await time.increase(2001);
+    await expectRevert(
       dao.executeProposal(2),
       'cannot execute proposal with votes # below quorum'
     );
   });
 
   it('Should NOT execute proposal twice', async () => {
-    await assertError(
+    await expectRevert(
       dao.executeProposal(1),
       'cannot execute proposal already executed'
     );  
@@ -135,7 +125,7 @@ contract('DAO', (accounts) => {
     await dao.createProposal('proposal 4', 50, accounts[8], {from: investor1});
     await dao.vote(3, {from: investor1});
     await dao.vote(3, {from: investor2});
-    assertError(
+    expectRevert(
       dao.executeProposal(3),
       'cannot execute proposal before end date'
     );
@@ -151,14 +141,14 @@ contract('DAO', (accounts) => {
   });
 
   it('Should NOT withdraw ether if not admin', async () => {
-    assertError(
+    expectRevert(
       dao.withdrawEther(10, accounts[8], {from: investor1}),
       'not enough availableFunds'
     );
   });
 
   it('Should NOT withdraw ether if trying to withdraw too much', async () => {
-    assertError(
+    expectRevert(
       dao.withdrawEther(1000, accounts[8]),
       'not enough availableFunds'
     );

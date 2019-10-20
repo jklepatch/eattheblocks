@@ -1,15 +1,5 @@
+const { expectRevert, time } = require('@openzeppelin/test-helpers');
 const DAO = artifacts.require('DAO');
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms)); 
-const assertError = async (promise, error) => {
-  try {
-    await promise;
-  } catch(e) {
-    assert(e.message.includes(error))
-    return;
-  }
-  assert(false);
-}
 
 contract('DAO', (accounts) => {
   let dao = null;

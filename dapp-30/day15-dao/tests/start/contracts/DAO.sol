@@ -99,7 +99,12 @@ contract DAO {
     Proposal storage proposal = proposals[proposalId];
     require(now >= proposal.end, 'cannot execute proposal before end date');
     require(proposal.executed == false, 'cannot execute proposal already executed');
-    require((proposal.votes / totalShares) * 100 >= quorum, 'cannot execute proposal with votes # below quorum');
+    //BUG 1: Because of integer division,
+    //the require condition failed even when we had enough votes
+    //require((proposal.votes / totalShares) * 100 >= quorum, 'cannot execute proposal with votes # below quorum');
+    require(((proposal.votes * 100) / totalShares) >= quorum, 'cannot execute proposal with votes # below quorum');
+    //BUG2: Added this missing code, otherwise can execute same proposal twice
+    proposal.executed = true;
     _transferEther(proposal.amount, proposal.recipient);
   }
 
