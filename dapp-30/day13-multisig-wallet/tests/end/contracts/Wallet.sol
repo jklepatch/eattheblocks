@@ -10,7 +10,7 @@ contract Wallet {
     uint approvals;
     bool sent;
   }
-  mapping(uint => Transfer) transfers;
+  mapping(uint => Transfer) public transfers;
   uint nextId;
   mapping(address => mapping(uint => bool)) approvals;
 

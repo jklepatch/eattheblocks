@@ -9,8 +9,9 @@ contract('Wallet', (accounts) => {
 
   it('should create transfers', async () => {
     await wallet.createTransfer(100, accounts[5], {from: accounts[0]});
-    //We havent created a getter for transfers struct, so cant make assertion
-    //on new transfer created :(
+    const transfer = await wallet.transfers(0);
+    assert(transfer.id.toNumber() === 0);
+    assert(transfer.amount.toNumber() === 100);
   });
 
   it('should NOT create transfers if sender is not approver', async () => {
