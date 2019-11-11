@@ -1,15 +1,5 @@
-const Lottery = artifacts.require('Lottery');
-const timeHelper = require('ganache-time-traveler');
-
-const assertError = async (promise, error) => {
-  try {
-    await promise;
-  } catch(e) {
-    assert(e.message.includes(error))
-    return;
-  }
-  assert(false);
-}
+const { expectRevert, time } = require('@openzeppelin/test-helpers');
+const Lottery = artifacts.require('Lottery.sol');
 
 const balances = async addresses => {
   const balanceResults = await Promise.all(addresses.map(address =>
@@ -19,16 +9,13 @@ const balances = async addresses => {
 };
 
 contract('Lottery', (accounts) => {
-  let lottery = null;
-  let snapshotId = null;
-  before(async () => {
-    lottery = await Lottery.deployed();
-    const snapShot = await timeHelper.takeSnapshot();
-    snapshotId = snapShot['result'];
+  let lottery;
+  beforeEach(async () => {
+    lottery = await Lottery.new(2);
   });
   
   it('Should NOT create bet if not admin', async () => {
-    await assertError(
+    await expectRevert(
       lottery.createBet(5, 5, {from: accounts[1]}),
       'only admin'
     );
@@ -36,16 +23,13 @@ contract('Lottery', (accounts) => {
 
   it('Should NOT create bet if state not idle', async () => {
     await lottery.createBet(5, 5),
-    await assertError(
+    await expectRevert(
       lottery.createBet(5, 5),
       'current state does not allow this'
     );
   });
 
   it('Should create a bet', async () => {
-    await timeHelper.revertToSnapShot(snapshotId);
-    const snapShot = await timeHelper.takeSnapshot();
-    snapshotId = snapShot['result'];
     await lottery.createBet(10, 20);
     const betCount = await lottery.betCount();
     const betSize = await lottery.betSize();
@@ -56,23 +40,19 @@ contract('Lottery', (accounts) => {
   });
 
   it('Should NOT bet if not in state BETTING', async () => {
-    await timeHelper.revertToSnapShot(snapshotId);
-    await assertError( 
+    await expectRevert( 
       lottery.bet({value: 100, from: accounts[1]}),
       'current state does not allow this'
     );
   });
 
   it('Should NOT bet if not sending exact bet amount', async () => {
-    await timeHelper.revertToSnapShot(snapshotId);
-    const snapShot = await timeHelper.takeSnapshot();
-    snapshotId = snapShot['result'];
     await lottery.createBet(3, 20);
-    await assertError( 
+    await expectRevert( 
       lottery.bet({value: 100, from: accounts[1]}),
       'can only bet exactly the bet size'
     );
-    await assertError( 
+    await expectRevert( 
       lottery.bet({value: 15, from: accounts[2]}),
       'can only bet exactly the bet size'
     );
@@ -80,8 +60,6 @@ contract('Lottery', (accounts) => {
 
   it('Should bet', async () => {
     const players = [accounts[1], accounts[2], accounts[3]];
-
-    await timeHelper.revertToSnapShot(snapshotId);
     await lottery.createBet(3, web3.utils.toWei('1', 'ether'));
 
     const balancesBefore = await balances(players); 
@@ -91,7 +69,6 @@ contract('Lottery', (accounts) => {
       gasPrice: 1
     })))
     const balancesAfter = await balances(players); 
-    //const result = players.some((_player, i) => balancesBefore[i].sub(balancesAfter[i]).toNumber() ===  294);
     const result = players.some((_player, i) => {
       const gasUsed = web3.utils.toBN(txs[i].receipt.gasUsed);
       const expected = web3.utils.toBN(web3.utils.toWei('1.94', 'ether'));
@@ -101,7 +78,7 @@ contract('Lottery', (accounts) => {
   });
 
   it('Should NOT cancel if not betting', async () => {
-    await assertError(
+    await expectRevert(
       lottery.cancel({from: accounts[1]}),
       'current state does not allow this'
     );
@@ -109,13 +86,14 @@ contract('Lottery', (accounts) => {
 
   it('Should NOT cancel if not admin', async () => {
     await lottery.createBet(3, 100);
-    await assertError(
+    await expectRevert(
       lottery.cancel({from: accounts[1]}),
       'only admin'
     );
   });
 
   it('Should cancel', async () => {
+    await lottery.createBet(3, 100);
     await lottery.cancel();
     const state = await lottery.currentState();
     assert(state.toNumber() === 0);
