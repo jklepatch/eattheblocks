@@ -1,15 +1,5 @@
-const EventContract = artifacts.require('EventContract');
-const timeHelper = require('ganache-time-traveler');
-
-const assertError = async (promise, error) => {
-  try {
-    await promise;
-  } catch(e) {
-    assert(e.message.includes(error))
-    return;
-  }
-  assert(false);
-}
+const { expectRevert, time } = require('@openzeppelin/test-helpers');
+const EventContract = artifacts.require('EventContract.sol');
 
 contract('EventContract', (accounts) => {
   let eventContract = null;
@@ -19,7 +9,7 @@ contract('EventContract', (accounts) => {
 
   it('Should NOT create an event if date if before now', async () => {
     const date =  parseInt((new Date()).getTime() / 1000 - 10);
-    await assertError(
+    await expectRevert(
       eventContract.createEvent('event1', date, 5, 10),
       'can only organize event at a future date'
     );
@@ -27,7 +17,7 @@ contract('EventContract', (accounts) => {
 
   it('Should NOT create an event if less than 1 ticket', async () => {
     const date =  parseInt((new Date()).getTime() / 1000 + 100);
-    await assertError(
+    await expectRevert(
       eventContract.createEvent('event1', date, 5, 0),
       'can only organize event with at least 1 ticket'
     );
@@ -39,29 +29,29 @@ contract('EventContract', (accounts) => {
   });
 
   it('Should NOT buy a ticket if event does not exist', async () => {
-    await assertError(
+    await expectRevert(
       eventContract.buyTicket(1, 1),
       'this event does not exist'
     );
   });
 
   it('Should NOT buy a ticket if event is not active', async () => {
-    await assertError(
+    await expectRevert(
       eventContract.buyTicket(0, 1),
       'event must be active'
     );
   });
 
   it('Should NOT buy a ticket if wrong amount of ether sent', async () => {
-    timeHelper.advanceTime(100);
-    await assertError(
+    time.increase(100);
+    await expectRevert(
       eventContract.buyTicket(0, 1),
       'ether sent must be equal to total ticket cost'
     );
   });
 
   it('Should NOT buy a ticket if not enough ticket left', async () => {
-    await assertError(
+    await expectRevert(
       eventContract.buyTicket(0, 3, {value: 15}),
       'not enough ticket left'
     );
@@ -77,7 +67,7 @@ contract('EventContract', (accounts) => {
   });
 
   it('Should NOT transfer ticket it not enough tickets', async () => {
-    await assertError(
+    await expectRevert(
       eventContract.transferTicket(0, 3, accounts[5]),
       'not enough ticket'
     );

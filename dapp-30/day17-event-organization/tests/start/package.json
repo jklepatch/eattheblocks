@@ -14,5 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "ganache-time-traveler": "^1.0.2"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.3"
   }
 }
