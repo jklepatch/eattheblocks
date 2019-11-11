@@ -2,12 +2,11 @@ const { expectRevert, time } = require('@openzeppelin/test-helpers');
 const DAO = artifacts.require('DAO');
 
 contract('DAO', (accounts) => {
-  let dao = null;
-  const investor1 = accounts[1];
-  const investor2 = accounts[2];
-  const investor3 = accounts[3];
+  let dao;
+
+  const [investor1, investor2, investor3] = [accounts[1], accounts[2], accounts[3]];
   before(async () => {
-    dao = await DAO.deployed();
+    dao = await DAO.new(2, 2, 50);
   });
 
   //Note: in the contract we could add a require statement to reject
@@ -36,13 +35,13 @@ contract('DAO', (accounts) => {
     assert(availableFunds.toNumber() === 600);
   });
 
-  //it('Should NOT accept contribution after contributionTime', async () => {
-  //  await time.increase(2001); 
-  //  await expectRevert(
-  //    dao.contribute({from: investor1, value: 100}), 
-  //    'cannot contribute after contributionEnd'
-  //  );
-  //});
+  it('Should NOT accept contribution after contributionTime', async () => {
+    await time.increase(2001); 
+    await expectRevert(
+      dao.contribute({from: investor1, value: 100}), 
+      'cannot contribute after contributionEnd'
+    );
+  });
 
   it('Should create proposal', async () => {
     await dao.createProposal('proposal 1', 100, accounts[8], {from: investor1});

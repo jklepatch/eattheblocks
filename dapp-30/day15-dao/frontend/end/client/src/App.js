@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Voting from './contracts/Voting.json';
+import DAO from './contracts/DAO.json';
 import { getWeb3 } from './utils.js';
 
 function App() {
@@ -14,9 +14,9 @@ function App() {
       const web3 = await getWeb3();
       const accounts = await web3.eth.getAccounts();
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = Voting.networks[networkId];
+      const deployedNetwork = DAO.networks[networkId];
       const contract = new web3.eth.Contract(
-        Voting.abi,
+        DAO.abi,
         deployedNetwork && deployedNetwork.address,
       );
       const admin = await contract.methods
@@ -43,6 +43,7 @@ function App() {
     );
   }
 
+    /* TO CHANGE
   useEffect(() => {
     if(isReady()) {
       updateBallots();
@@ -82,6 +83,7 @@ function App() {
     await contract.methods
       .addVoters(voters)
       .send({from: accounts[0]});
+    //await updateCurrentTransfer();
   };
 
   async function vote(e, ballotId) {
@@ -95,9 +97,9 @@ function App() {
   };
 
   function isFinished(ballot) {
-    const now = (new Date()).getTime();
-    const ballotEnd =  (new Date(parseInt(ballot.end) * 1000)).getTime();
-    return (ballotEnd - now) > 0 ? false : true;
+    const now = new Date().getTime();
+    const ballotEnd =  new Date(parseInt(ballot.end) * 1000);
+    return (ballotEnd > now) > 0 ? false : true;
   }
 
   if (!isReady()) {
@@ -130,22 +132,6 @@ function App() {
             </form>
           </div>
         </div>
-
-        <hr/>
-
-        <div className="row">
-          <div className="col-sm-12">
-            <h2>Add voters</h2>
-            <form onSubmit={e => addVoters(e)}>
-              <div className="form-group">
-                <label htmlFor="voters">Voters</label>
-                <input type="text" className="form-control" id="voters" />
-              </div>
-              <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
-          </div>
-        </div>
-
         <hr/>
         </>
       ) : null}
@@ -214,6 +200,8 @@ function App() {
       </div>
     </div>
   );
+
+            */
 }
 
 export default App;

@@ -64,6 +64,22 @@ function App() {
           </form>
         </div>
       </div>
+
+      <hr/>
+
+      <div className="row">
+        <div className="col-sm-12">
+          <h2>Add voters</h2>
+          <form>
+            <div className="form-group">
+              <label htmlFor="voters">Voters</label>
+              <input type="text" className="form-control" id="voters" />
+            </div>
+            <button type="submit" className="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+
       <hr/>
 
       <div className="row">
