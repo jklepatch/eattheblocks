@@ -1,4 +1,4 @@
-const { expectRevert, expectEvent } = require('@openzeppelin/test-helpers');
+const { expectRevert, expectEvent, time } = require('@openzeppelin/test-helpers');
 const ICO = artifacts.require('ICO.sol');
 const Token = artifacts.require('ERC20Token.sol');
 
@@ -28,14 +28,16 @@ contract('ICO', accounts => {
   });
 
   it('should start the ICO', async () => {
+    const start = parseInt((new Date()).getTime() / 1000);
     const duration = 100;
     const price = 1;
     const availableTokens = web3.utils.toWei('100');
     const minPurchase = web3.utils.toWei('10'); 
     const maxPurchase = web3.utils.toWei('20');
+    time.increaseTo(start);
     await ico.start(duration, price, availableTokens, minPurchase, maxPurchase); 
 
-    const expectedEnd = Math.floor(((new Date()).getTime() / 1000)) + duration;
+    const expectedEnd = start +duration;
     const end = await ico.end();
     const actualPrice = await ico.price();
     const actualAvailableTokens = await ico.availableTokens();
@@ -66,12 +68,15 @@ contract('ICO', accounts => {
   });
 
   context('Sale started', () => {
+    let start;
     const duration = 100;
     const price = 2;
     const availableTokens = web3.utils.toWei('30');
     const minPurchase = web3.utils.toWei('1'); 
     const maxPurchase = web3.utils.toWei('10');
     beforeEach(async() => {
+     start = parseInt((new Date()).getTime() / 1000);
+      time.increaseTo(start);
       ico.start(duration, price, availableTokens, minPurchase, maxPurchase); 
     });
 
@@ -115,77 +120,57 @@ contract('ICO', accounts => {
       );
     });
 
+    it(
+      'full ico process: investors buy, admin release and withdraw', 
+      async () => {
+      const [investor1, investor2] = [accounts[1], accounts[2]];
+      const [amount1, amount2] = [
+        web3.utils.toBN(web3.utils.toWei('1')),
+        web3.utils.toBN(web3.utils.toWei('10')),
+      ];
+      await ico.whitelist(investor1);
+      await ico.whitelist(investor2);
+      await ico.buy({from: investor1, value: amount1}); 
+      await ico.buy({from: investor2, value: amount2}); 
+
+      await expectRevert(
+        ico.release({from: investor1}),
+        'only admin'
+      );
+
+      await expectRevert(
+        ico.release(),
+        'ICO must have ended'
+      );
+
+      await expectRevert(
+        ico.withdraw(accounts[9], 10),
+        'ICO must have ended'
+      );
+
+      time.increaseTo(start + duration + 10);
+      await ico.release();
+      const balance1 = await token.balanceOf(investor1);
+      const balance2 = await token.balanceOf(investor2);
+      assert(balance1.eq(amount1.mul(web3.utils.toBN(price))));
+      assert(balance2.eq(amount2.mul(web3.utils.toBN(price))));
+
+      await expectRevert(
+        ico.withdraw(accounts[9], 10, {from: investor1}),
+        'only admin'
+      );
+
+      const balanceContract = web3.utils.toBN(
+        await web3.eth.getBalance(token.address)
+      );
+      const balanceBefore = web3.utils.toBN(
+        await web3.eth.getBalance(accounts[9])
+      );
+      await ico.withdraw(accounts[9], balanceContract);
+      const balanceAfter = web3.utils.toBN(
+        await web3.eth.getBalance(accounts[9])
+      );
+      assert(balanceAfter.sub(balanceBefore).eq(balanceContract));
+    });
   });
-
-
-
-  //it('should return the correct balance', async () => {
-  //  const balance = await token.balanceOf(accounts[0]);
-  //  assert(balance.eq(initialBalance));
-  //});
-
-  //it('should transfer token', async () => {
-  //  const transfer = web3.utils.toBN(100);
-  //  const receipt = await token.transfer(accounts[1], transfer);
-  //  const balance1 = await token.balanceOf(accounts[0]);
-  //  const balance2 = await token.balanceOf(accounts[1]);
-  //  const initialBalance = web3.utils.toBN(web3.utils.toWei('1'));
-  //  assert(balance1.eq(initialBalance.sub(transfer)));
-  //  expectEvent(receipt, 'Transfer', {
-  //    from: accounts[0],
-  //    to: accounts[1],
-  //    tokens: transfer
-  //  });
-  //});
-
-  //it('should NOT transfer token if balance too low', async () => {
-  //  await expectRevert(
-  //    token.transfer(accounts[1], web3.utils.toWei('10')),
-  //    'token balance too low'
-  //  );
-  //});
-
-  //it('should transfer token when approved', async () => {
-  //  let allowance;
-  //  let receipt;
-  //  const _100 = web3.utils.toBN(100);
-
-  //  allowance = await token.allowance(accounts[0], accounts[1]);
-  //  assert(allowance.isZero());
-
-  //  receipt = await token.approve(accounts[1], _100);
-  //  allowance = await token.allowance(accounts[0], accounts[1]);
-  //  assert(allowance.eq(_100));
-  //  expectEvent(receipt, 'Approval', {
-  //    tokenOwner: accounts[0],
-  //    spender: accounts[1],
-  //    tokens: _100
-  //  });
-
-  //  receipt = await token.transferFrom(
-  //    accounts[0], 
-  //    accounts[2], 
-  //    _100, 
-  //    {from: accounts[1]}
-  //  );
-  //  allowance = await token.allowance(accounts[0], accounts[1]);
-  //  const balance1 = await token.balanceOf(accounts[0]);
-  //  const balance2 = await token.balanceOf(accounts[2]);
-  //  assert(balance1.eq(initialBalance.sub(_100)));
-  //  assert(balance2.eq(_100));
-  //  assert(allowance.isZero());
-  //  expectEvent(receipt, 'Transfer', {
-  //    from: accounts[0],
-  //    to: accounts[2],
-  //    tokens: _100
-  //  });
-  //});
-
-  //it('should NOT transfer token if not approved', async () => {
-  //  await expectRevert(
-  //    token.transferFrom(accounts[0], accounts[1], 10),
-  //    'allowance too low'
-  //  );
-  //});
-
 });
