@@ -53,87 +53,30 @@ function App() {
   }, [accounts, contract, web3, admin]);
 
   async function updateShares() {
-    const shares = await contract.methods
-      .shares(accounts[0])
-      .call();
-    setShares(shares);
   }
 
   async function updateProposals() {
-    const nextProposalId = parseInt(await contract.methods
-      .nextProposalId()
-      .call());
-
-    const proposals = [];
-    for(let i = 0; i < nextProposalId; i++) { 
-      const [proposal, hasVoted] = await Promise.all([
-        contract.methods.proposals(i).call(),
-        contract.methods.votes(accounts[0], i).call()
-      ]);
-      proposals.push({...proposal, hasVoted});
-    }
-    setProposals(proposals);
   }
 
   async function executeProposal(proposalId) {
-    await contract.methods
-      .executeProposal(proposalId)
-      .send({from: accounts[0]});
-    await updateProposals();
   };
 
   async function withdrawEther(e) {
-    e.preventDefault();
-    const amount = e.target.elements[0].value;
-    const to = e.target.elements[1].value;
-    await contract.methods
-      .withdraw(amount, to)
-      .send({from: accounts[0]});
   };
 
   async function contribute(e) {
-    e.preventDefault();
-    const amount = e.target.elements[0].value;
-    await contract.methods
-      .contribute()
-      .send({from: accounts[0], value: amount});
-    await updateShares();
   };
 
   async function redeemShares(e) {
-    e.preventDefault();
-    const amount = e.target.elements[0].value;
-    await contract.methods
-      .redeemShares(amount)
-      .send({from: accounts[0]});
-    await updateShares();
   };
 
   async function transferShares(e) {
-    e.preventDefault();
-    const amount = e.target.elements[0].value;
-    await contract.methods
-      .redeemShares(amount)
-      .send({from: accounts[0]});
-    await updateShares();
   };
 
   async function vote(ballotId) {
-    await contract.methods
-      .vote(ballotId)
-      .send({from: accounts[0]});
-    await updateProposals();
   };
 
   async function createProposal(e) {
-    e.preventDefault();
-    const name = e.target.elements[0].value;
-    const amount = e.target.elements[1].value;
-    const recipient = e.target.elements[2].value;
-    await contract.methods
-      .createProposal(name, amount, recipient)
-      .send({from: accounts[0]});
-    await updateProposals();
   };
 
   function isFinished(proposal) {
