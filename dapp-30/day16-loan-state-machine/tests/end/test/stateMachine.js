@@ -30,7 +30,6 @@ contract('StateMachine', (accounts) => {
     );
   });
 
-
   it('Should accept fund', async () => {
     const balanceBefore = web3.utils.toBN(
       await web3.eth.getBalance(borrower)
