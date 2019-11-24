@@ -2,6 +2,7 @@ pragma solidity ^0.5.4;
 
 contract EventContract {
   struct Event {
+    uint id;
     address admin;
     string name;
     uint date;
@@ -22,6 +23,7 @@ contract EventContract {
     require(date > now, 'can only organize event at a future date');
     require(ticketCount > 0, 'can only organize event with at least 1 ticket');
     events[nextId] = Event(
+      nextId,
       msg.sender, 
       name, 
       date, 
@@ -34,7 +36,7 @@ contract EventContract {
 
   function buyTicket(uint id, uint quantity) 
     eventExist(id) 
-    eventActive(id)
+    eventNotStarted(id)
     payable
     external {
     Event storage _event = events[id];
@@ -46,7 +48,7 @@ contract EventContract {
 
   function transferTicket(uint eventId, uint quantity, address to) 
     eventExist(eventId)
-    eventActive(eventId)
+    eventNotStarted(eventId)
     external {
       require(tickets[msg.sender][eventId] >= quantity, 'not enough ticket');
       tickets[msg.sender][eventId] -= quantity;
@@ -57,8 +59,8 @@ contract EventContract {
     require(events[id].date != 0, 'this event does not exist');
     _;
   }
-  modifier eventActive(uint id) {
-    require(now >= events[id].date, 'event must be active');
+  modifier eventNotStarted(uint id) {
+    require(now < events[id].date, 'event has expired');
     _;
   }
 }
