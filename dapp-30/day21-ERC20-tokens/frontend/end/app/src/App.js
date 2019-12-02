@@ -1,25 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 import { Drizzle } from '@drizzle/store';
-import { DrizzleContext } from "@drizzle/react-plugin";
-import LoadingContainer from './LoadingContainer.js';
-
-//import 'node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { drizzleReactHooks } from "@drizzle/react-plugin";
 
 import drizzleOptions from "./drizzleOptions";
-import MyContainer from "./MyContainer";
+import LoadingContainer from './LoadingContainer.js';
 import TokenMetadata from './TokenMetadata.js';
+import TokenWallet from './TokenWallet.js';
 
 const drizzle = new Drizzle(drizzleOptions);
+const { DrizzleProvider } = drizzleReactHooks;
 
 function App() {
   return (
     <div className="container">
       <h1>ERC20 Token</h1>
-      <DrizzleContext.Provider drizzle={drizzle}>
+      <DrizzleProvider drizzle={drizzle}>
         <LoadingContainer>
           <TokenMetadata />
+          <TokenWallet />
         </LoadingContainer>
-      </DrizzleContext.Provider>
+      </DrizzleProvider>
     </div>
   );
 }

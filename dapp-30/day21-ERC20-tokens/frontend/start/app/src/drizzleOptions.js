@@ -6,7 +6,7 @@ const options = {
     customProvider: new Web3("ws://localhost:9545"),
   },
   contracts: [],
-  events: {},
+  events: {}
 };
 
 export default options;

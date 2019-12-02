@@ -1,6 +1,6 @@
 pragma solidity ^0.5.6;
 
-interface ERC20Interface {
+contract ERC20Interface {
     function transfer(address to, uint tokens) public returns (bool success);
     function transferFrom(address from, address to, uint tokens) public returns (bool success);
     function balanceOf(address tokenOwner) public view returns (uint balance);
@@ -16,7 +16,7 @@ contract ERC20Token is ERC20Interface {
     string public name;
     string public symbol;
     uint8 public decimals;
-    uint public totalSupply;
+    uint public _totalSupply;
     mapping(address => uint) public balances;
     mapping(address => mapping(address => uint)) public allowed;
     
@@ -24,17 +24,17 @@ contract ERC20Token is ERC20Interface {
         string memory _name,
         string memory _symbol,
         uint8 _decimals,
-        uint _totalSupply)
+        uint _initialSupply)
         public {
             name = _name;
             symbol = _symbol;
             decimals = _decimals;
-            totalSupply = _totalSupply;
+            _totalSupply = _initialSupply;
             balances[msg.sender] = _totalSupply;
         }
         
     function transfer(address to, uint value) public returns(bool) {
-        require(balances[msg.sender] >= value);
+        require(balances[msg.sender] >= value, 'token balance too low');
         balances[msg.sender] -= value;
         balances[to] += value;
         emit Transfer(msg.sender, to, value);
@@ -43,16 +43,16 @@ contract ERC20Token is ERC20Interface {
     
     function transferFrom(address from, address to, uint value) public returns(bool) {
         uint allowance = allowed[from][msg.sender];
-        require(balances[msg.sender] >= value && allowance >= value);
+        require(allowance >= value, 'allowance too low');
+        require(balances[from] >= value, 'token balance too low');
         allowed[from][msg.sender] -= value;
-        balances[msg.sender] -= value;
+        balances[from] -= value;
         balances[to] += value;
-        emit Transfer(msg.sender, to, value);
+        emit Transfer(from, to, value);
         return true;
     }
     
     function approve(address spender, uint value) public returns(bool) {
-        require(spender != msg.sender);
         allowed[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
         return true;
@@ -65,5 +65,8 @@ contract ERC20Token is ERC20Interface {
     function balanceOf(address owner) public view returns(uint) {
         return balances[owner];
     }
-    
+
+    function totalSupply() public view returns (uint) {
+      return _totalSupply;
+    }
 }
