@@ -47,48 +47,18 @@ function App() {
   }, [accounts, contract, web3]);
 
   async function updateGame() {
-    let gameId = parseInt(await contract.methods.gameId().call());
-    gameId = gameId > 0 ? gameId - 1 : gameId;
-    const game = await contract.methods.getGame(gameId).call();
-    setGame({id: game[0], bet: game[1], players: game[2], state: game[3]});
   }
 
   async function createGame(e) {
-    e.preventDefault();
-    const participant = e.target.elements[0].value;
-    const bet = e.target.elements[1].value;
-    await contract.methods
-      .createGame(participant)
-      .send({from: accounts[0], value: bet});
-    await updateGame();
   };
 
   async function joinGame() {
-    await contract.methods
-      .joinGame(game.id)
-      .send({from: accounts[0], value: game.bet});
-    await updateGame();
   };
 
   async function commitMove(e) {
-    e.preventDefault();
-    const select = e.target.elements[0];
-    const move = select.options[select.selectedIndex].value;
-    const salt = Math.floor(Math.random() * 1000);  
-    await contract.methods
-      .commitMove(game.id, move, salt)
-      .send({from: accounts[0]});
-    setMove({id: move, salt});
-    await updateGame();
   };
 
   async function revealMove(e) {
-    e.preventDefault();
-    await contract.methods
-      .revealMove(game.id, move.id, move.salt)
-      .send({from: accounts[0]});
-    setMove(undefined);
-    await updateGame();
   };
 
   if(typeof game.state === 'undefined') {
@@ -100,19 +70,14 @@ function App() {
       <h1 className="text-center">Rock Paper Scissors</h1>
 
       <p>State: {states[game.state]}</p>
-      {game.state === '1' ? (
-        <>
-          <p>Bet: {game.bet}</p>
-          <div>
-            <h2>Players</h2>
-            <ul>
-              {game.players.map(player => <li key={player}>{player}</li>)}
-            </ul>
-          </div>
-        </>
-      ) : null}
+      <p>Bet: {game.bet}</p>
+      <div>
+        <h2>Players</h2>
+        <ul>
+          {game.players.map(player => <li key={player}>{player}</li>)}
+        </ul>
+      </div>
 
-      {game.state === '0' ? (
         <div className="row">
           <div className="col-sm-12">
             <h2>Create Game</h2>
@@ -129,10 +94,7 @@ function App() {
             </form>
           </div>
         </div>
-      ) : null}
 
-      {game.state === '1' 
-       && game.players[1].toLowerCase() === accounts[0].toLowerCase() ? (
         <div className="row">
           <div className="col-sm-12">
             <h2>Bet</h2>
@@ -145,9 +107,7 @@ function App() {
               </button>
           </div>
         </div>
-      ) : null}
 
-      {game.state === '2' ? (
         <div className="row">
           <div className="col-sm-12">
             <h2>Commit move</h2>
@@ -164,9 +124,7 @@ function App() {
             </form>
           </div>
         </div>
-      ) : null}
 
-      {game.state === '3' ? (
         <div className="row">
           <div className="col-sm-12">
             <h2>Reveal move</h2>
@@ -179,7 +137,7 @@ function App() {
             </button>
           </div>
         </div>
-      ) : null}
+        
     </div>
   );
 }
