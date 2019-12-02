@@ -146,12 +146,7 @@ contract('RockPaperScissors', (accounts) => {
     const balanceP2Before = web3.utils.toBN(
       await web3.eth.getBalance(player2)
     );
-    const txCost = web3.utils.toBN(
-      await contract
-        .revealMove
-        .estimateGas(0, paper, salt2, {from: player2, gasPrice: 1})
-    );
-    await contract.revealMove(0, paper, salt2, {from: player2, gasPrice: 1});
+    const tx = await contract.revealMove(0, paper, salt2, {from: player2, gasPrice: 1});
     const game = await contract.games(0);
     const balanceP1After = web3.utils.toBN(
       await web3.eth.getBalance(player1)
@@ -162,7 +157,7 @@ contract('RockPaperScissors', (accounts) => {
     assert(balanceP1After.sub(balanceP1Before).isZero());
     assert(
       balanceP2After
-        .add(txCost)
+        .add(web3.utils.toBN(tx.receipt.gasUsed))
         .sub(balanceP2Before)
         .eq(oneEther.add(oneEther))
     );
