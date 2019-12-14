@@ -73,17 +73,16 @@ function App() {
   async function commitMove(e) {
     e.preventDefault();
     const select = e.target.elements[0];
-    const move = select.options[select.selectedIndex].value;
+    const moveId = select.options[select.selectedIndex].value;
     const salt = Math.floor(Math.random() * 1000);  
     await contract.methods
-      .commitMove(game.id, move, salt)
+      .commitMove(game.id, moveId, salt)
       .send({from: accounts[0]});
-    setMove({id: move, salt});
+    setMove({id: moveId, salt});
     await updateGame();
   };
 
-  async function revealMove(e) {
-    e.preventDefault();
+  async function revealMove() {
     await contract.methods
       .revealMove(game.id, move.id, move.salt)
       .send({from: accounts[0]});
@@ -155,9 +154,9 @@ function App() {
               <div className="form-group">
                 <label htmlFor="move">Move</label>
                 <select className="form-control" id="move">
-                  <option value="0">Rock</option>
-                  <option value="1">Paper</option>
-                  <option value="2">Scissors</option>
+                  <option value="1">Rock</option>
+                  <option value="2">Paper</option>
+                  <option value="3">Scissors</option>
                 </select>
               </div>
               <button type="submit" className="btn btn-primary">Submit</button>
@@ -171,7 +170,7 @@ function App() {
           <div className="col-sm-12">
             <h2>Reveal move</h2>
             <button 
-              onClick={e => revealMove()}
+              onClick={() => revealMove()}
               type="submit" 
               className="btn btn-primary"
             >
