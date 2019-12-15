@@ -1,0 +1,19 @@
+{
+  "name": "94-web3-tutorial-contract-instance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.0.27",
+    "web3": "^1.2.4"
+  }
+}
