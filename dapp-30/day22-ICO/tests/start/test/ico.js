@@ -1,4 +1,4 @@
-const { expectRevert, expectEvent, time } = require('@openzeppelin/test-helpers');
+const { expectRevert, time } = require('@openzeppelin/test-helpers');
 const ICO = artifacts.require('ICO.sol');
 const Token = artifacts.require('ERC20Token.sol');
 

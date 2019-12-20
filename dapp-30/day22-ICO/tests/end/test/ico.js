@@ -1,4 +1,4 @@
-const { expectRevert, expectEvent, time } = require('@openzeppelin/test-helpers');
+const { expectRevert, time } = require('@openzeppelin/test-helpers');
 const ICO = artifacts.require('ICO.sol');
 const Token = artifacts.require('ERC20Token.sol');
 
@@ -27,17 +27,19 @@ contract('ICO', accounts => {
     assert(totalSupply.eq(initialBalance));
   });
 
+  //test a bit flaky because of testing of `expectedEnd`. 
+  //you can comment out the assertion on this variable to fix this
   it('should start the ICO', async () => {
-    const start = parseInt((new Date()).getTime() / 1000);
     const duration = 100;
     const price = 1;
     const availableTokens = web3.utils.toWei('100');
     const minPurchase = web3.utils.toWei('10'); 
     const maxPurchase = web3.utils.toWei('20');
+    const start = parseInt((new Date()).getTime() / 1000);
     time.increaseTo(start);
     await ico.start(duration, price, availableTokens, minPurchase, maxPurchase); 
 
-    const expectedEnd = start +duration;
+    const expectedEnd = start + duration;
     const end = await ico.end();
     const actualPrice = await ico.price();
     const actualAvailableTokens = await ico.availableTokens();
@@ -75,9 +77,15 @@ contract('ICO', accounts => {
     const minPurchase = web3.utils.toWei('1'); 
     const maxPurchase = web3.utils.toWei('10');
     beforeEach(async() => {
-     start = parseInt((new Date()).getTime() / 1000);
+      start = parseInt((new Date()).getTime() / 1000);
       time.increaseTo(start);
-      ico.start(duration, price, availableTokens, minPurchase, maxPurchase); 
+      await ico.start(
+        duration, 
+        price, 
+        availableTokens, 
+        minPurchase, 
+        maxPurchase
+      ); 
     });
 
     it('should NOT let non-investors buy', async () => {
@@ -120,7 +128,7 @@ contract('ICO', accounts => {
       );
     });
 
-    it(
+    it.only(
       'full ico process: investors buy, admin release and withdraw', 
       async () => {
       const [investor1, investor2] = [accounts[1], accounts[2]];
@@ -148,6 +156,7 @@ contract('ICO', accounts => {
         'ICO must have ended'
       );
 
+      // Admin release tokens to investors
       time.increaseTo(start + duration + 10);
       await ico.release();
       const balance1 = await token.balanceOf(investor1);
@@ -160,6 +169,7 @@ contract('ICO', accounts => {
         'only admin'
       );
 
+      // Admin withdraw ether that was sent to the ico
       const balanceContract = web3.utils.toBN(
         await web3.eth.getBalance(token.address)
       );
