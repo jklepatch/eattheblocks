@@ -1,0 +1,18 @@
+{
+  "name": "18-blockies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "static-server public"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "static-server": "^2.2.1"
+  },
+  "dependencies": {
+    "ethereum-blockies": "^0.1.1"
+  }
+}
