@@ -6,6 +6,7 @@ import drizzleOptions from "./drizzleOptions";
 import LoadingContainer from './LoadingContainer.js';
 import TokenMetadata from './TokenMetadata.js';
 import TokenWallet from './TokenWallet.js';
+import Admin from './Admin.js';
 
 const drizzle = new Drizzle(drizzleOptions);
 const { DrizzleProvider } = drizzleReactHooks;
@@ -18,6 +19,7 @@ function App() {
         <LoadingContainer>
           <TokenMetadata />
           <TokenWallet />
+          <Admin />
         </LoadingContainer>
       </DrizzleProvider>
     </div>

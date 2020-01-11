@@ -52,14 +52,6 @@ export default () => {
           method="approve"
         />
       </div>
-      <div>
-        <h2>Is approved for all</h2>
-        <ContractForm
-          drizzle={drizzle}
-          contract="ERC721Token"
-          method="isApprovedForAll"
-        />
-      </div>
     </div>
   );
 };
