@@ -74,7 +74,7 @@ contract('ERC721Token', accounts => {
     );
   });
 
-  it('transfer() should transfer', async () => {
+  it('transferFrom() should transfer', async () => {
     const tokenId = 0;
     const receipt = await token.transferFrom(admin, trader1, tokenId, {from: admin});
     const [balanceAdmin, balanceTrader, owner] = await Promise.all([

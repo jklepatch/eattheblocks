@@ -25,13 +25,13 @@ contract('ERC721Token', accounts => {
   it('should NOT transfer if not owner', async () => {
   });
 
-  //Wasn't able to make that test work :( see end code for explanation
+  //Bug here, skip this test :( see end code for explanation
   it.skip(
     'safeTransferFrom() should NOT transfer if recipient contract does not implement erc721recipient interface', 
     async () => {
   });
 
-  it('transfer() should transfer', async () => {
+  it('transferFrom() should transfer', async () => {
   });
 
   it('safeTransferFrom() should transfer', async () => {
