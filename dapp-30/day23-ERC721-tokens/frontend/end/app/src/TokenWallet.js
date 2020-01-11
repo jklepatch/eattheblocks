@@ -21,14 +21,6 @@ export default () => {
         />
       </div>
       <div>
-        <h2>Transfer</h2>
-        <ContractForm
-          drizzle={drizzle}
-          contract="ERC721Token"
-          method="transfer"
-        />
-      </div>
-      <div>
         <h2>Transfer from</h2>
         <ContractForm
           drizzle={drizzle}
