@@ -1,14 +1,6 @@
 pragma solidity ^0.5.8;
 pragma experimental ABIEncoderV2;
 
-contract Resolver {
-    function addr(bytes32 node) view external returns (address);
-}
-
-contract ENS {
-    function resolver(bytes32 node) view external returns (Resolver);
-}
-
 //1. Send tweet
 //2. Send private messages
 //3. Follow other people
@@ -17,12 +9,11 @@ contract ENS {
 contract Tweeter {
     struct Tweet {
         uint id;
-        address authorAddress;
-        string authorName;
+        address author;
         string content;
         uint createdAt;
     }
-
+    
     struct Message {
         uint id;
         string content;
@@ -37,7 +28,6 @@ contract Tweeter {
     mapping(address => mapping(address => bool)) private operators;
     uint private nextTweetId;
     uint private nextMessageId;
-    ENS public ens;
     
     event TweetSent (
         uint id,
@@ -53,23 +43,6 @@ contract Tweeter {
         address indexed to,
         uint createdAt
     );
-
-    constructor(address ensAddress) public {
-      ens = ENS(ensAddress);
-    }
-
-    function resolve(bytes32 _node) view public returns(address) {
-        Resolver resolver = ens.resolver(_node);
-        return resolver.addr(_node);
-    }
-
-    function reverseResolve(address _authorAddress) 
-      view 
-      public 
-      returns(string memory) {
-      //@Todo
-      return 'author name';
-    }
     
     function tweet(string calldata _content) external {
         _tweet(msg.sender, _content);
@@ -114,8 +87,7 @@ contract Tweeter {
             Tweet storage _tweet = tweets[i];
             _tweets[j] = Tweet(
                 _tweet.id, 
-                _tweet.authorAddress,
-                _tweet.authorName,
+                _tweet.author, 
                 _tweet.content, 
                 _tweet.createdAt
             );
@@ -136,8 +108,7 @@ contract Tweeter {
           Tweet storage _tweet = tweets[tweetIds[i]];
           _tweets[j] = Tweet(
               _tweet.id, 
-              _tweet.authorAddress, 
-              _tweet.authorName,
+              _tweet.author, 
               _tweet.content, 
               _tweet.createdAt
           );
@@ -147,20 +118,13 @@ contract Tweeter {
     }
     
     function _tweet(
-        address _authorAddress, 
+        address _from, 
         string memory _content) 
         internal
-        canOperate(_authorAddress) {
-        string memory authorName = reverseResolve(_authorAddress);
-        tweets[nextTweetId] = Tweet(
-          nextTweetId, 
-          _authorAddress, 
-          authorName, 
-          _content, 
-          now
-        );
-        tweetsOf[_authorAddress].push(nextTweetId);
-        emit TweetSent(nextTweetId, _authorAddress, _content, now);
+        canOperate(_from) {
+        tweets[nextTweetId] = Tweet(nextTweetId, _from, _content, now);
+        tweetsOf[_from].push(nextTweetId);
+        emit TweetSent(nextTweetId, _from, _content, now);
         nextTweetId++;
     }
         
