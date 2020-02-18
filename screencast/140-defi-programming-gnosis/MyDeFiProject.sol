@@ -1,24 +1,18 @@
 pragma solidity 0.5.0;
 
+import './IERC20.sol';
 import './IERC1155.sol';
+import './IConditionalTokens.sol';
 
-//With Remix
-import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol';
-import 'https://github.com/gnosis/conditional-tokens-contracts/blob/master/contracts/ConditionalTokens.sol';
-
-// With Truffle
-//import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-//import '@gnosis.pm/conditional-tokens-contract/contracts/ConditionalTokens.sol';
-
-contract MyDeFiProject is IERC1155 {
+contract MyDeFiProject is IERC1155TokenReceiver {
   IERC20 dai;
-  ConditionalTokens conditionalTokens;
+  IConditionalTokens conditionalTokens;
   address public oracle;
   mapping(bytes32 => mapping(uint => uint)) public tokenBalance; //balance of conditional tokens, indexed by questionId and indexSet 
 
   constructor(address _dai, address _conditionalTokens, address _oracle) public {
     dai = IERC20(_dai);
-    conditionalTokens = ConditionalTokens(_conditionalTokens);
+    conditionalTokens = IConditionalTokens(_conditionalTokens);
     oracle = _oracle;
   }
 
@@ -27,18 +21,18 @@ contract MyDeFiProject is IERC1155 {
     conditionalTokens.prepareCondition(
       oracle,     //Will provide outcome  
       questionId, //identify the bet 
-      2           //There are 2 outcome;
+      3           //There are 3 outcomes;
     );
 
     bytes32 conditionId = conditionalTokens.getConditionId(
       oracle, 
       questionId, 
-      2
+      3
     );
 
-    uint[] partition = new uint[](2);
+    uint[] memory partition = new uint[](2);
     partition[0] = 1; //0b001
-    partition[1] = 2; //0b010
+    partition[1] = 2; //0b110
     dai.approve(address(conditionalTokens), amount);
     conditionalTokens.splitPosition(
       dai,         //collateralToken 
@@ -56,11 +50,10 @@ contract MyDeFiProject is IERC1155 {
     bytes32 questionId, 
     uint indexSet,
     address to, 
-    bytes32 questionId, 
     uint amount) external {
+    require(msg.sender == admin, 'only admin');
     require(tokenBalance[questionId][indexSet] >=  amount, 'not enough tokens');
-    tokenBalance[questionId][0] -= amount;
-
+    tokenBalance[questionId][indexSet] -= amount;
 
     bytes32 conditionId = conditionalTokens.getConditionId(
       oracle, 
@@ -69,13 +62,13 @@ contract MyDeFiProject is IERC1155 {
     );
 
     bytes32 collectionId = conditionalTokens.getCollectionId(
-      bytes32(0) //parentCollectionId
+      bytes32(0), //parentCollectionId
       conditionId, 
       indexSet
     );
 
     uint positionId = conditionalTokens.getPositionId(
-      dai //collateral Token, 
+      dai, //collateral Token, 
       collectionId
     );
 

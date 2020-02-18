@@ -1,14 +1,17 @@
 pragma solidity ^0.5.0;
 
+import './IERC20.sol';
 import './IERC1155.sol';
+import './IConditionalTokens.sol';
 
-contract ConditionalTokensWallet is IERC1155 {
+contract ConditionalTokensWallet is ERC1155TokenReceiver {
   IERC20 dai;
-  ConditionalTokens conditionalTokens;
+  IConditionalTokens conditionalTokens;
+  address oracle;
 
   constructor(address _dai, address _conditionalTokens, address _oracle) public {
     dai = IERC20(_dai);
-    conditionalTokens = ConditionalTokens(_conditionalTokens);
+    conditionalTokens = IConditionalTokens(_conditionalTokens);
     oracle = _oracle;
   }
 
@@ -21,7 +24,8 @@ contract ConditionalTokensWallet is IERC1155 {
     );
   }
 
-  function transferDai(address to, address amount) external {
+  function transferDai(address to, uint amount) external {
+    require(msg.sender == admin, 'only admin');
     dai.transfer(to, amount);
   }
 

@@ -1,9 +1,31 @@
 pragma solidity ^0.5.0;
 
+contract IERC1155 {
+    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
+
+    event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values);
+
+    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
+
+    event URI(string value, uint256 indexed id);
+
+    function balanceOf(address owner, uint256 id) public view returns (uint256);
+
+    function balanceOfBatch(address[] memory owners, uint256[] memory ids) public view returns (uint256[] memory);
+
+    function setApprovalForAll(address operator, bool approved) external;
+
+    function isApprovedForAll(address owner, address operator) external view returns (bool);
+
+    function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes calldata data) external;
+
+    function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata values, bytes calldata data) external;
+}
+
 /**
     Note: The ERC-165 identifier for this interface is 0x4e2312e0.
 */
-interface ERC1155TokenReceiver {
+interface IERC1155TokenReceiver {
     /**
         @notice Handle the receipt of a single ERC1155 token type.
         @dev An ERC1155-compliant smart contract MUST call this function on the token recipient contract, at the end of a `safeTransferFrom` after the balance has been updated.        
