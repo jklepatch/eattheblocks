@@ -1,103 +1,133 @@
 pragma solidity 0.6.3;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import './ICToken.sol';
 
 contract Dex {
-  
-  //represent an ERC20 token.
-  struct Token {
-    bytes32 ticker; //3 letters that describt the token (ex: DAI). we dont use strings because they are hard to manipulate in Solidity
-    address tokenAddress;     //Address of  ERC20 token
-    address cTokenAddress;    //Address of cToken (Compound. ex: cDai, cBat, etc..)
-  }
-  
-  //Collections of tokens. tokens is to quickly find a specific token, and tokenList is to enumerate all tokens
-  mapping(bytes32 => Token) public tokens; 
-  bytes32[] public tokenList;
-  //balances of ERC20 tokens, by address (trader) and token (ex: 0x782442 => DAI => 20)
-  mapping(address => mapping(bytes32 => uint)) public balances;
-  //balances of ERC20 tokens, by token
-  mapping(bytes32 => uint) public totalBalances;
-  //address that has special permissions like adding new tokens
-  address public admin;
-  
-  constructor() public {
-    admin = msg.sender;
-  }
-  
-  
-  //add a token to the registry. Before we can trade a new token it needs to be added here
-  function addToken(
-    bytes32 ticker, 
-    address tokenAddress,
-    address cTokenAddress) 
-    onlyAdmin()
-    external {
-    tokens[ticker] = Token(ticker, tokenAddress, cTokenAddress);
-    for (uint i = 0; i < tokenList.length; i++) {
-      if(tokenList[i] == ticker) {
-        return;
-      }
+       
+    enum Side {
+        BUY,
+        SELL
     }
-    tokenList.push(ticker);
-  }
-
-  // traders deposit ERC20 tokens before trading. 
-  //Note: traders need to call approve() on the ERC20 token before calling deposit()
-  function deposit(
-    uint amount, 
-    bytes32 ticker) 
-    tokenExist(ticker)
-    external {
-    address tokenAddress = tokens[ticker].tokenAddress;
-    address cTokenAddress = tokens[ticker].cTokenAddress; 
-    IERC20(tokenAddress).transferFrom(msg.sender, address(this), amount);
-    IERC20(tokenAddress).approve(address(this), amount);
-    ICToken(cTokenAddress).mint(amount);
-    balances[msg.sender][ticker] += amount;
-  }
-
-  //traders withdraw ERC20 tokens after trading
-  function withdraw(
-    uint amount, 
-    bytes32 ticker, 
-    address to) 
-    tokenExist(ticker)
-    external {
-    require(balances[msg.sender][ticker] >= amount);
-    balances[msg.sender][ticker] -= amount;
-    Token storage token = tokens[ticker];
-    ICToken(token.cTokenAddress).redeemUnderlying(amount);
-    IERC20(token.tokenAddress).transfer(to, amount);
-  }
-  
-  //TOdo: finish this function
-  function withdrawProfit(address to) 
-    onlyAdmin()
-    external {
-    for (uint i = 0; i < tokenList.length; i++) {
-      Token storage token = tokens[tokenList[i]];
-      //todo:  create balance per token
-      //Step 1: getBalanceOfUnderlying
-      //Step 2: calculate difference between current erc20 balance and balance per token
-      //Step 3: redeem profits
-      //Step 4: send the profits
-      ICToken cToken = ICToken(token.cTokenAddress);
-      uint compoundTokenBalance = cToken.balanceOfUnderlying(address(this));
-      uint profits = compoundTokenBalance - totalBalances[token.ticker]; 
-      cToken.redeemUnderlying(profits);
-      IERC20(token.tokenAddress).transfer(to, profits);
+    
+    struct Token {
+        bytes32 ticker;
+        address tokenAddress;
     }
-  }
-  
-  modifier tokenExist(bytes32 ticker) {
-    require(tokens[ticker].tokenAddress != address(0), 'This token does not exist');
-    _;
-  }
-  
-  modifier onlyAdmin() {
-    require(msg.sender == admin, 'Only admin');
-    _;
-  }
+    
+    struct Order {
+        uint id;
+        Side side;
+        bytes32 ticker;
+        uint amount;
+        uint filled;
+        uint price;
+        uint date;
+    }
+    
+    mapping(bytes32 => Token) public tokens;
+    bytes32[] public tokenList;
+    mapping(address => mapping(bytes32 => uint)) public traderBalances;
+    mapping(bytes32 => mapping(uint => Order[])) public orderBook;
+    address public admin;
+    uint public nextOrderId;
+    bytes32 constant DAI = bytes32('DAI');
+    
+    constructor() public {
+        admin = msg.sender;
+    }
+    
+    function addToken(
+        bytes32 ticker,
+        address tokenAddress)
+        onlyAdmin()
+        external {
+        tokens[ticker] = Token(ticker, tokenAddress);
+        tokenList.push(ticker);
+    }
+    
+    function deposit(
+        uint amount,
+        bytes32 ticker)
+        tokenExist(ticker)
+        external {
+        IERC20(tokens[ticker].tokenAddress).transferFrom(
+            msg.sender,
+            address(this),
+            amount
+        );
+        traderBalances[msg.sender][ticker] += amount;
+    }
+    
+    function withdraw(
+        uint amount,
+        bytes32 ticker)
+        tokenExist(ticker)
+        external {
+        require(
+            traderBalances[msg.sender][ticker] >= amount,
+            'balance too low'
+        ); 
+        traderBalances[msg.sender][ticker] -= amount;
+        IERC20(tokens[ticker].tokenAddress).transfer(msg.sender, amount);
+    }
+    
+    function createLimitOrder(
+        bytes32 ticker,
+        uint amount,
+        uint price,
+        Side side)
+        tokenExist(ticker)
+        external {
+        require(ticker != DAI, 'cannot trade DAI');
+        if(side == Side.SELL) {
+            require(
+                traderBalances[msg.sender][ticker] >= amount, 
+                'token balance too low'
+            );
+        } else {
+            require(
+                traderBalances[msg.sender][DAI] >= amount * price,
+                'dai balance too low'
+            );
+        }
+        Order[] storage orders = orderBook[ticker][uint(side)];
+        orders.push(Order(
+            nextOrderId,
+            side,
+            ticker,
+            amount,
+            0,
+            price,
+            now
+        ));
+        
+        uint i = orders.length - 1;
+        while(i > 0) {
+            if(side == Side.BUY && orders[i - 1].price > orders[i].price) {
+                break;   
+            }
+            if(side == Side.SELL && orders[i - 1].price < orders[i].price) {
+                break;   
+            }
+            Order memory order = orders[i - 1];
+            orders[i - 1] = orders[i];
+            orders[i] = order;
+            i--;
+        }
+        nextOrderId++;
+    }
+    
+    modifier tokenExist(bytes32 ticker) {
+        require(
+            tokens[ticker].tokenAddress != address(0),
+            'this token does not exist'
+        );
+        _;
+    }
+    
+    modifier onlyAdmin() {
+        require(msg.sender == admin, 'only admin');
+        _;
+    }
 }
+
