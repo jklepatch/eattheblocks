@@ -1,4 +1,5 @@
 pragma solidity 0.6.3;
+pragma experimental ABIEncoderV2;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/math/SafeMath.sol';
@@ -50,6 +51,15 @@ contract Dex {
     
     constructor() public {
         admin = msg.sender;
+    }
+
+    function getOrders(
+      bytes32 ticker, 
+      Side side) 
+      external 
+      view
+      returns(Order[] memory) {
+      return orderBook[ticker][uint(side)];
     }
     
     function addToken(
@@ -196,10 +206,10 @@ contract Dex {
         }
     }
    
-   modifier tokenIsNotDai(bytes32 ticker) {
+    modifier tokenIsNotDai(bytes32 ticker) {
        require(ticker != DAI, 'cannot trade DAI');
        _;
-   }     
+    }     
     
     modifier tokenExist(bytes32 ticker) {
         require(
