@@ -54,6 +54,17 @@ contract('Dex', (accounts) => {
     assert(balance.toString() === amount); 
   });
 
+  it('should NOT deposit tokens if token does not exist', async () => {
+    await expectRevert(
+      dex.deposit(
+        web3.utils.toWei('1000'),
+        web3.utils.fromAscii('TOKEN-DOES-NOT-EXIST'),
+        {from: trader1}
+      ),
+      'this token does not exist'
+    );
+  });
+
   it('should withdraw tokens', async () => {
     const amount = web3.utils.toWei('100');
 
@@ -75,6 +86,17 @@ contract('Dex', (accounts) => {
     ]);
     assert(balanceDex.isZero());
     assert(balanceDai.toString() === web3.utils.toWei('1000')); 
+  });
+
+  it('should NOT withdraw tokens if token does not exist', async () => {
+    await expectRevert(
+      dex.withdraw(
+        web3.utils.toWei('1000'),
+        web3.utils.fromAscii('TOKEN-DOES-NOT-EXIST'),
+        {from: trader1}
+      ),
+      'this token does not exist'
+    );
   });
 
   it('should NOT withdraw tokens if balance too low', async () => {
