@@ -7,6 +7,11 @@ const Rep = artifacts.require('mocks/Rep.sol');
 const Zrx = artifacts.require('mocks/Zrx.sol');
 const Dex = artifacts.require('Dex.sol');
 
+const SIDE = {
+  BUY: 0,
+  SELL: 1
+};
+
 contract('Dex', (accounts) => {
   let dex, dai, bat, rep, zrx;
   const [trader1, trader2] = [accounts[1], accounts[2]];
@@ -29,14 +34,22 @@ contract('Dex', (accounts) => {
     ]);
 
     const amount = web3.utils.toWei('1000');
+    const seedTokenBalance = async (token, trader) => {
+      await token.faucet(trader, amount)
+      await token.approve(
+        dex.address, 
+        amount, 
+        {from: trader}
+      );
+    };
     await Promise.all(
-      [trader1, trader2].map(
-        trader => dai.faucet(trader, amount)
+      [dai, bat, rep, zrx].map(
+        token => seedTokenBalance(token, trader1) 
       )
     );
     await Promise.all(
-      [trader1, trader2].map(
-        trader => dai.approve(dex.address, amount, {from: trader})
+      [dai, bat, rep, zrx].map(
+        token => seedTokenBalance(token, trader2) 
       )
     );
   });

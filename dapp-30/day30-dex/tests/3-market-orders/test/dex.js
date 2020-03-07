@@ -238,4 +238,83 @@ contract('Dex', (accounts) => {
       'this token does not exist'
     );
   });
+
+  it('should create market order & match', async () => {
+    await dex.deposit(
+      web3.utils.toWei('100'),
+      DAI,
+      {from: trader1}
+    );
+
+    await dex.createLimitOrder(
+      REP,
+      web3.utils.toWei('10'),
+      10,
+      SIDE.BUY,
+      {from: trader1}
+    );
+
+    await dex.deposit(
+      web3.utils.toWei('100'),
+      REP,
+      {from: trader2}
+    );
+
+    await dex.createMarketOrder(
+      REP,
+      web3.utils.toWei('5'),
+      SIDE.SELL,
+      {from: trader2}
+    );
+
+    const balances = await Promise.all([
+      dex.traderBalances(trader1, DAI),
+      dex.traderBalances(trader1, REP),
+      dex.traderBalances(trader2, DAI),
+      dex.traderBalances(trader2, REP),
+    ]);
+    const orders = await dex.getOrders(REP, SIDE.BUY);
+    assert(orders.length === 1);
+    assert(orders[0].filled = web3.utils.toWei('5'));
+    assert(balances[0].toString() === web3.utils.toWei('50'));
+    assert(balances[1].toString() === web3.utils.toWei('5'));
+    assert(balances[2].toString() === web3.utils.toWei('50'));
+    assert(balances[3].toString() === web3.utils.toWei('95'));
+  });
+
+  it('should NOT create market order if balance too low', async () => {
+    await expectRevert(
+      dex.createMarketOrder(
+        REP,
+        web3.utils.toWei('101'),
+        SIDE.SELL,
+        {from: trader2}
+      ),
+      'token balance too low'
+    );
+  });
+
+  it('should NOT create market order if token is DAI', async () => {
+    await expectRevert(
+      dex.createMarketOrder(
+        DAI,
+        web3.utils.toWei('1000'),
+        SIDE.BUY,
+        {from: trader1}
+      ),
+      'cannot trade DAI'
+    );
+  });
+
+  it('should NOT create market order if token does not not exist', async () => {
+    await expectRevert(
+      dex.createMarketOrder(
+        web3.utils.fromAscii('TOKEN-DOES-NOT-EXIST'),
+        web3.utils.toWei('1000'),
+        SIDE.BUY,
+        {from: trader1}
+      ),
+      'this token does not exist'
+    );
+  });
 });
