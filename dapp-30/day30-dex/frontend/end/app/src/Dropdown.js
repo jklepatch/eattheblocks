@@ -23,14 +23,13 @@ function Dropdown({onSelect, activeItem, items, className}) {
       </button>
       <div className={`dropdown-menu ${dropdownVisible ? 'visible' : ''}`}>
         {items && items.map((item, i) => ( 
-          <a 
+          <button 
             className={`dropdown-item ${item.value === activeItem.value ? 'active' : null}`} 
-            href="/"
             key={i}
             onClick={() => selectItem(item.value)}
           >
             {item.label}
-          </a>
+          </button>
         ))}
       </div>
     </div>

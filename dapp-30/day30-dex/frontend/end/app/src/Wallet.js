@@ -21,7 +21,7 @@ function Wallet({deposit, withdraw, user}) {
   return (
     <div id="wallet" className="card">
       <h2 className="card-title">Wallet</h2>
-      <h3>Token balance for {user.selectedToken.symbol}</h3>
+      <h3>Token balance for {user.selectedToken.ticker}</h3>
       <div className="form-group row">
         <label htmlFor="wallet" className="col-sm-4 col-form-label">Wallet</label>
         <div className="col-sm-8">
@@ -44,7 +44,7 @@ function Wallet({deposit, withdraw, user}) {
           />
         </div>
       </div>
-      <h3>Transfer {user.selectedToken.symbol}</h3>
+      <h3>Transfer {user.selectedToken.ticker}</h3>
       <form id="transfer" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group row">
           <label htmlFor="direction" className="col-sm-4 col-form-label">Direction</label>
@@ -74,7 +74,7 @@ function Wallet({deposit, withdraw, user}) {
                 onChange={(e) => setAmount(e.target.value)}
               />
               <div className="input-group-append">
-                <span className="input-group-text">{user.selectedToken.symbol}</span>
+                <span className="input-group-text">{user.selectedToken.ticker}</span>
               </div>
             </div>
           </div>

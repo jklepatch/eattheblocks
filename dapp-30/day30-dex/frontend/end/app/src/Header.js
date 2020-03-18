@@ -13,11 +13,11 @@ function Header({
           <Dropdown 
             className="ml-3"
             items={tokens.map((token) => ({
-              label: token.symbol,
+              label: token.ticker,
               value: token
             }))} 
             activeItem={{
-              label: user.selectedToken.symbol,
+              label: user.selectedToken.ticker,
               value: user.selectedToken
             }}
             onSelect={selectToken}

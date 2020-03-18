@@ -21,7 +21,7 @@ function NewOrder({createMarketOrder, createLimitOrder}) {
   const onSubmit = (e) => {
     e.preventDefault();
     if(order.type === TYPE.MARKET) {
-      createMarketOrder(order.amount, order.price, order.side);
+      createMarketOrder(order.amount, order.side);
     } else {
       createLimitOrder(order.amount, order.price, order.side);
     }
@@ -72,7 +72,7 @@ function NewOrder({createMarketOrder, createLimitOrder}) {
               type="text" 
               className="form-control" 
               id="order-amount" 
-              onChange={e => setOrder(order => ({ ...order, amount: e.target.value}))}
+              onChange={({ target: { value }}) => setOrder(order => ({ ...order, amount: value}))}
             />
           </div>
         </div>
@@ -84,7 +84,7 @@ function NewOrder({createMarketOrder, createLimitOrder}) {
                 type="text" 
                 className="form-control" 
                 id="order-price" 
-                onChange={e => setOrder(order => ({ ...order, price: e.target.value}))}
+                onChange={({ target: { value }}) => setOrder(order => ({ ...order, price: value}))}
               />
             </div>
           </div>
