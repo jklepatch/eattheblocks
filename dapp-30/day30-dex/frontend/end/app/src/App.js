@@ -99,8 +99,6 @@ function App({web3, accounts, contracts}) {
   }
 
   const createMarketOrder = async (amount, side) => {
-    console.log(amount, side);
-    return;
     await contracts.dex.methods
       .createMarketOrder(
         web3.utils.fromAscii(user.selectedToken.ticker),
@@ -113,8 +111,6 @@ function App({web3, accounts, contracts}) {
   }
 
   const createLimitOrder = async (amount, price, side) => {
-    console.log(amount, price, side);
-    return;
     await contracts.dex.methods
       .createLimitOrder(
         web3.utils.fromAscii(user.selectedToken.ticker),
