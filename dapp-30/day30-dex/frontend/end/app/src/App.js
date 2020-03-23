@@ -150,11 +150,11 @@ function App({web3, accounts, contracts}) {
       const tokens = rawTokens.map((token, i) => {
         return {...token, ticker: web3.utils.hexToUtf8(token.ticker)};
       });
-      const [balances, orders, trades] = await Promise.all([
+      const [balances, orders] = await Promise.all([
         getBalances(accounts[0], tokens[0]),
         getOrders(tokens[0]),
-        listenToTrades(tokens[0])
       ]);
+      listenToTrades(tokens[0])
       setTokens(tokens);
       setUser({accounts, balances, selectedToken: tokens[0]});
       setOrders(orders);
