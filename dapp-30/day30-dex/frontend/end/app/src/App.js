@@ -3,8 +3,9 @@ import Header from './Header.js';
 import Footer from './Footer.js';
 import Wallet from './Wallet.js';
 import NewOrder from './NewOrder.js';
-import OrderList from './OrderList.js';
-import TradeList from './TradeList.js';
+import AllOrders from './AllOrders.js';
+import MyOrders from './MyOrders.js';
+import AllTrades from './AllTrades.js';
 
 const SIDE = {
   BUY: 0,
@@ -26,6 +27,7 @@ function App({web3, accounts, contracts}) {
     sell: []
   });
   const [trades, setTrades] = useState([]);
+  const [listener, setListener] = useState(undefined);
 
   const getBalances = async (account, token) => {
     const tokenDex = await contracts.dex.methods
@@ -49,31 +51,50 @@ function App({web3, accounts, contracts}) {
     return {buy: orders[0], sell: orders[1]};
   }
 
-  const getTrades = async token => {
-    //@todo: make it work with events
-    //contracts.dex.NewTrade(newTrade => setTrades(trades => [...trades, newTrade]));
-    //const trades= await contracts.dex.methods
-    //  .getTrades(web3.utils.fromAscii(token.ticker))
-    //  .call();
-    //return trades; 
-    return [];
+  const listenToTrades = token => {
+    const tradeIds = new Set();
+    setTrades([]);
+    const listener = contracts.dex.events.NewTrade(
+      {
+        filter: {ticker: web3.utils.fromAscii(token.ticker)},
+        fromBlock: 0
+      })
+      .on('data', newTrade => {
+        if(tradeIds.has(newTrade.returnValues.tradeId)) return;
+        tradeIds.add(newTrade.returnValues.tradeId);
+        setTrades(trades => ([...trades, newTrade.returnValues]));
+      });
+    setListener(listener);
   }
 
-  const selectToken = async token => {
-    const [balances, orders, trades] = await Promise.all([
-      getBalances(
-        user.accounts[0], 
-        token
-      ),
-      getOrders(token),
-      getTrades(token)
-    ]);
-    setUser(user => ({ ...user, balances, selectedToken: token}));
-    setOrders(orders);
-    setTrades(trades);
+  useEffect(() => {
+    const init = async () => {
+      const [balances, orders] = await Promise.all([
+        getBalances(
+          user.accounts[0], 
+          user.selectedToken
+        ),
+        getOrders(user.selectedToken),
+      ]);
+      listenToTrades(user.selectedToken);
+      setUser(user => ({ ...user, balances}));
+      setOrders(orders);
+    }
+    if(typeof user.selectedToken !== 'undefined') {
+      init();
+    }
+  }, [user.selectedToken], () => {
+    listener.unsubscribe();
+  });
+
+  const selectToken = token => {
+    setUser(user => ({ ...user, selectedToken: token}));
   }
 
   const deposit = async amount => {
+    await contracts[user.selectedToken.ticker].methods
+      .approve(contracts.dex.options.address, amount)
+      .send({from: user.accounts[0]});
     await contracts.dex.methods
       .deposit(amount, web3.utils.fromAscii(user.selectedToken.ticker))
       .send({from: user.accounts[0]});
@@ -132,12 +153,11 @@ function App({web3, accounts, contracts}) {
       const [balances, orders, trades] = await Promise.all([
         getBalances(accounts[0], tokens[0]),
         getOrders(tokens[0]),
-        getTrades(tokens[0])
+        listenToTrades(tokens[0])
       ]);
       setTokens(tokens);
       setUser({accounts, balances, selectedToken: tokens[0]});
       setOrders(orders);
-      setTrades(trades);
     }
     init();
   // eslint-disable-next-line
@@ -180,14 +200,22 @@ function App({web3, accounts, contracts}) {
           </div>
           {user.selectedToken.ticker !== 'DAI' ? (
             <div className="col-sm-8">
-                <OrderList 
-                  orders={orders}
-                />
-                    {/*
-                <TradeList 
+                <AllTrades 
                   trades={trades}
                 />
-                */}
+                <AllOrders 
+                  orders={orders}
+                />
+                <MyOrders 
+                  orders={{
+                    buy: orders.buy.filter(
+                      order => order.trader.toLowerCase() === accounts[0].toLowerCase()
+                    ),
+                    sell: orders.sell.filter(
+                      order => order.trader.toLowerCase() === accounts[0].toLowerCase()
+                    )
+                  }}
+                />
             </div>
           ) : null}
         </div>

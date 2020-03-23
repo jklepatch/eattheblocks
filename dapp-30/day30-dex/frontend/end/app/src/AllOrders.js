@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Moment from 'react-moment';
 
-function OrderList({orders}) {
+function AllOrders({orders}) {
   const renderList = (orders, side, className) => {
     return (
       <Fragment>
@@ -19,7 +19,7 @@ function OrderList({orders}) {
           <tbody>
             {orders.map((order) => (
               <tr key={order.id}>
-                <td>{order.amount}</td>
+                <td>{order.amount - order.filled}</td>
                 <td>{order.price}</td>
                 <td>
                   <Moment fromNow>{parseInt(order.date) * 1000}</Moment>
@@ -33,8 +33,8 @@ function OrderList({orders}) {
   }
 
   return (
-    <div id="order-list" className="card">
-      <h2 className="card-title">Orders</h2>
+    <div className="card">
+      <h2 className="card-title">All orders</h2>
       <div className="row">
         <div className="col-sm-6">
           {renderList(orders.buy, 'Buy', 'order-list-buy')}
@@ -47,4 +47,4 @@ function OrderList({orders}) {
   );
 }
 
-export default OrderList;
+export default AllOrders;
