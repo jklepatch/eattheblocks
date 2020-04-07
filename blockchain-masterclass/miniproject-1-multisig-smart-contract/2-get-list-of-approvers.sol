@@ -8,4 +8,8 @@ contract Wallet {
     approvers = _approvers;
     quorum = _quorum;
   }
+
+  function getApprovers() external view returns(address[] memory) {
+    return approvers;
+  }
 }
