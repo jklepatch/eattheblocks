@@ -8,9 +8,8 @@ def addId(id: int128):
 
 @public
 @constant
-def get(i: uint256) -> uint256:
-    return 1
-    # return self.ids[i]
+def get(i: int128) -> uint128:
+    return self.ids[i]
 
 @public
 @constant

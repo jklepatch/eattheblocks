@@ -2,9 +2,9 @@ data: string[100]
 
 @public
 def set(_data: string[100]):
-  data = _data
+  self.data = _data
 
 @public
 @constant
 def get -> string[100]
-  return data
+  return self.data
