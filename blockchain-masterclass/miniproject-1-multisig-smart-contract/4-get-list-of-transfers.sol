@@ -1,4 +1,5 @@
 pragma solidity ^0.6.0;
+pragma experimental ABIEncoderV2;
 
 contract Wallet {
   address[] public approvers;
@@ -10,9 +11,8 @@ contract Wallet {
     uint approvals;
     bool sent;
   }
-  mapping(uint => Transfer) transfers;
-  uint nextId;
-  mapping(address => mapping(uint => bool)) approvals;
+  mapping(uint => Transfer) public transfers;
+  uint public nextId;
 
   constructor(address[] memory _approvers, uint _quorum) payable public {
     approvers = _approvers;
@@ -21,6 +21,14 @@ contract Wallet {
 
   function getApprovers() external view returns(address[] memory) {
     return approvers;
+  }
+
+  function getTransfers() external view returns(Transfer[] memory) {
+    Transfer[] memory _transfers = new Transfer[](nextId);
+    for(uint i = 0; i < _transfers.length; i++) {
+      _transfers[i] = transfers[i];
+    }
+    return _transfers;
   }
 
   function createTransfer(uint amount, address payable to) external {
@@ -32,20 +40,5 @@ contract Wallet {
       false
     );
     nextId++;
-  }
-
-  function approveTransfer(uint id) external {
-    require(transfers[id].sent == false, 'transfer has already been sent');
-    require(approvals[msg.sender][id] == false, 'cannot approve transfer twice');
-
-    approvals[msg.sender][id] = true;
-    transfers[id].approvals++;
-
-    if(transfers[id].approvals >= quorum) {
-      transfers[id].sent = true;
-      address payable to = transfers[id].to;
-      uint amount = transfers[id].amount;
-      to.transfer(amount);
-    }
   }
 }
