@@ -13,7 +13,6 @@ contract Wallet {
   }
   mapping(uint => Transfer) public transfers;
   mapping(address => mapping(uint => bool)) public approvals;
-  uint public nextId;
 
   constructor(address[] memory _approvers, uint _quorum) public {
     approvers = _approvers;
@@ -25,22 +24,17 @@ contract Wallet {
   }
 
   function getTransfers() external view returns(Transfer[] memory) {
-    Transfer[] memory _transfers = new Transfer[](nextId);
-    for(uint i = 0; i < _transfers.length; i++) {
-      _transfers[i] = transfers[i];
-    }
-    return _transfers;
+    return transfers;
   }
 
   function createTransfer(uint amount, address payable to) external onlyApprover() {
-    transfers[nextId] = Transfer(
-      nextId,
+    transfers.push(Transfer(
+      transfers.length,
       amount,
       to,
       0,
       false
     );
-    nextId++;
   }
 
   function approveTransfer(uint id) external onlyApprover() {

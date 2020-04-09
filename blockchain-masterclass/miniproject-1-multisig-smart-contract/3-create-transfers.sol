@@ -11,7 +11,6 @@ contract Wallet {
     bool sent;
   }
   mapping(uint => Transfer) public transfers;
-  uint public nextId;
 
   constructor(address[] memory _approvers, uint _quorum) public {
     approvers = _approvers;
@@ -23,13 +22,12 @@ contract Wallet {
   }
 
   function createTransfer(uint amount, address payable to) external {
-    transfers[nextId] = Transfer(
-      nextId,
+    transfers.push(Transfer(
+      transfers.length,
       amount,
       to,
       0,
       false
     );
-    nextId++;
   }
 }

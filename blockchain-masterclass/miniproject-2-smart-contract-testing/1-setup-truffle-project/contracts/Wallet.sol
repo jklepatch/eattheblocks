@@ -1,4 +1,5 @@
 pragma solidity ^0.6.0;
+pragma experimental ABIEncoderV2;
 
 contract Wallet {
   address[] public approvers;
@@ -10,8 +11,7 @@ contract Wallet {
     uint approvals;
     bool sent;
   }
-  mapping(uint => Transfer) public transfers;
-  uint nextId;
+  Transfer[] public transfers;
   mapping(address => mapping(uint => bool)) public approvals;
 
   constructor(address[] memory _approvers, uint _quorum) payable public {
@@ -23,15 +23,18 @@ contract Wallet {
      return approvers;
   }
 
+  function getTransfers() external view returns(Transfer[] memory) {
+    return transfers;
+  }
+
   function createTransfer(uint amount, address payable to) external onlyApprover() {
-    transfers[nextId] = Transfer(
-      nextId,
+    transfers.push(Transfer(
+      transfers.length,
       amount,
       to,
       0,
       false
-    );
-    nextId++;
+    ));
   }
 
   function approveTransfer(uint id) external onlyApprover() {
