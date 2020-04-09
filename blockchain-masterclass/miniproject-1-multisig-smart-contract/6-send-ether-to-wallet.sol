@@ -15,7 +15,7 @@ contract Wallet {
   mapping(address => mapping(uint => bool)) public approvals;
   uint public nextId;
 
-  constructor(address[] memory _approvers, uint _quorum) payable public {
+  constructor(address[] memory _approvers, uint _quorum) public {
     approvers = _approvers;
     quorum = _quorum;
   }
