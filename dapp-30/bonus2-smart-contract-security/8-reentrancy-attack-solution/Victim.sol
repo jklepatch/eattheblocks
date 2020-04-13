@@ -5,7 +5,7 @@ import "./Attacker.sol";
 contract Victim {
   mapping(address => uint) public balances;
   Attacker attacker;
-  bool locked
+  bool locked;
 
   //Solution 1: use transfer() to send ether
   function withdraw1(uint amount) external {
@@ -25,6 +25,7 @@ contract Victim {
   function withdraw3(uint amount) external {
     require(locked == false);
     locked = true;
+    require(balances[msg.sender] >= amount);
     msg.sender.call.value(amount)("")
     balances[msg.sender]--;
     locked = false;

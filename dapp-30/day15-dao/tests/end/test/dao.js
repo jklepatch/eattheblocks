@@ -54,14 +54,14 @@ contract('DAO', (accounts) => {
   });
 
   it('Should NOT create proposal if not from investor', async () => {
-    expectRevert(
+    await expectRevert(
       dao.createProposal('proposal 2', 10, accounts[8], {from: accounts[5]}),
       'only investors'
     );
   });
 
   it('Should NOT create proposal if amount too big', async () => {
-    expectRevert(
+    await expectRevert(
       dao.createProposal('proposal 2', 1000, accounts[8], {from: investor1}),
       'amount too big'
     );
@@ -72,14 +72,14 @@ contract('DAO', (accounts) => {
   });
 
   it('Should NOT vote if not investor', async () => {
-    expectRevert(
+    await expectRevert(
       dao.vote(0, {from: accounts[8]}), 
       'only investors'
     );
   });
 
   it('Should NOT vote if already voted', async () => {
-    expectRevert(
+    await expectRevert(
       dao.vote(0, {from: investor1}), 
       'investor can only vote once for a proposal'
     );
@@ -140,14 +140,14 @@ contract('DAO', (accounts) => {
   });
 
   it('Should NOT withdraw ether if not admin', async () => {
-    expectRevert(
+    await expectRevert(
       dao.withdrawEther(10, accounts[8], {from: investor1}),
-      'not enough availableFunds'
+      'only admin'
     );
   });
 
   it('Should NOT withdraw ether if trying to withdraw too much', async () => {
-    expectRevert(
+    await expectRevert(
       dao.withdrawEther(1000, accounts[8]),
       'not enough availableFunds'
     );
