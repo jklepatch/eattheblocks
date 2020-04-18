@@ -26,7 +26,7 @@ contract Wallet {
     function getTransfers() external view returns(Transfer[] memory) {
         return transfers;
     }
-
+    
     function createTransfer(uint amount, address payable to) external onlyApprover() {
         transfers.push(Transfer(
             transfers.length,

@@ -1,9 +1,5 @@
 const path = require('path');
-const fs = require('fs');
-const HDWalletProvider = require('@truffle/hdwallet-provider');
-const secrets = JSON.parse(
-  fs.readFileSync('.secrets').toString().trim()
-);
+const provider = require('@truffle/hdwallet-provider');
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -44,16 +40,20 @@ module.exports = {
   contracts_build_directory: path.join(__dirname, "client/src/contracts"),
 
   networks: {
-    networks: {
-       kovan: {
-         provider: () =>
-           new HDWalletProvider(
-             secrets.seed,
-             `https://kovan.infura.io/v3/${secrets.projectId}`
-           ),
-         network_id: 42 
-       }
-     }
+    kovan: {
+      provider: () =>
+        new provider(
+          [
+            '83b99803bf672b25ba87ee98d56a257284be38957eb4d6ab799aea3a86476f9a', 
+            'a9c5ed7f6b02581740f0ae45f0dec02057cfcb53530684b4c87c39212b3685fa', 
+            'a361f1d37cccb52bfbde62c09019a1bbe83806a574fbf0bd7cbdd95b16159970'
+          ],
+          'https://kovan.infura.io/v3/74aa9a15e2524f6980edb8a377301f3c',
+          0,
+          3
+        ),
+      network_id: 42
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
