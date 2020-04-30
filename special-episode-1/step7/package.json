@@ -19,7 +19,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "json-loader": "^0.5.7",
     "truffle-contract": "^3.0.1",
     "truffle-solidity-loader": "^0.1.0",
