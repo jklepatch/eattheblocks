@@ -1,0 +1,17 @@
+#header {
+  .header-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 1rem;
+    line-height: 38px;
+  }
+  .contract-address {
+    color: $dimWhite; 
+    font-size: 0.8rem; 
+    .contract-address .address {
+      font-family: 'Courier';
+    }
+  }
+}

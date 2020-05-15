@@ -1,0 +1,18 @@
+$fontSmall: 14px;
+
+.green-bg {
+  background: $green;
+}
+.red-bg {
+  background: $red;
+}
+
+.flex {
+  display: flex;
+}
+
+@media (min-width: 576px) {
+  .first-col {
+    padding-right: 0;
+  }
+}

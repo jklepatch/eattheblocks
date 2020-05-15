@@ -1,0 +1,14 @@
+.card {
+  background-color: rgb(20, 20, 20);
+  border-radius: 5px;
+  padding: 1em;
+  margin-bottom: 1em;
+  .card-title {
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    border-bottom: 10px solid #731DD8;
+    margin-bottom: 1em;
+  }
+}
+
