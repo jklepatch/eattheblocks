@@ -2024,7 +2024,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.21",
-  "updatedAt": "2020-03-10T10:10:05.449Z",
+  "updatedAt": "2020-05-15T21:36:17.214Z",
   "devdoc": {
     "details": "Interface of the ERC20 standard as defined in the EIP. Does not include the optional functions; to access them see {ERC20Detailed}.",
     "methods": {
