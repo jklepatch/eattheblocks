@@ -1,0 +1,9 @@
+#title {
+  background-color: #111;
+  color: white;
+  font-family: 'Arial';
+}
+
+.character {
+  display: inline-block;
+}

@@ -1,0 +1,12 @@
+#title {
+  background-color: #111;
+  color: white;
+  font-family: 'Arial';
+
+}
+
+.character {
+  float: left;
+  padding: 15px;
+  margin: 15px;
+}
