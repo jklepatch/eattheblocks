@@ -40,7 +40,7 @@ function App() {
     typeof web3 === 'undefined'
     || typeof accounts === 'undefined'
     || typeof wallet === 'undefined'
-    || typeof approvers === 'undefined'
+    || approvers.length === 0 
     || typeof quorum === 'undefined'
   ) {
     return <div>Loading...</div>;
