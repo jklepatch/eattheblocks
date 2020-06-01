@@ -2,6 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './scss/index.scss';
-import LoadingContainer from './LoadingContainer';
+import App from './App';
 
-ReactDOM.render(<LoadingContainer />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
