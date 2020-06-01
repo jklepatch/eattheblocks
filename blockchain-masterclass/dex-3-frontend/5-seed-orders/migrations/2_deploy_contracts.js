@@ -1,4 +1,3 @@
-const { time } = require('@openzeppelin/test-helpers');
 const Dai = artifacts.require('mocks/Dai.sol');
 const Bat = artifacts.require('mocks/Bat.sol');
 const Rep = artifacts.require('mocks/Rep.sol');
@@ -65,31 +64,46 @@ module.exports = async function(deployer, _network, accounts) {
     )
   );
 
+   const increaseTime = async (seconds) => {
+     await web3.currentProvider.send({
+       jsonrpc: '2.0',
+       method: 'evm_increaseTime',
+       params: [seconds],
+       id: 0,
+     }, () => {});
+     await web3.currentProvider.send({
+       jsonrpc: '2.0',
+       method: 'evm_mine',
+       params: [],
+       id: 0,
+     }, () => {});
+  }
+
   //create trades
   await dex.createLimitOrder(BAT, 1000, 10, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(BAT, 1000, SIDE.SELL, {from: trader2});
-  await time.increase(1);
+  await increaseTime(1);
   await dex.createLimitOrder(BAT, 1200, 11, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(BAT, 1200, SIDE.SELL, {from: trader2});
-  await time.increase(1);
+  await increaseTime(1);
   await dex.createLimitOrder(BAT, 1200, 15, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(BAT, 1200, SIDE.SELL, {from: trader2});
-  await time.increase(1);
+  await increaseTime(1);
   await dex.createLimitOrder(BAT, 1500, 14, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(BAT, 1500, SIDE.SELL, {from: trader2});
-  await time.increase(1);
+  await increaseTime(1);
   await dex.createLimitOrder(BAT, 2000, 12, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(BAT, 2000, SIDE.SELL, {from: trader2});
 
   await dex.createLimitOrder(REP, 1000, 2, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(REP, 1000, SIDE.SELL, {from: trader2});
-  await time.increase(1);
+  await increaseTime(1);
   await dex.createLimitOrder(REP, 500, 4, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(REP, 500, SIDE.SELL, {from: trader2});
-  await time.increase(1);
+  await increaseTime(1);
   await dex.createLimitOrder(REP, 800, 2, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(REP, 800, SIDE.SELL, {from: trader2});
-  await time.increase(1);
+  await increaseTime(1);
   await dex.createLimitOrder(REP, 1200, 6, SIDE.BUY, {from: trader1});
   await dex.createMarketOrder(REP, 1200, SIDE.SELL, {from: trader2});
 
