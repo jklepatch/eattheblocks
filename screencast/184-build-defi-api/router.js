@@ -93,13 +93,16 @@ router.post('/mint/:cToken/:amount', async (ctx, next) => {
     config.ERC20Abi,
     tokenAddress
   );
-  await token.approve(cToken.options.address, ctx.params.amount);
+  await token
+    .methods
+    .approve(cToken.options.address, ctx.params.amount)
+    .send({ from: adminAddress });
 
   try {
     const cTokenBalance = await cToken
       .methods
       .mint(ctx.params.amount)
-      .call({ from: adminAddress });
+      .send({ from: adminAddress });
     ctx.body = {
       cToken: ctx.params.cToken,
       address: adminAddress, 
@@ -128,7 +131,7 @@ router.post('/redeem/:cToken/:amount', async (req, res) => {
     const cTokenBalance = await cToken
       .methods
       .redeem(ctx.params.amount)
-      .call({ from: adminAddress });
+      .send({ from: adminAddress });
     ctx.body = {
       cToken: ctx.params.cToken,
       address: adminAddress, 
