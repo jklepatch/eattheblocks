@@ -3,21 +3,21 @@ import Header from './Header.js';
 import Footer from './Footer.js';
 
 function App({web3, accounts, contracts}) {
-  const [tokens, setTokens]  = useState([]);
+  const [tokens, setTokens] = useState([]);
   const [user, setUser] = useState({
-    accounts: [], 
+    accounts: [],
     selectedToken: undefined
   });
 
   const selectToken = token => {
-    setUser(user => ({ ...user, selectedToken: token}));
+    setUser({...user, selectedToken: token});
   }
 
   useEffect(() => {
     const init = async () => {
-      const rawTokens = await contracts.dex.methods.getTokens().call();
+      const rawTokens = await contracts.dex.methods.getTokens().call(); 
       const tokens = rawTokens.map(token => ({
-        ...token, 
+        ...token,
         ticker: web3.utils.hexToUtf8(token.ticker)
       }));
       setTokens(tokens);
@@ -26,17 +26,13 @@ function App({web3, accounts, contracts}) {
     init();
   }, []);
 
-  const isReady = () => {
-    return typeof user.selectedToken !== 'undefined';
-  }
-
-  if (!isReady()) {
+  if(typeof user.selectedToken === 'undefined') {
     return <div>Loading...</div>;
   }
 
   return (
     <div id="app">
-      <Header 
+      <Header
         contracts={contracts}
         tokens={tokens}
         user={user}
