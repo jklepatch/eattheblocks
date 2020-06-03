@@ -11,7 +11,6 @@ function Header({
       <div className="row">
         <div className="col-sm-3 flex">
           <Dropdown 
-            className="ml-3"
             items={tokens.map((token) => ({
               label: token.ticker,
               value: token
