@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
 
-function Dropdown({onSelect, activeItem, items, className}) {
+function Dropdown({onSelect, activeItem, items}) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  }
-
-  const selectItem = (item) => {
+  const selectItem = (e, item) => {
+    e.preventDefault();
     setDropdownVisible(!dropdownVisible);
     onSelect(item);
   }
 
   return (
-    <div className={`dropdown ${className}`}>
+    <div className='dropdown ml-3'>
       <button 
         className="btn btn-secondary dropdown-toggle" 
         type="button" 
-        onClick={toggleDropdown}
+        onClick={() => setDropdownVisible(!dropdownVisible)}
       >
         {activeItem.label}
       </button>
       <div className={`dropdown-menu ${dropdownVisible ? 'visible' : ''}`}>
         {items && items.map((item, i) => ( 
-          <button 
+          <a 
             className={`dropdown-item ${item.value === activeItem.value ? 'active' : null}`} 
+            href='#'
             key={i}
-            onClick={() => selectItem(item.value)}
+            onClick={e => selectItem(e, item.value)}
           >
             {item.label}
-          </button>
+          </a>
         ))}
       </div>
     </div>
