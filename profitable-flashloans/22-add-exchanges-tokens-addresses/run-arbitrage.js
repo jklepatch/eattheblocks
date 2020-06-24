@@ -7,6 +7,7 @@ const { mainnet: addresses } = require('./addresses');
 const web3 = new Web3(
   new Web3.providers.WebsocketProvider(process.env.INFURA_URL)
 );
+web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
 
 const kyber = new web3.eth.Contract(
   abis.kyber.kyberNetworkProxy,
@@ -17,6 +18,10 @@ const AMOUNT_ETH = 100;
 const RECENT_ETH_PRICE = 230;
 const AMOUNT_ETH_WEI = web3.utils.toWei(AMOUNT_ETH.toString());
 const AMOUNT_DAI_WEI = web3.utils.toWei((AMOUNT_ETH * RECENT_ETH_PRICE).toString());
+const DIRECTION = {
+  KYBER_TO_UNISWAP: 0,
+  UNISWAP_TO_UNISWAP: 1,
+};
 
 const init = async () => {
   const WETH = new Token(
@@ -104,10 +109,10 @@ const init = async () => {
         console.log(`Expected profit: ${profit2} dai`);
         //Execute arb Uniswap <=> Kyber
       }
+
     })
     .on('error', error => {
       console.log(error);
     });
 }
 init();
-
