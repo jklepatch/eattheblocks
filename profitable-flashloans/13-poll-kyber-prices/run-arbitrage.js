@@ -1,4 +1,4 @@
-require("dotenv").config()
+require('dotenv').config()
 const Web3 = require('web3');
 const abis = require('./abis');
 const { mainnet: addresses } = require('./addresses');
