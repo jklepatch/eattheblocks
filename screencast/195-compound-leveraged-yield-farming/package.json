@@ -1,0 +1,21 @@
+{
+  "name": "195-compound-recursive-leverage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "deploy": "truffle migrate --reset --network mainnet",
+    "openPosition": "truffle exec scripts/openPosition.js --network mainnet",
+    "closePosition": "truffle exec scripts/closePosition.js --network mainnet"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.1.0",
+    "@truffle/hdwallet-provider": "^1.0.36"
+  }
+}
