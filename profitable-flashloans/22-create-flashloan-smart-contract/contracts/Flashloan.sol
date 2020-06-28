@@ -7,10 +7,11 @@ import "@studydefi/money-legos/dydx/contracts/ICallee.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 
-contract DydxFlashloaner is ICallee, DydxFlashloanBase {
-    struct MyCustomData {
-        address token;
-        uint256 repayAmount;
+contract Flashloan is ICallee, DydxFlashloanBase {
+    enum Direction { KyberToUniswap, UniswapToKyber } 
+    struct ArbInfo {
+        Direction direction;
+        uint repayAmount;
     }
 
     // This is the function that will be called postLoan
@@ -20,21 +21,7 @@ contract DydxFlashloaner is ICallee, DydxFlashloanBase {
         Account.Info memory account,
         bytes memory data
     ) public {
-        MyCustomData memory mcd = abi.decode(data, (MyCustomData));
-        uint256 balOfLoanedToken = IERC20(mcd.token).balanceOf(address(this));
-
-        // Note that you can ignore the line below
-        // if your dydx account (this contract in this case)
-        // has deposited at least ~2 Wei of assets into the account
-        // to balance out the collaterization ratio
-        require(
-            balOfLoanedToken >= mcd.repayAmount,
-            "Not enough funds to repay dydx loan!"
-        );
-
-        // TODO: Encode your logic here
-        // E.g. arbitrage, liquidate accounts, etc
-        revert("Hello, you haven't encoded your logic");
+        ArbInfo memory mcd = abi.decode(data, (ArbInfo));
     }
 
     function initateFlashLoan(address _solo, address _token, uint256 _amount)
