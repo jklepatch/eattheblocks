@@ -42,7 +42,7 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         bytes memory data
     ) public {
         ArbInfo memory arbInfo = abi.decode(data, (ArbInfo));
-        //uint256 balOfLoanedToken = IERC20(mcd.token).balanceOf(address(this));
+        uint256 balanceDai = dai.balanceOf(address(this));
 
         // Note that you can ignore the line below
         // if your dydx account (this contract in this case)
@@ -52,8 +52,6 @@ contract Flashloan is ICallee, DydxFlashloanBase {
             balOfLoanedToken >= arbInfo.repayAmount,
             "Not enough funds to repay dydx loan!"
         );
-
-        revert("Hello, you haven't encoded your logic");
     }
 
     function initateFlashLoan(

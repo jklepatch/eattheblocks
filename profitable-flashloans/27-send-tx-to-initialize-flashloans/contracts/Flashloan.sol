@@ -112,8 +112,6 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         uint profit = dai.balanceOf(address(this)); 
         dai.transfer(beneficiary, profit);
         emit NewArbitrage(arbInfo.direction, profit, now);
-
-        revert("Hello, you haven't encoded your logic");
     }
 
     function initateFlashLoan(

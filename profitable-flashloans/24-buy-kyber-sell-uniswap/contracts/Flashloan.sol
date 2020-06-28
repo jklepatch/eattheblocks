@@ -75,8 +75,6 @@ contract Flashloan is ICallee, DydxFlashloanBase {
             now
           );
         }
-
-        revert("Hello, you haven't encoded your logic");
     }
 
     function initateFlashLoan(
