@@ -98,11 +98,11 @@ const init = async () => {
       console.log('Uniswap ETH/DAI');
       console.log(uniswapRates);
 
-      const [tx1, tx2] = DIRECTION.map(direction => flashLoan.methods.initiateFlashloan(
+      const [tx1, tx2] = Object.keys(DIRECTION).map(direction => flashLoan.methods.initiateFlashloan(
         addresses.dydx.solo, 
         addresses.tokens.weth, 
         AMOUNT_ETH_WEI,
-        direction
+        DIRECTION[direction]
       ));
       const [gasPrice, gasCost1, gasCost2] = await Promise.all([
         web3.eth.getGasPrice(),
