@@ -21,7 +21,7 @@ const AMOUNT_ETH_WEI = web3.utils.toWei(AMOUNT_ETH.toString());
 const AMOUNT_DAI_WEI = web3.utils.toWei((AMOUNT_ETH * RECENT_ETH_PRICE).toString());
 const DIRECTION = {
   KYBER_TO_UNISWAP: 0,
-  UNISWAP_TO_UNISWAP: 1,
+  UNISWAP_TO_KYBER: 1
 };
 
 const init = async () => {
