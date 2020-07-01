@@ -49,7 +49,7 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         // has deposited at least ~2 Wei of assets into the account
         // to balance out the collaterization ratio
         require(
-            balOfLoanedToken >= arbInfo.repayAmount,
+            balanceDai >= arbInfo.repayAmount,
             "Not enough funds to repay dydx loan!"
         );
     }
