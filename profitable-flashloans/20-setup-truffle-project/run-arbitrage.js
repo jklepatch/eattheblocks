@@ -19,20 +19,6 @@ const AMOUNT_ETH_WEI = web3.utils.toWei(AMOUNT_ETH.toString());
 const AMOUNT_DAI_WEI = web3.utils.toWei((AMOUNT_ETH * RECENT_ETH_PRICE).toString());
 
 const init = async () => {
-  const WETH = new Token(
-    ChainId.MAINNET, 
-    addresses.tokens.weth, 
-    18, 
-    'WETH', 
-    'Wrapped Ether'
-  );
-  const DAI = new Token(
-    ChainId.MAINNET, 
-    addresses.tokens.dai, 
-    18, 
-    'DAI', 
-    'Dai Stablecoin'
-  );
   const [dai, weth] = await Promise.all(
     [addresses.tokens.dai, addresses.tokens.weth].map(tokenAddress => (
       Token.fetchData(
@@ -40,7 +26,7 @@ const init = async () => {
         tokenAddress,
       )
   )));
-  daiWeth = await Pair.fetchData(
+  const daiWeth = await Pair.fetchData(
     dai,
     weth,
   );
@@ -75,8 +61,8 @@ const init = async () => {
       console.log(kyberRates);
 
       const uniswapResults = await Promise.all([
-        daiWeth.getOutputAmount(new TokenAmount(DAI, AMOUNT_DAI_WEI)),
-        daiWeth.getOutputAmount(new TokenAmount(WETH, AMOUNT_ETH_WEI))
+        daiWeth.getOutputAmount(new TokenAmount(dai, AMOUNT_DAI_WEI)),
+        daiWeth.getOutputAmount(new TokenAmount(weth, AMOUNT_ETH_WEI))
       ]);
       const uniswapRates = {
         buy: parseFloat( AMOUNT_DAI_WEI / (uniswapResults[0][0].toExact() * 10 ** 18)),
