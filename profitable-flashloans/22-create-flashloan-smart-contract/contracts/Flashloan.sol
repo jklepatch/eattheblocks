@@ -24,7 +24,7 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         ArbInfo memory arbInfo = abi.decode(data, (ArbInfo));
     }
 
-    function initateFlashLoan(
+    function initiateFlashLoan(
       address _solo, 
       address _token, 
       uint256 _amount,

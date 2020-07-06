@@ -1,3 +1,4 @@
+require('dotenv').config();
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 /**
  * Use this file to configure your truffle project. It's seeded with some

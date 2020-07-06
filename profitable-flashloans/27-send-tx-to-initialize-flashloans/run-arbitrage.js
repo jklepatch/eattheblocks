@@ -84,7 +84,7 @@ const init = async () => {
       console.log('Uniswap ETH/DAI');
       console.log(uniswapRates);
 
-      const [tx1, tx2] = Object.keys(DIRECTION).map(direction => flashLoan.methods.initiateFlashloan(
+      const [tx1, tx2] = Object.keys(DIRECTION).map(direction => flashloan.methods.initiateFlashloan(
         addresses.dydx.solo, 
         addresses.tokens.weth, 
         AMOUNT_ETH_WEI,

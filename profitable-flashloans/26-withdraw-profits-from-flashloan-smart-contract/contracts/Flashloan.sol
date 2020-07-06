@@ -114,7 +114,7 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         emit NewArbitrage(arbInfo.direction, profit, now);
     }
 
-    function initateFlashLoan(
+    function initiateFlashLoan(
       address _solo, 
       address _token, 
       uint256 _amount, 
