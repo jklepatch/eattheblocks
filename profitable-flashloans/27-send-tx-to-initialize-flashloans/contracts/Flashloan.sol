@@ -109,7 +109,7 @@ contract Flashloan is ICallee, DydxFlashloanBase {
             expectedRate
           );
         }
-        uint profit = dai.balanceOf(address(this)); 
+        uint profit = dai.balanceOf(address(this)) - arbInfo.repayAmount; 
         dai.transfer(beneficiary, profit);
         emit NewArbitrage(arbInfo.direction, profit, now);
     }
