@@ -24,8 +24,12 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         ArbInfo memory arbInfo = abi.decode(data, (ArbInfo));
     }
 
-    function initateFlashLoan(address _solo, address _token, uint256 _amount)
-        external
+    function initateFlashLoan(
+      address _solo, 
+      address _token, 
+      uint256 _amount,
+      Direction _direction) 
+        external 
     {
         ISoloMargin solo = ISoloMargin(_solo);
 
@@ -45,7 +49,7 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         operations[0] = _getWithdrawAction(marketId, _amount);
         operations[1] = _getCallAction(
             // Encode MyCustomData for callFunction
-            abi.encode(MyCustomData({token: _token, repayAmount: repayAmount}))
+            abi.encode(ArbInfo({direction: _direction, repayAmount: repayAmount}))
         );
         operations[2] = _getDepositAction(marketId, repayAmount);
 
