@@ -55,7 +55,7 @@ contract Flashloan is ICallee, DydxFlashloanBase {
 
         if(arbInfo.direction == Direction.KyberToUniswap) {
           //Buy ETH on Kyber
-          dai.approve(address(uniswap), balanceDai); 
+          dai.approve(address(kyber), balanceDai); 
           (uint expectedRate, ) = kyber.getExpectedRate(
             dai, 
             IERC20(KYBER_ETH_ADDRESS), 
