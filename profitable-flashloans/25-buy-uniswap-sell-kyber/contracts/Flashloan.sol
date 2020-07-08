@@ -102,7 +102,7 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         }
     }
 
-    function initiateFlashLoan(
+    function initiateFlashloan(
       address _solo, 
       address _token, 
       uint256 _amount, 
