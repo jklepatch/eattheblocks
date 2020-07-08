@@ -1,0 +1,4 @@
+sending address: 0xAD8eD8FBA46BA6bE9120d0aEc43109A0543b69d3
+Private key: d448c9224e0bcf3a6475fb54a34056fb02ef469d1f5f8520bc0f6e443bde68c4
+
+deployed contract 0xde64eeed74a518ea4777bace2e80102a940a7e9b9c93cb25a81f7884c3fd3200
