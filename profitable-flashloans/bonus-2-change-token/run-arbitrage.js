@@ -69,7 +69,7 @@ const init = async () => {
         buy: parseFloat(1 / (kyberResults[0].expectedRate / (10 ** 18))),
         sell: parseFloat(kyberResults[1].expectedRate / (10 ** 18))
       };
-      console.log('Kyber ETH/DAI');
+      console.log('Kyber ETH/USDC');
       console.log(kyberRates);
 
       const uniswapResults = await Promise.all([
@@ -80,7 +80,7 @@ const init = async () => {
         buy: parseFloat( AMOUNT_TOKEN_WEI / (uniswapResults[0][0].toExact() * 10 ** 18)),
         sell: parseFloat(uniswapResults[1][0].toExact() / AMOUNT_ETH),
       };
-      console.log('Uniswap ETH/DAI');
+      console.log('Uniswap ETH/USDC');
       console.log(uniswapRates);
 
       const [tx1, tx2] = Object.keys(DIRECTION).map(direction => flashloan.methods.initiateFlashloan(
@@ -101,9 +101,9 @@ const init = async () => {
       const profit2 = (parseInt(AMOUNT_ETH_WEI) / 10 ** 18) * (kyberRates.sell - uniswapRates.buy) - (txCost2 / 10 ** 18) * currentEthPrice;
       if(profit1 > 0) {
         console.log('Arb opportunity found!');
-        console.log(`Buy ETH on Kyber at ${kyberRates.buy} dai`);
-        console.log(`Sell ETH on Uniswap at ${uniswapRates.sell} dai`);
-        console.log(`Expected profit: ${profit1} dai`);
+        console.log(`Buy ETH on Kyber at ${kyberRates.buy} usdc`);
+        console.log(`Sell ETH on Uniswap at ${uniswapRates.sell} usdc`);
+        console.log(`Expected profit: ${profit1} usdc`);
         const data = tx1.encodeABI();
         const txData = {
           from: admin,
@@ -116,9 +116,9 @@ const init = async () => {
         console.log(`Transaction hash: ${receipt.transactionHash}`);
       } else if(profit2 > 0) {
         console.log('Arb opportunity found!');
-        console.log(`Buy ETH from Uniswap at ${uniswapRates.buy} dai`);
-        console.log(`Sell ETH from Kyber at ${kyberRates.sell} dai`);
-        console.log(`Expected profit: ${profit2} dai`);
+        console.log(`Buy ETH from Uniswap at ${uniswapRates.buy} usdc`);
+        console.log(`Sell ETH from Kyber at ${kyberRates.sell} usdc`);
+        console.log(`Expected profit: ${profit2} usdc`);
         const data = tx2.encodeABI();
         const txData = {
           from: admin,
