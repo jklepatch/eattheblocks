@@ -8,6 +8,7 @@ import { KyberNetworkProxy as IKyberNetworkProxy } from '@studydefi/money-legos/
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import './IUniswapV2Router02.sol';
 import './IWeth.sol';
+import './DaiFaucet.sol';
 
 contract Flashloan is ICallee, DydxFlashloanBase {
     enum Direction { KyberToUniswap, UniswapToKyber } 
@@ -26,20 +27,25 @@ contract Flashloan is ICallee, DydxFlashloanBase {
     IUniswapV2Router02 uniswap;
     IWeth weth;
     IERC20 dai;
+    DaiFaucet daiFaucet;
     address beneficiary;
     address constant KYBER_ETH_ADDRESS = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+
+    event Foo(uint balanceDai, uint repayAmount);
 
     constructor(
         address kyberAddress,
         address uniswapAddress,
         address wethAddress,
         address daiAddress,
+        address daiFaucetAddress,
         address beneficiaryAddress
     ) public {
       kyber = IKyberNetworkProxy(kyberAddress);
       uniswap = IUniswapV2Router02(uniswapAddress);
       weth = IWeth(wethAddress);
       dai = IERC20(daiAddress);
+      daiFaucet = DaiFaucet(daiFaucet);
       beneficiary = beneficiaryAddress;
     }
 
@@ -53,50 +59,53 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         ArbInfo memory arbInfo = abi.decode(data, (ArbInfo));
         uint256 balanceDai = dai.balanceOf(address(this));
 
+        //emit Foo(balanceDai, arbInfo.repayAmount);
+
         // Note that you can ignore the line below
         // if your dydx account (this contract in this case)
         // has deposited at least ~2 Wei of assets into the account
         // to balance out the collaterization ratio
-        require(
-            balanceDai >= arbInfo.repayAmount,
-            "Not enough funds to repay dydx loan!"
-        );
+        //require(
+        //    balanceDai >= arbInfo.repayAmount,
+        //    "Not enough funds to repay dydx loan!"
 
-        //if(arbInfo.direction == Direction.KyberToUniswap) {
-        //  //Buy ETH on Kyber
-        //  dai.approve(address(kyber), balanceDai); 
-        //  (uint expectedRate, ) = kyber.getExpectedRate(
-        //    dai, 
-        //    IERC20(KYBER_ETH_ADDRESS), 
-        //    balanceDai
-        //  );
-        //  kyber.swapTokenToEther(dai, balanceDai, expectedRate);
+        if(arbInfo.direction == Direction.KyberToUniswap) {
+          //Buy ETH on Kyber
+          dai.approve(address(kyber), balanceDai); 
+          //(uint expectedRate, ) = kyber.getExpectedRate(
+          //  dai, 
+          //  IERC20(KYBER_ETH_ADDRESS), 
+          //  balanceDai
+          //);
+          //kyber.swapTokenToEther(dai, balanceDai, expectedRate);
+          /*
 
-        //  //Sell ETH on Uniswap
-        //  address[] memory path = new address[](2);
-        //  path[0] = address(weth);
-        //  path[1] = address(dai);
-        //  uint[] memory minOuts = uniswap.getAmountsOut(address(this).balance - 2, path); 
-        //  uniswap.swapExactETHForTokens.value(address(this).balance - 2)(
-        //    minOuts[0], 
-        //    path, 
-        //    address(this), 
-        //    now
-        //  );
-        //} else {
+          //Sell ETH on Uniswap
+          address[] memory path = new address[](2);
+          path[0] = address(weth);
+          path[1] = address(dai);
+          uint[] memory minOuts = uniswap.getAmountsOut(address(this).balance, path); 
+          uniswap.swapExactETHForTokens.value(address(this).balance)(
+            minOuts[0], 
+            path, 
+            address(this), 
+            now
+          );
+          */
+        } else {
         //  //Buy ETH on Uniswap
-        //  dai.approve(address(uniswap), balanceDai); 
-        //  address[] memory path = new address[](2);
-        //  path[0] = address(dai);
-        //  path[1] = address(weth);
-        //  uint[] memory minOuts = uniswap.getAmountsOut(balanceDai, path); 
-        //  uniswap.swapExactTokensForETH(
-        //    balanceDai, 
-        //    minOuts[0], 
-        //    path, 
-        //    address(this), 
-        //    now
-        //  );
+          dai.approve(address(uniswap), balanceDai); 
+          address[] memory path = new address[](2);
+          path[0] = address(dai);
+          path[1] = address(weth);
+          uint[] memory minOuts = uniswap.getAmountsOut(balanceDai, path); 
+          uniswap.swapExactTokensForETH(
+            balanceDai, 
+            minOuts[0], 
+            path, 
+            address(this), 
+            now
+          );
 
         //  //Sell ETH on Kyber
         //  (uint expectedRate, ) = kyber.getExpectedRate(
@@ -104,11 +113,16 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         //    dai, 
         //    address(this).balance - 2
         //  );
-        //  kyber.swapEtherToToken.value(address(this).balance - 2)(
-        //    dai, 
-        //    expectedRate
-        //  );
-        //}
+          //kyber.swapEtherToToken.value(address(this).balance)(
+          //  dai, 
+          //  1
+          //  //expectedRate
+          //);
+        }
+        balanceDai = dai.balanceOf(address(this));
+        if(balanceDai < arbInfo.repayAmount) {
+          daiFaucet.sendDai(arbInfo.repayAmount - balanceDai);
+        }
         //uint profit = dai.balanceOf(address(this)) - arbInfo.repayAmount; 
         //dai.transfer(beneficiary, profit);
         //emit NewArbitrage(arbInfo.direction, profit, now);

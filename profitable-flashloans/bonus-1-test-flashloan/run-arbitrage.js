@@ -4,11 +4,11 @@ const { ChainId, Token, TokenAmount, Pair } = require('@uniswap/sdk');
 const abis = require('./abis');
 const { mainnet: addresses } = require('./addresses');
 const Flashloan = require('./build/contracts/Flashloan.json');
+const VaultManager = require('./build/contracts/VaultManager.json');
+const DaiFaucet = require('./build/contracts/DaiFaucet.json');
 
-const web3 = new Web3(
-  new Web3.providers.WebsocketProvider(process.env.INFURA_URL)
-);
-const { address: admin } = web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
+const web3 = new Web3('http://127.0.0.1:8545');
+const admin = '0xC4D54e2C776beA8c182707b06aCE8015856abc09';
 
 const kyber = new web3.eth.Contract(
   abis.kyber.kyberNetworkProxy,
@@ -26,113 +26,80 @@ const DIRECTION = {
 
 const init = async () => {
   const networkId = await web3.eth.net.getId();
+  const daiFaucetAddress = DaiFaucet.networks[networkId].address
   const flashloan = new web3.eth.Contract(
     Flashloan.abi,
     Flashloan.networks[networkId].address
   );
-
-  const [dai, weth] = await Promise.all(
-    [addresses.tokens.dai, addresses.tokens.weth].map(tokenAddress => (
-      Token.fetchData(
-        ChainId.MAINNET,
-        tokenAddress,
-      )
-  )));
-  const daiWeth = await Pair.fetchData(
-    dai,
-    weth,
+  const vaultManager = new web3.eth.Contract(
+    VaultManager.abi,
+    VaultManager.networks[networkId].address
   );
 
-  //web3.eth.subscribe('newBlockHeaders')
-  //  .on('data', async block => {
-  //    console.log(`New block received. Block # ${block.number}`);
+  const dai = new web3.eth.Contract(
+    abis.tokens.erc20,
+    addresses.tokens.dai
+  );
 
-      const kyberResults = await Promise.all([
-          kyber
-            .methods
-            .getExpectedRate(
-              addresses.tokens.dai, 
-              '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 
-              AMOUNT_DAI_WEI
-            ) 
-            .call(),
-          kyber
-            .methods
-            .getExpectedRate(
-              '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 
-              addresses.tokens.dai, 
-              AMOUNT_ETH_WEI
-            ) 
-            .call()
-      ]);
-      const kyberRates = {
-        buy: parseFloat(1 / (kyberResults[0].expectedRate / (10 ** 18))),
-        sell: parseFloat(kyberResults[1].expectedRate / (10 ** 18))
-      };
-      console.log('Kyber ETH/DAI');
-      console.log(kyberRates);
+  const DAI_FROM_MAKER = web3.utils.toWei('30000')
 
-      const uniswapResults = await Promise.all([
-        daiWeth.getOutputAmount(new TokenAmount(dai, AMOUNT_DAI_WEI)),
-        daiWeth.getOutputAmount(new TokenAmount(weth, AMOUNT_ETH_WEI))
-      ]);
-      const uniswapRates = {
-        buy: parseFloat( AMOUNT_DAI_WEI / (uniswapResults[0][0].toExact() * 10 ** 18)),
-        sell: parseFloat(uniswapResults[1][0].toExact() / AMOUNT_ETH),
-      };
-      console.log('Uniswap ETH/DAI');
-      console.log(uniswapRates);
+  console.log(`Borrowing ${web3.utils.fromWei(DAI_FROM_MAKER)} DAI from Maker`);
+  await vaultManager
+    .methods
+    .openVault(
+      addresses.makerdao.CDP_MANAGER,
+      addresses.makerdao.MCD_JUG,
+      addresses.makerdao.MCD_JOIN_ETH_A,
+      addresses.makerdao.MCD_JOIN_DAI,
+      DAI_FROM_MAKER,
+    )
+    .send({
+      from: admin,
+      gas: 1000000,
+      gasPrice: 1,
+      value: web3.utils.toWei('60000')
+    });
+    
+  console.log(`Transfering ${web3.utils.fromWei(DAI_FROM_MAKER)} DAI to DaiFaucet`);
+  await dai
+    .methods
+    .transfer(
+      daiFaucetAddress,
+      DAI_FROM_MAKER
+    )
+    .send({
+      from: admin,
+      gas: 200000,
+      gasPrice: 1
+    });
+  const daiFaucetBalance = await dai
+    .methods
+    .balanceOf(daiFaucetAddress)
+    .call();
+  console.log(`DAI balance of DaiFaucet: ${web3.utils.fromWei(daiFaucetBalance)}`);
 
-      const [tx1, tx2] = Object.keys(DIRECTION).map(direction => flashloan.methods.initiateFlashloan(
-        addresses.dydx.solo, 
-        addresses.tokens.dai, 
-        AMOUNT_DAI_WEI,
-        DIRECTION[direction]
-      ));
-      const [gasPrice, gasCost1, gasCost2] = await Promise.all([
-        web3.eth.getGasPrice(),
-        tx1.estimateGas({from: admin}),
-        tx2.estimateGas({from: admin})
-      ]);
-      const txCost1 = parseInt(gasCost1) * parseInt(gasPrice);
-      const txCost2 = parseInt(gasCost2) * parseInt(gasPrice);
-      //const currentEthPrice = (uniswapRates.buy + uniswapRates.sell) / 2; 
-      //const profit1 = (parseInt(AMOUNT_ETH_WEI) / 10 ** 18) * (uniswapRates.sell - kyberRates.buy) - (txCost1 / 10 ** 18) * currentEthPrice;
-      //const profit2 = (parseInt(AMOUNT_ETH_WEI) / 10 ** 18) * (kyberRates.sell - uniswapRates.buy) - (txCost2 / 10 ** 18) * currentEthPrice;
-      //if(profit1 > 0) {
-        //console.log('Arb opportunity found!');
-        //console.log(`Buy ETH on Kyber at ${kyberRates.buy} dai`);
-        //console.log(`Sell ETH on Uniswap at ${uniswapRates.sell} dai`);
-        //console.log(`Expected profit: ${profit1} dai`);
-        const data = tx1.encodeABI();
-        const txData = {
-          from: admin,
-          to: flashloan.options.address,
-          data,
-          gas: gasCost1,
-          gasPrice
-        };
-        const receipt = await web3.eth.sendTransaction(txData);
-        console.log(`Transaction hash: ${receipt.transactionHash}`);
-      //} else if(profit2 > 0) {
-        //console.log('Arb opportunity found!');
-        //console.log(`Buy ETH from Uniswap at ${uniswapRates.buy} dai`);
-        //console.log(`Sell ETH from Kyber at ${kyberRates.sell} dai`);
-        //console.log(`Expected profit: ${profit2} dai`);
-        //const data = tx2.encodeABI();
-        //const txData = {
-          //from: admin,
-          //to: flashloan.options.address,
-          //data,
-          //gas: gasCost2,
-          //gasPrice
-        //};
-        //const receipt = await web3.eth.sendTransaction(txData);
-        //console.log(`Transaction hash: ${receipt.transactionHash}`);
-      //}
-    //})
-    //.on('error', error => {
-      //console.log(error);
-    //});
+  const [tx1, tx2] = Object.keys(DIRECTION).map(direction => flashloan.methods.initiateFlashloan(
+    addresses.dydx.solo, 
+    addresses.tokens.dai, 
+    AMOUNT_DAI_WEI,
+    DIRECTION[direction]
+  ));
+  let [gasPrice, gasCost1, gasCost2] = await Promise.all([
+    web3.eth.getGasPrice(),
+    600000,
+    600000,
+    //tx1.estimateGas({from: admin}),
+    //tx2.estimateGas({from: admin})
+  ]);
+  const txCost1 = parseInt(gasCost1) * parseInt(gasPrice);
+  const txCost2 = parseInt(gasCost2) * parseInt(gasPrice);
+    
+  const gasCost = 1000000; //240247
+  console.log('initiating flashloan Kyber => Uniswap');
+  const r = await tx2.send({
+    from: admin, 
+    gas: gasCost, 
+    gasPrice
+  });
 }
 init();
