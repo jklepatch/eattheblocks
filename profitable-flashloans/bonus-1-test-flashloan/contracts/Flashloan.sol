@@ -31,8 +31,6 @@ contract Flashloan is ICallee, DydxFlashloanBase {
     address beneficiary;
     address constant KYBER_ETH_ADDRESS = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
 
-    event Foo(uint balanceDai, uint repayAmount);
-
     constructor(
         address kyberAddress,
         address uniswapAddress,
@@ -59,8 +57,6 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         ArbInfo memory arbInfo = abi.decode(data, (ArbInfo));
         uint256 balanceDai = dai.balanceOf(address(this));
 
-        //emit Foo(balanceDai, arbInfo.repayAmount);
-
         // Note that you can ignore the line below
         // if your dydx account (this contract in this case)
         // has deposited at least ~2 Wei of assets into the account
@@ -72,13 +68,12 @@ contract Flashloan is ICallee, DydxFlashloanBase {
         if(arbInfo.direction == Direction.KyberToUniswap) {
           //Buy ETH on Kyber
           dai.approve(address(kyber), balanceDai); 
-          //(uint expectedRate, ) = kyber.getExpectedRate(
-          //  dai, 
-          //  IERC20(KYBER_ETH_ADDRESS), 
-          //  balanceDai
-          //);
-          //kyber.swapTokenToEther(dai, balanceDai, expectedRate);
-          /*
+          (uint expectedRate, ) = kyber.getExpectedRate(
+            dai, 
+            IERC20(KYBER_ETH_ADDRESS), 
+            balanceDai
+          );
+          kyber.swapTokenToEther(dai, balanceDai, expectedRate);
 
           //Sell ETH on Uniswap
           address[] memory path = new address[](2);
@@ -86,14 +81,13 @@ contract Flashloan is ICallee, DydxFlashloanBase {
           path[1] = address(dai);
           uint[] memory minOuts = uniswap.getAmountsOut(address(this).balance, path); 
           uniswap.swapExactETHForTokens.value(address(this).balance)(
-            minOuts[0], 
+            minOuts[1], 
             path, 
             address(this), 
             now
           );
-          */
         } else {
-        //  //Buy ETH on Uniswap
+          //Buy ETH on Uniswap
           dai.approve(address(uniswap), balanceDai); 
           address[] memory path = new address[](2);
           path[0] = address(dai);
@@ -101,23 +95,22 @@ contract Flashloan is ICallee, DydxFlashloanBase {
           uint[] memory minOuts = uniswap.getAmountsOut(balanceDai, path); 
           uniswap.swapExactTokensForETH(
             balanceDai, 
-            minOuts[0], 
+            minOuts[1], 
             path, 
             address(this), 
             now
           );
 
-        //  //Sell ETH on Kyber
-        //  (uint expectedRate, ) = kyber.getExpectedRate(
-        //    IERC20(KYBER_ETH_ADDRESS), 
-        //    dai, 
-        //    address(this).balance - 2
-        //  );
-          //kyber.swapEtherToToken.value(address(this).balance)(
-          //  dai, 
-          //  1
-          //  //expectedRate
-          //);
+          //Sell ETH on Kyber
+          (uint expectedRate, ) = kyber.getExpectedRate(
+            IERC20(KYBER_ETH_ADDRESS), 
+            dai, 
+            address(this).balance
+          );
+          kyber.swapEtherToToken.value(address(this).balance)(
+            dai, 
+            expectedRate
+          );
         }
         balanceDai = dai.balanceOf(address(this));
         if(balanceDai < arbInfo.repayAmount) {
@@ -162,4 +155,6 @@ contract Flashloan is ICallee, DydxFlashloanBase {
 
         solo.operate(accountInfos, operations);
     }
+
+    function() external payable {}
 }

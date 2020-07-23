@@ -10,6 +10,10 @@ contract DaiFaucet {
   }
 
   function sendDai(uint amount) external {
+    require(
+      dai.balanceOf(address(this)) >= amount, 
+      'Not enough dai in the faucet'
+    );
     dai.transfer(msg.sender, amount);
   }
 }

@@ -4,20 +4,26 @@
   "description": "",
   "main": "run-arbitrage.js",
   "scripts": {
-    "fork": "ganache-cli --fork REPLACE_WITH_INFURA_URL --account='0xREPLACE_WITH_PRIVATE_KEY,1000000000000000000000'",
-    "deploy": "truffle migrate --reset --network mainnetFork"
+    "fork": "ganache-cli --fork REPLACE_BY_INFURA_MAINNET_URL --account='REPLACE_BY_YOUR_ADDRESS,1000000000000000000000000'",
+    "deploy:fork": "truffle migrate --reset --network mainnetFork",
+    "deploy:kovan": "truffle migrate --reset --network kovan",
+    "arbitrage:fork": "node run-arbitrage-fork.js",
+    "arbitrage:kovan": "node run-arbitrage-kovan.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@studydefi/money-legos": "^2.3.3",
-    "@truffle/hdwallet-provider": "^1.0.35",
+    "@truffle/hdwallet-provider": "^1.0.39",
     "@uniswap/sdk": "^2.0.5",
     "dotenv": "^8.2.0",
     "web3": "^1.2.9"
   },
   "engines": {
     "node": "12.x"
+  },
+  "devDependencies": {
+    "@truffle/contract": "^4.2.13"
   }
 }

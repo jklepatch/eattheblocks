@@ -17,7 +17,6 @@ contract VaultManager is DssProxyActionsBase {
         bytes32 ilk = bytes32("ETH-A");
         uint cdp = open(manager, ilk, address(this));
 
-
         address urn = ManagerLike(manager).urns(cdp);
         address vat = ManagerLike(manager).vat();
         // Receives ETH amount, converts it to WETH and joins it into the vat
