@@ -98,14 +98,12 @@ const init = async () => {
         const txCost = parseInt(gasCost) * parseInt(gasPrice);
         const currentEthPrice = (uniswapRates.buy + uniswapRates.sell) / 2; 
         const profit = (parseInt(AMOUNT_ETH_WEI) / 10 ** 18) * (uniswapRates.sell - kyberRates.buy) - (txCost / 10 ** 18) * currentEthPrice;
-        console.log(profit);
 
         if(profit > 0) {
           console.log('Arb opportunity found!');
           console.log(`Buy ETH on Kyber at ${kyberRates.buy} dai`);
           console.log(`Sell ETH on Uniswap at ${uniswapRates.sell} dai`);
           console.log(`Expected profit: ${profit} dai`);
-          return;
           const data = tx.encodeABI();
           const txData = {
             from: admin,
