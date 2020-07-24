@@ -83,52 +83,73 @@ const init = async () => {
       console.log('Uniswap ETH/DAI');
       console.log(uniswapRates);
 
-      const [tx1, tx2] = Object.keys(DIRECTION).map(direction => flashloan.methods.initiateFlashloan(
-        addresses.dydx.solo, 
-        addresses.tokens.dai, 
-        AMOUNT_DAI_WEI,
-        DIRECTION[direction]
-      ));
-      const [gasPrice, gasCost1, gasCost2] = await Promise.all([
-        web3.eth.getGasPrice(),
-        tx1.estimateGas({from: admin}),
-        tx2.estimateGas({from: admin})
-      ]);
-      const txCost1 = parseInt(gasCost1) * parseInt(gasPrice);
-      const txCost2 = parseInt(gasCost2) * parseInt(gasPrice);
-      const currentEthPrice = (uniswapRates.buy + uniswapRates.sell) / 2; 
-      const profit1 = (parseInt(AMOUNT_ETH_WEI) / 10 ** 18) * (uniswapRates.sell - kyberRates.buy) - (txCost1 / 10 ** 18) * currentEthPrice;
-      const profit2 = (parseInt(AMOUNT_ETH_WEI) / 10 ** 18) * (kyberRates.sell - uniswapRates.buy) - (txCost2 / 10 ** 18) * currentEthPrice;
-      if(profit1 > 0) {
-        console.log('Arb opportunity found!');
-        console.log(`Buy ETH on Kyber at ${kyberRates.buy} dai`);
-        console.log(`Sell ETH on Uniswap at ${uniswapRates.sell} dai`);
-        console.log(`Expected profit: ${profit1} dai`);
-        const data = tx1.encodeABI();
-        const txData = {
-          from: admin,
-          to: flashloan.options.address,
-          data,
-          gas: gasCost1,
-          gasPrice
-        };
-        const receipt = await web3.eth.sendTransaction(txData);
-        console.log(`Transaction hash: ${receipt.transactionHash}`);
-      } else if(profit2 > 0) {
-        console.log('Arb opportunity found!');
-        console.log(`Buy ETH from Uniswap at ${uniswapRates.buy} dai`);
-        console.log(`Sell ETH from Kyber at ${kyberRates.sell} dai`);
-        console.log(`Expected profit: ${profit2} dai`);
-        const data = tx2.encodeABI();
-        const txData = {
-          from: admin,
-          to: flashloan.options.address,
-          data,
-          gas: gasCost2,
-          gasPrice
-        };
-        const receipt = await web3.eth.sendTransaction(txData);
-        console.log(`Transaction hash: ${receipt.transactionHash}`);
+      if(kyberRates.buy < uniswapRates.sell) {
+        const tx = flashloan.methods.initiateFlashloan(
+          addresses.dydx.solo, 
+          addresses.tokens.dai, 
+          AMOUNT_DAI_WEI,
+          DIRECTION.KYBER_TO_UNISWAP
+        );
+        const [gasPrice, gasCost] = await Promise.all([
+          web3.eth.getGasPrice(),
+          tx.estimateGas({from: admin}),
+        ]);
+
+        const txCost = parseInt(gasCost) * parseInt(gasPrice);
+        const currentEthPrice = (uniswapRates.buy + uniswapRates.sell) / 2; 
+        const profit = (parseInt(AMOUNT_ETH_WEI) / 10 ** 18) * (uniswapRates.sell - kyberRates.buy) - (txCost / 10 ** 18) * currentEthPrice;
+        console.log(profit);
+
+        if(profit > 0) {
+          console.log('Arb opportunity found!');
+          console.log(`Buy ETH on Kyber at ${kyberRates.buy} dai`);
+          console.log(`Sell ETH on Uniswap at ${uniswapRates.sell} dai`);
+          console.log(`Expected profit: ${profit} dai`);
+          return;
+          const data = tx.encodeABI();
+          const txData = {
+            from: admin,
+            to: flashloan.options.address,
+            data,
+            gas: gasCost,
+            gasPrice
+          };
+          const receipt = await web3.eth.sendTransaction(txData);
+          console.log(`Transaction hash: ${receipt.transactionHash}`);
+        }
+      }
+
+      if(uniswapRates.buy < kyber.sell) {
+        const tx = flashloan.methods.initiateFlashloan(
+          addresses.dydx.solo, 
+          addresses.tokens.dai, 
+          AMOUNT_DAI_WEI,
+          DIRECTION.UNISWAP_TO_KYBER
+        );
+        const [gasPrice, gasCost] = await Promise.all([
+          web3.eth.getGasPrice(),
+          tx.estimateGas({from: admin}),
+        ]);
+        const txCost = parseInt(gasCost) * parseInt(gasPrice);
+        const currentEthPrice = (uniswapRates.buy + uniswapRates.sell) / 2; 
+        const profit = (parseInt(AMOUNT_ETH_WEI) / 10 ** 18) * (kyberRates.sell - uniswapRates.buy) - (txCost / 10 ** 18) * currentEthPrice;
+
+        if(profit > 0) {
+          console.log('Arb opportunity found!');
+          console.log(`Buy ETH from Uniswap at ${uniswapRates.buy} dai`);
+          console.log(`Sell ETH from Kyber at ${kyberRates.sell} dai`);
+          console.log(`Expected profit: ${profit} dai`);
+          const data = tx.encodeABI();
+          const txData = {
+            from: admin,
+            to: flashloan.options.address,
+            data,
+            gas: gasCost,
+            gasPrice
+          };
+          const receipt = await web3.eth.sendTransaction(txData);
+          console.log(`Transaction hash: ${receipt.transactionHash}`);
+        }
       }
     })
     .on('error', error => {
