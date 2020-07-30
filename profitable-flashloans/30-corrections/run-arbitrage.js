@@ -24,10 +24,10 @@ const DIRECTION = {
 
 const init = async () => {
   const networkId = await web3.eth.net.getId();
-  const flashloan = new web3.eth.Contract(
-    Flashloan.abi,
-    Flashloan.networks[networkId].address
-  );
+  //const flashloan = new web3.eth.Contract(
+  //  Flashloan.abi,
+  //  Flashloan.networks[networkId].address
+  //);
   
   let ethPrice;
   const updateEthPrice = async () => {
@@ -88,8 +88,8 @@ const init = async () => {
       const daiFromKyber = ethFromUniswap.mul(web3.utils.toBN(amountsDai[0].expectedRate)).div(ONE_WEI);
       const daiFromUniswap = web3.utils.toBN(amountsDai[1][0].raw.toString());
 
-      console.log(`Kyber -> Uniswap. Dai input / output: ${AMOUNT_DAI_WEI.toString()} / ${daiFromUniswap.toString()}`);
-      console.log(`Uniswap -> Kyber. Dai input / output: ${AMOUNT_DAI_WEI.toString()} / ${daiFromKyber.toString()}`);
+      console.log(`Kyber -> Uniswap. Dai input / output: ${web3.utils.fromWei(AMOUNT_DAI_WEI.toString())} / ${web3.utils.fromWei(daiFromUniswap.toString())}`);
+      console.log(`Uniswap -> Kyber. Dai input / output: ${web3.utils.fromWei(AMOUNT_DAI_WEI.toString())} / ${web3.utils.fromWei(daiFromKyber.toString())}`);
 
       if(daiFromUniswap.gt(AMOUNT_DAI_WEI)) {
         const tx = flashloan.methods.initiateFlashloan(
@@ -108,7 +108,7 @@ const init = async () => {
 
         if(profit > 0) {
           console.log('Arb opportunity found Kyber -> Uniswap!');
-          console.log(`Expected profit: ${profit} Dai`);
+          console.log(`Expected profit: ${web3.utils.fromWei(profit)} Dai`);
           const data = tx.encodeABI();
           const txData = {
             from: admin,
@@ -138,7 +138,7 @@ const init = async () => {
 
         if(profit > 0) {
           console.log('Arb opportunity found Uniswap -> Kyber!');
-          console.log(`Expected profit: ${profit} Dai`);
+          console.log(`Expected profit: ${web3.utils.fromWei(profit)} Dai`);
           const data = tx.encodeABI();
           const txData = {
             from: admin,
