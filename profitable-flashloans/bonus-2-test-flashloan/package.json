@@ -1,0 +1,23 @@
+{
+  "name": "10-connect-to-blockchain-with-web3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run-arbitrage.js",
+  "scripts": {
+    "fork": "ganache-cli --fork wss://mainnet.infura.io/ws/v3/d246db9a5bd84a9ea93abb161c4a511b --account='0xa2ef844945ad2c208b163ef718f51d5dd60788f7561d72918a88e92df4a7beeb,1000000000000000000000'",
+    "deploy": "truffle migrate --reset --network mainnetFork"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@studydefi/money-legos": "^2.3.3",
+    "@truffle/hdwallet-provider": "^1.0.35",
+    "@uniswap/sdk": "^2.0.5",
+    "dotenv": "^8.2.0",
+    "web3": "^1.2.9"
+  },
+  "engines": {
+    "node": "12.x"
+  }
+}

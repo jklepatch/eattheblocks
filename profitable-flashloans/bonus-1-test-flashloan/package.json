@@ -4,7 +4,7 @@
   "description": "",
   "main": "run-arbitrage.js",
   "scripts": {
-    "fork": "ganache-cli --fork REPLACE_BY_INFURA_MAINNET_URL --account='REPLACE_BY_YOUR_ADDRESS,1000000000000000000000000'",
+    "fork": "ganache-cli --fork REPLACE_BY_INFURA_MAINNET_URL --account='REPLACE_BY_PRIVATE_KEY,1000000000000000000000000'",
     "deploy:fork": "truffle migrate --reset --network mainnetFork",
     "deploy:kovan": "truffle migrate --reset --network kovan",
     "arbitrage:fork": "node run-arbitrage-fork.js",
