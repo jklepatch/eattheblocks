@@ -33,6 +33,7 @@ contract MyDeFiProject {
     address[] memory path = new address[](2);
     path[0] = address(DAI);
     path[1] = uniswap.WETH();
+    IERC20(token).approve(address(uniswap), amountIn);
     uniswap.swapExactTokensForETH(
       amountIn, 
       amountOutMin, 
