@@ -1,0 +1,542 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "lockfileVersion": 1,
+  "requires": true,
+  "dependencies": {
+    "@ethersproject/abi": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/abi/-/abi-5.0.2.tgz",
+      "integrity": "sha512-Z+5f7xOgtRLu/W2l9Ry5xF7ehh9QVQ0m1vhynmTcS7DMfHgqTd1/PDFC62aw91ZPRCRZsYdZJu8ymokC5e1JSw==",
+      "requires": {
+        "@ethersproject/address": "^5.0.0",
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/constants": "^5.0.0",
+        "@ethersproject/hash": "^5.0.0",
+        "@ethersproject/keccak256": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0"
+      }
+    },
+    "@ethersproject/abstract-provider": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/abstract-provider/-/abstract-provider-5.0.2.tgz",
+      "integrity": "sha512-U1s60+nG02x8FKNMoVNI6MG8SguWCoG9HJtwOqWZ38LBRMsDV4c0w4izKx98kcsN3wXw4U2/YAyJ9LlH7+/hkg==",
+      "requires": {
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/networks": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/transactions": "^5.0.0",
+        "@ethersproject/web": "^5.0.0"
+      }
+    },
+    "@ethersproject/abstract-signer": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/abstract-signer/-/abstract-signer-5.0.2.tgz",
+      "integrity": "sha512-CzzXbeqKlgayE4YTnvvreGBG3n+HxakGXrxaGM6LjBZnOOIVSYi6HMFG8ZXls7UspRY4hvMrtnKEJKDCOngSBw==",
+      "requires": {
+        "@ethersproject/abstract-provider": "^5.0.0",
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0"
+      }
+    },
+    "@ethersproject/address": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/address/-/address-5.0.2.tgz",
+      "integrity": "sha512-+rz26RKj7ujGfQynys4V9VJRbR+wpC6eL8F22q3raWMH3152Ha31GwJPWzxE/bEA+43M/zTNVwY0R53gn53L2Q==",
+      "requires": {
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/keccak256": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/rlp": "^5.0.0",
+        "bn.js": "^4.4.0"
+      }
+    },
+    "@ethersproject/base64": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/base64/-/base64-5.0.2.tgz",
+      "integrity": "sha512-0FE5RH5cUDddOiQEDpWtyHjkSW4D5/rdJzA3KTZo8Fk5ab/Y8vdzqbamsXPyPsXU3gS+zCE5Qq4EKVOWlWLLTA==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0"
+      }
+    },
+    "@ethersproject/basex": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/basex/-/basex-5.0.2.tgz",
+      "integrity": "sha512-p4m2CeQqI9vma3XipRbP2iDf6zTsbroE0MEXBAYXidsoJQSvePKrC6MVRKfTzfcHej1b9wfmjVBzqhqn3FRhIA==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0"
+      }
+    },
+    "@ethersproject/bignumber": {
+      "version": "5.0.5",
+      "resolved": "https://registry.npmjs.org/@ethersproject/bignumber/-/bignumber-5.0.5.tgz",
+      "integrity": "sha512-24ln7PV0g8ZzjcVZiLW9Wod0i+XCmK6zKkAaxw5enraTIT1p7gVOcSXFSzNQ9WYAwtiFQPvvA+TIO2oEITZNJA==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "bn.js": "^4.4.0"
+      }
+    },
+    "@ethersproject/bytes": {
+      "version": "5.0.3",
+      "resolved": "https://registry.npmjs.org/@ethersproject/bytes/-/bytes-5.0.3.tgz",
+      "integrity": "sha512-AyPMAlY+Amaw4Zfp8OAivm1xYPI8mqiUYmEnSUk1CnS2NrQGHEMmFJFiOJdS3gDDpgSOFhWIjZwxKq2VZpqNTA==",
+      "requires": {
+        "@ethersproject/logger": "^5.0.0"
+      }
+    },
+    "@ethersproject/constants": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/constants/-/constants-5.0.2.tgz",
+      "integrity": "sha512-nNoVlNP6bgpog7pQ2EyD1xjlaXcy1Cl4kK5v1KoskHj58EtB6TK8M8AFGi3GgHTdMldfT4eN3OsoQ/CdOTVNFA==",
+      "requires": {
+        "@ethersproject/bignumber": "^5.0.0"
+      }
+    },
+    "@ethersproject/contracts": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/contracts/-/contracts-5.0.2.tgz",
+      "integrity": "sha512-Ud3oW8mBNIWE+WHRjvwVEwfvshn7lfYWSSKG0fPSb6baRN9mLOoNguX+VIv3W5Sne9w2utnBmxLF2ESXitw64A==",
+      "requires": {
+        "@ethersproject/abi": "^5.0.0",
+        "@ethersproject/abstract-provider": "^5.0.0",
+        "@ethersproject/abstract-signer": "^5.0.0",
+        "@ethersproject/address": "^5.0.0",
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/constants": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0"
+      }
+    },
+    "@ethersproject/hash": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/hash/-/hash-5.0.2.tgz",
+      "integrity": "sha512-dWGvNwmVRX2bxoQQ3ciMw46Vzl1nqfL+5R8+2ZxsRXD3Cjgw1dL2mdjJF7xMMWPvPdrlhKXWSK0gb8VLwHZ8Cw==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/keccak256": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0"
+      }
+    },
+    "@ethersproject/hdnode": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/hdnode/-/hdnode-5.0.2.tgz",
+      "integrity": "sha512-QAUI5tfseTFqv00Vnbwzofqse81wN9TaL+x5GufTHIHJXgVdguxU+l39E3VYDCmO+eVAA6RCn5dJgeyra+PU2g==",
+      "requires": {
+        "@ethersproject/abstract-signer": "^5.0.0",
+        "@ethersproject/basex": "^5.0.0",
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/pbkdf2": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/sha2": "^5.0.0",
+        "@ethersproject/signing-key": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0",
+        "@ethersproject/transactions": "^5.0.0",
+        "@ethersproject/wordlists": "^5.0.0"
+      }
+    },
+    "@ethersproject/json-wallets": {
+      "version": "5.0.4",
+      "resolved": "https://registry.npmjs.org/@ethersproject/json-wallets/-/json-wallets-5.0.4.tgz",
+      "integrity": "sha512-jqtb+X3rJXWG/w+Qyr7vq1V+fdc5jiLlyc6akwI3SQIHTfcuuyF+eZRd9u2/455urNwV3nuCsnrgxs2NrtHHIw==",
+      "requires": {
+        "@ethersproject/abstract-signer": "^5.0.0",
+        "@ethersproject/address": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/hdnode": "^5.0.0",
+        "@ethersproject/keccak256": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/pbkdf2": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/random": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0",
+        "@ethersproject/transactions": "^5.0.0",
+        "aes-js": "3.0.0",
+        "scrypt-js": "3.0.1"
+      }
+    },
+    "@ethersproject/keccak256": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/keccak256/-/keccak256-5.0.2.tgz",
+      "integrity": "sha512-MbroXutc0gPNYIrUjS4Aw0lDuXabdzI7+l7elRWr1G6G+W0v00e/3gbikWkCReGtt2Jnt4lQSgnflhDwQGcIhA==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "js-sha3": "0.5.7"
+      }
+    },
+    "@ethersproject/logger": {
+      "version": "5.0.4",
+      "resolved": "https://registry.npmjs.org/@ethersproject/logger/-/logger-5.0.4.tgz",
+      "integrity": "sha512-alA2LiAy1LdQ/L1SA9ajUC7MvGAEQLsICEfKK4erX5qhkXE1LwLSPIzobtOWFsMHf2yrXGKBLnnpuVHprI3sAw=="
+    },
+    "@ethersproject/networks": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/networks/-/networks-5.0.2.tgz",
+      "integrity": "sha512-T7HVd62D4izNU2tDHf6xUDo7k4JOGX4Lk7vDmVcDKrepSWwL2OmGWrqSlkRe2a1Dnz4+1VPE6fb6+KsmSRe82g==",
+      "requires": {
+        "@ethersproject/logger": "^5.0.0"
+      }
+    },
+    "@ethersproject/pbkdf2": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/pbkdf2/-/pbkdf2-5.0.2.tgz",
+      "integrity": "sha512-OJFxdX/VtGI5M04lAzXKEOb76XBzjCOzGyko3/bMWat3ePAw7RveBOLyhm79SBs2fh21MSYgdG6JScEMHoSImw==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/sha2": "^5.0.0"
+      }
+    },
+    "@ethersproject/properties": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/properties/-/properties-5.0.2.tgz",
+      "integrity": "sha512-FxAisPGAOACQjMJzewl9OJG6lsGCPTm5vpUMtfeoxzAlAb2lv+kHzQPUh9h4jfAILzE8AR1jgXMzRmlhwyra1Q==",
+      "requires": {
+        "@ethersproject/logger": "^5.0.0"
+      }
+    },
+    "@ethersproject/providers": {
+      "version": "5.0.5",
+      "resolved": "https://registry.npmjs.org/@ethersproject/providers/-/providers-5.0.5.tgz",
+      "integrity": "sha512-ZR3yFg/m8qDl7317yXOHE7tKeGfoyZIZ/imhVC4JqAH+SX1rb6bdZcSjhJfet7rLmnJSsnYLTgIiVIT85aVLgg==",
+      "requires": {
+        "@ethersproject/abstract-provider": "^5.0.0",
+        "@ethersproject/abstract-signer": "^5.0.0",
+        "@ethersproject/address": "^5.0.0",
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/constants": "^5.0.0",
+        "@ethersproject/hash": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/networks": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/random": "^5.0.0",
+        "@ethersproject/rlp": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0",
+        "@ethersproject/transactions": "^5.0.0",
+        "@ethersproject/web": "^5.0.0",
+        "ws": "7.2.3"
+      }
+    },
+    "@ethersproject/random": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/random/-/random-5.0.2.tgz",
+      "integrity": "sha512-kLeS+6bwz37WR2zbe69gudyoGVoUzljQO0LhifnATsZ7rW0JZ9Zgt0h5aXY7tqFDo9TvdqeCwUFdp1t3T5Fkhg==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0"
+      }
+    },
+    "@ethersproject/rlp": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/rlp/-/rlp-5.0.2.tgz",
+      "integrity": "sha512-oE0M5jqQ67fi2SuMcrpoewOpEuoXaD8M9JeR9md1bXRMvDYgKXUtDHs22oevpEOdnO2DPIRabp6MVHa4aDuWmw==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0"
+      }
+    },
+    "@ethersproject/sha2": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/sha2/-/sha2-5.0.2.tgz",
+      "integrity": "sha512-VFl4qSStjQZaygpqoAHswaCY59qBm1Sm0rf8iv0tmgVsRf0pBg2nJaNf9NXXvcuJ9AYPyXl57dN8kozdC4z5Cg==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "hash.js": "1.1.3"
+      },
+      "dependencies": {
+        "hash.js": {
+          "version": "1.1.3",
+          "resolved": "https://registry.npmjs.org/hash.js/-/hash.js-1.1.3.tgz",
+          "integrity": "sha512-/UETyP0W22QILqS+6HowevwhEFJ3MBJnwTf75Qob9Wz9t0DPuisL8kW8YZMK62dHAKE1c1p+gY1TtOLY+USEHA==",
+          "requires": {
+            "inherits": "^2.0.3",
+            "minimalistic-assert": "^1.0.0"
+          }
+        }
+      }
+    },
+    "@ethersproject/signing-key": {
+      "version": "5.0.3",
+      "resolved": "https://registry.npmjs.org/@ethersproject/signing-key/-/signing-key-5.0.3.tgz",
+      "integrity": "sha512-5QPZaBRGCLzfVMbFb3LcVjNR0UbTXnwDHASnQYfbzwUOnFYHKxHsrcbl/5ONGoppgi8yXgOocKqlPCFycJJVWQ==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "elliptic": "6.5.3"
+      }
+    },
+    "@ethersproject/solidity": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/solidity/-/solidity-5.0.2.tgz",
+      "integrity": "sha512-RygurUe1hPW1LDYAPXy4471AklGWNnxgFWc3YUE6H11gzkit26jr6AyZH4Yyjw38eBBL6j0AOfQzMWm+NhxZ9g==",
+      "requires": {
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/keccak256": "^5.0.0",
+        "@ethersproject/sha2": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0"
+      }
+    },
+    "@ethersproject/strings": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/strings/-/strings-5.0.2.tgz",
+      "integrity": "sha512-oNa+xvSqsFU96ndzog0IBTtsRFGOqGpzrXJ7shXLBT7juVeSEyZA/sYs0DMZB5mJ9FEjHdZKxR/rTyBY91vuXg==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/constants": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0"
+      }
+    },
+    "@ethersproject/transactions": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/transactions/-/transactions-5.0.2.tgz",
+      "integrity": "sha512-jZp0ZbbJlq4JLZY6qoMzNtp2HQsX6USQposi3ns0MPUdn3OdZJBDtrcO15r/2VS5t/K1e1GE5MI1HmMKlcTbbQ==",
+      "requires": {
+        "@ethersproject/address": "^5.0.0",
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/constants": "^5.0.0",
+        "@ethersproject/keccak256": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/rlp": "^5.0.0",
+        "@ethersproject/signing-key": "^5.0.0"
+      }
+    },
+    "@ethersproject/units": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/units/-/units-5.0.2.tgz",
+      "integrity": "sha512-PSuzycBA1zmRysTtKtp+XYZ3HIJfbmfRdZchOUxdyeGo5siUi9H6mYQcxdJHv82oKp/FniMj8qS8qtLQThhOEg==",
+      "requires": {
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/constants": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0"
+      }
+    },
+    "@ethersproject/wallet": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/wallet/-/wallet-5.0.2.tgz",
+      "integrity": "sha512-gg86ynLV5k5caNnYpJoYc6WyIUHKMTjOITCk5zXGyVbbkXE07y/fGql4A51W0C6mWkeb5Mzz8AKqzHZECdH30w==",
+      "requires": {
+        "@ethersproject/abstract-provider": "^5.0.0",
+        "@ethersproject/abstract-signer": "^5.0.0",
+        "@ethersproject/address": "^5.0.0",
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/hash": "^5.0.0",
+        "@ethersproject/hdnode": "^5.0.0",
+        "@ethersproject/json-wallets": "^5.0.0",
+        "@ethersproject/keccak256": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/random": "^5.0.0",
+        "@ethersproject/signing-key": "^5.0.0",
+        "@ethersproject/transactions": "^5.0.0",
+        "@ethersproject/wordlists": "^5.0.0"
+      }
+    },
+    "@ethersproject/web": {
+      "version": "5.0.3",
+      "resolved": "https://registry.npmjs.org/@ethersproject/web/-/web-5.0.3.tgz",
+      "integrity": "sha512-9WoIWNxbFOk+8TiWqQMQbYJUIFeC1Z7zNr7oCHpVyhxF0EY54ZVXlP/Y7VJ7KzK++A/iMGOuTIGeL5sMqa2QMg==",
+      "requires": {
+        "@ethersproject/base64": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0"
+      }
+    },
+    "@ethersproject/wordlists": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/@ethersproject/wordlists/-/wordlists-5.0.2.tgz",
+      "integrity": "sha512-6vKDQcjjpnfdSCr0+jNxpFH3ieKxUPkm29tQX2US7a3zT/sJU/BGlKBR7D8oOpwdE0hpkHhJyMlypRBK+A2avA==",
+      "requires": {
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/hash": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0"
+      }
+    },
+    "@uniswap/sdk": {
+      "version": "3.0.3-beta.1",
+      "resolved": "https://registry.npmjs.org/@uniswap/sdk/-/sdk-3.0.3-beta.1.tgz",
+      "integrity": "sha512-8MqfVDXAHHcAnUxBAaoHdeGmLUc8Tu4GZ4n7kLabKlF2b4RUS/jnuUIdzOR9QPMdY/avw3gH/OtTxH2elDNShw==",
+      "requires": {
+        "@uniswap/v2-core": "^1.0.0",
+        "big.js": "^5.2.2",
+        "decimal.js-light": "^2.5.0",
+        "jsbi": "^3.1.1",
+        "tiny-invariant": "^1.1.0",
+        "tiny-warning": "^1.0.3",
+        "toformat": "^2.0.0"
+      }
+    },
+    "@uniswap/v2-core": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@uniswap/v2-core/-/v2-core-1.0.1.tgz",
+      "integrity": "sha512-MtybtkUPSyysqLY2U210NBDeCHX+ltHt3oADGdjqoThZaFRDKwM6k1Nb3F0A3hk5hwuQvytFWhrWHOEq6nVJ8Q=="
+    },
+    "aes-js": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/aes-js/-/aes-js-3.0.0.tgz",
+      "integrity": "sha1-4h3xCtbCBTKVvLuNq0Cwnb6ofk0="
+    },
+    "big.js": {
+      "version": "5.2.2",
+      "resolved": "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz",
+      "integrity": "sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ=="
+    },
+    "bn.js": {
+      "version": "4.11.9",
+      "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-4.11.9.tgz",
+      "integrity": "sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw=="
+    },
+    "brorand": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/brorand/-/brorand-1.1.0.tgz",
+      "integrity": "sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8="
+    },
+    "decimal.js-light": {
+      "version": "2.5.0",
+      "resolved": "https://registry.npmjs.org/decimal.js-light/-/decimal.js-light-2.5.0.tgz",
+      "integrity": "sha512-b3VJCbd2hwUpeRGG3Toob+CRo8W22xplipNhP3tN7TSVB/cyMX71P1vM2Xjc9H74uV6dS2hDDmo/rHq8L87Upg=="
+    },
+    "elliptic": {
+      "version": "6.5.3",
+      "resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.5.3.tgz",
+      "integrity": "sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==",
+      "requires": {
+        "bn.js": "^4.4.0",
+        "brorand": "^1.0.1",
+        "hash.js": "^1.0.0",
+        "hmac-drbg": "^1.0.0",
+        "inherits": "^2.0.1",
+        "minimalistic-assert": "^1.0.0",
+        "minimalistic-crypto-utils": "^1.0.0"
+      }
+    },
+    "ethers": {
+      "version": "5.0.8",
+      "resolved": "https://registry.npmjs.org/ethers/-/ethers-5.0.8.tgz",
+      "integrity": "sha512-of/rPgJ7E3yyBADUv5A7Gtkd7EB8ta/T9NS5CCG9tj9cifnXcI3KIdYQ7d8AS+9vm38pR1g6S5I+Q/mRnlQZlg==",
+      "requires": {
+        "@ethersproject/abi": "^5.0.0",
+        "@ethersproject/abstract-provider": "^5.0.0",
+        "@ethersproject/abstract-signer": "^5.0.0",
+        "@ethersproject/address": "^5.0.0",
+        "@ethersproject/base64": "^5.0.0",
+        "@ethersproject/basex": "^5.0.0",
+        "@ethersproject/bignumber": "^5.0.0",
+        "@ethersproject/bytes": "^5.0.0",
+        "@ethersproject/constants": "^5.0.0",
+        "@ethersproject/contracts": "^5.0.0",
+        "@ethersproject/hash": "^5.0.0",
+        "@ethersproject/hdnode": "^5.0.0",
+        "@ethersproject/json-wallets": "^5.0.0",
+        "@ethersproject/keccak256": "^5.0.0",
+        "@ethersproject/logger": "^5.0.0",
+        "@ethersproject/networks": "^5.0.0",
+        "@ethersproject/pbkdf2": "^5.0.0",
+        "@ethersproject/properties": "^5.0.0",
+        "@ethersproject/providers": "^5.0.0",
+        "@ethersproject/random": "^5.0.0",
+        "@ethersproject/rlp": "^5.0.0",
+        "@ethersproject/sha2": "^5.0.0",
+        "@ethersproject/signing-key": "^5.0.0",
+        "@ethersproject/solidity": "^5.0.0",
+        "@ethersproject/strings": "^5.0.0",
+        "@ethersproject/transactions": "^5.0.0",
+        "@ethersproject/units": "^5.0.0",
+        "@ethersproject/wallet": "^5.0.0",
+        "@ethersproject/web": "^5.0.0",
+        "@ethersproject/wordlists": "^5.0.0"
+      }
+    },
+    "hash.js": {
+      "version": "1.1.7",
+      "resolved": "https://registry.npmjs.org/hash.js/-/hash.js-1.1.7.tgz",
+      "integrity": "sha512-taOaskGt4z4SOANNseOviYDvjEJinIkRgmp7LbKP2YTTmVxWBl87s/uzK9r+44BclBSp2X7K1hqeNfz9JbBeXA==",
+      "requires": {
+        "inherits": "^2.0.3",
+        "minimalistic-assert": "^1.0.1"
+      }
+    },
+    "hmac-drbg": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/hmac-drbg/-/hmac-drbg-1.0.1.tgz",
+      "integrity": "sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=",
+      "requires": {
+        "hash.js": "^1.0.3",
+        "minimalistic-assert": "^1.0.0",
+        "minimalistic-crypto-utils": "^1.0.1"
+      }
+    },
+    "inherits": {
+      "version": "2.0.4",
+      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ=="
+    },
+    "js-sha3": {
+      "version": "0.5.7",
+      "resolved": "https://registry.npmjs.org/js-sha3/-/js-sha3-0.5.7.tgz",
+      "integrity": "sha1-DU/9gALVMzqrr0oj7tL2N0yfKOc="
+    },
+    "jsbi": {
+      "version": "3.1.3",
+      "resolved": "https://registry.npmjs.org/jsbi/-/jsbi-3.1.3.tgz",
+      "integrity": "sha512-nBJqA0C6Qns+ZxurbEoIR56wyjiUszpNy70FHvxO5ervMoCbZVE3z3kxr5nKGhlxr/9MhKTSUBs7cAwwuf3g9w=="
+    },
+    "minimalistic-assert": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz",
+      "integrity": "sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A=="
+    },
+    "minimalistic-crypto-utils": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz",
+      "integrity": "sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo="
+    },
+    "scrypt-js": {
+      "version": "3.0.1",
+      "resolved": "https://registry.npmjs.org/scrypt-js/-/scrypt-js-3.0.1.tgz",
+      "integrity": "sha512-cdwTTnqPu0Hyvf5in5asVdZocVDTNRmR7XEcJuIzMjJeSHybHl7vpB66AzwTaIg6CLSbtjcxc8fqcySfnTkccA=="
+    },
+    "tiny-invariant": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.1.0.tgz",
+      "integrity": "sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw=="
+    },
+    "tiny-warning": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz",
+      "integrity": "sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA=="
+    },
+    "toformat": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/toformat/-/toformat-2.0.0.tgz",
+      "integrity": "sha512-03SWBVop6nU8bpyZCx7SodpYznbZF5R4ljwNLBcTQzKOD9xuihRo/psX58llS1BMFhhAI08H3luot5GoXJz2pQ=="
+    },
+    "ws": {
+      "version": "7.2.3",
+      "resolved": "https://registry.npmjs.org/ws/-/ws-7.2.3.tgz",
+      "integrity": "sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ=="
+    }
+  }
+}

@@ -30,10 +30,10 @@ async function main(args) {
     console.error(`Invalid amount: ${args[1]}`);
     process.exit(1);
   }
-  const valueFormatted = ethers.utils.formatUnits(value, 6);
 
   const balance = await usdc.balanceOf(account.address);
   if (balance.lt(value)) {
+    const valueFormatted = ethers.utils.formatUnits(value, 6);
     const balanceFormatted = ethers.utils.formatUnits(balance, 6);
 
     console.error(
