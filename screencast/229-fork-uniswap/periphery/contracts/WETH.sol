@@ -32,7 +32,7 @@ contract WETH {
     mapping (address => uint)                       public  balanceOf;
     mapping (address => mapping (address => uint))  public  allowance;
 
-    constructor() public payable {
+    receive() external payable {
         deposit();
     }
     function deposit() public payable {
