@@ -70,6 +70,7 @@ contract ICO {
           'Not enough tokens left for sale'
         );
         dai.transferFrom(msg.sender, address(this), daiAmount);
+        token.mint(address(this), tokenAmount);
         sales[msg.sender] = Sale(
             msg.sender,
             tokenAmount,
