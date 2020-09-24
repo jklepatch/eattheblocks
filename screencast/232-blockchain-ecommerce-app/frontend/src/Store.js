@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ethers } from 'ethers';
 import axios from 'axios';
 
@@ -18,10 +18,6 @@ const ITEMS = [
 function Store({ paymentProcessor, dai }) {
   const buy = async item => {
     const response1 = await axios.get(`${API_URL}/api/getPaymentId/${item.id}`);
-    console.log(response1);
-
-    //console.log(paymentProcessor.address);
-    //console.log(item.price);
 
     const tx1 = await dai.approve(paymentProcessor.address, item.price);  
     await tx1.wait();
@@ -29,11 +25,9 @@ function Store({ paymentProcessor, dai }) {
     const tx2 = await paymentProcessor.pay(item.price, response1.data.paymentId);
     const receipt = await tx2.wait();
 
-    console.log(response1.data.paymentId);
     await new Promise(resolve => setTimeout(resolve, 5000)); 
     const response2 = await axios.get(`${API_URL}/api/getItemUrl/${response1.data.paymentId}`);
     console.log(response2);
-    //console.log(response2.data.url);
   };
 
   return (

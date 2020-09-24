@@ -14,12 +14,6 @@ const items = {
 };
 
 
-//homepage
-router.get('/', (ctx, next) => {
-  // ctx.router available
-  // serve the frontend bundle in ../frontend/build
-});
-
 //generate a paymentId for purchage
 router.get('/api/getPaymentId/:itemId', async (ctx, next) => {
   //1. generate paymentId randomly
@@ -40,15 +34,12 @@ router.get('/api/getPaymentId/:itemId', async (ctx, next) => {
 router.get('/api/getItemUrl/:paymentId', async (ctx, next) => {
   //1. verify paymentId exist in db and has been paid
   const payment = await Payment.findOne({id: ctx.params.paymentId});
-  console.log(ctx.params.paymentId);
-  console.log(payment);
   //2. return url to download item
   if(payment && payment.paid === true) {
     ctx.body = {
       url: items[payment.itemId].url
     };
   } else {
-    console.log('here');
     ctx.body = {
       url: ''
     };

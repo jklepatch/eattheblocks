@@ -25,7 +25,7 @@ const getBlockchain = () =>
 
         resolve({provider, paymentProcessor, dai});
       }
-      reject(false);
+      resolve({provider: undefined, paymentProcessor: undefined, dai: undefined});
     });
   });
 
