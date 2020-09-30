@@ -1,4 +1,4 @@
-# EaTheBlocks Pro
+# EaTheBlocks
 
 Blockchain tutorials of EatTheBlocks. Learn how to build Decentralized
 Applications (Dapps) on Ethereum and Solidity Smart contracts
@@ -18,4 +18,4 @@ Covers:
 ## Courses
 
 * [6-Figures Blockchain Development](https://eattheblocks.com/6-figure-blockchain-developer/)
-* [Web Development for Blockchain](https://eattheblocks-pro.teachable.com/p/web-development-blockchain)
+* [Profitable Flashloan](https://eattheblocks-pro.teachable.com/p/profitable-flashloans)
