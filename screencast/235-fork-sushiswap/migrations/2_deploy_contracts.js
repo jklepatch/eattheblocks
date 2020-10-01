@@ -6,6 +6,7 @@ const SushiToken = artifacts.require('SushiToken.sol')
 const MasterChef = artifacts.require('MasterChef.sol'); 
 const SushiBar = artifacts.require('SushiBar.sol');
 const SushiMaker = artifacts.require('SushiMaker.sol');
+const Migrator = artifacts.require('Migrator.sol');
 
 module.exports = async function(deployer, _network, addresses) {
   const [admin, _] = addresses;
@@ -29,9 +30,9 @@ module.exports = async function(deployer, _network, addresses) {
     MasterChef,
     sushiToken.address,
     admin,
-    100,
+    web3.utils.toWei('100'),
     1,
-    0
+    1
   );
   const masterChef = await MasterChef.deployed();
   await sushiToken.transferOwnership(masterChef.address);
@@ -47,6 +48,13 @@ module.exports = async function(deployer, _network, addresses) {
     weth.address
   );
   const sushiMaker = await SushiMaker.deployed();
-
   await factory.setFeeTo(sushiMaker.address);
+
+  await deployer.deploy(
+    Migrator,
+    masterChef.address,
+    '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f',
+    factory.address,
+    1
+  );
 };
