@@ -5,7 +5,7 @@ import '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
-contract FungibleNFT is ERC20 {
+contract RFT is ERC20 {
   //ICO & shares
   uint public icoSharePrice;
   uint public icoShareSupply;
@@ -39,6 +39,7 @@ contract FungibleNFT is ERC20 {
   }
 
   function startIco() external {
+    require(msg.sender == admin, 'only admin');
     nft.transferFrom(msg.sender, address(this), nftId);
     icoEnd = block.timestamp + 7 * 86400;
   }
@@ -50,7 +51,6 @@ contract FungibleNFT is ERC20 {
     uint daiAmount = shareAmount * icoSharePrice;
     dai.transferFrom(msg.sender, address(this), daiAmount);
     _mint(msg.sender, shareAmount);
-    //transfer(msg.sender, shareAmount);
   }
 
   function withdrawIcoProfits() external {
