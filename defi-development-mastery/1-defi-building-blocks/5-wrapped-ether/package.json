@@ -1,5 +1,5 @@
 {
-  "name": "2-tokens",
+  "name": "5-wrapped-ether",
   "version": "1.0.0",
   "description": "",
   "main": "truffle-config.js",
@@ -13,6 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@openzeppelin/contracts": "^3.2.0"
+    "@openzeppelin/contracts": "^3.2.1-solc-0.7"
   }
 }

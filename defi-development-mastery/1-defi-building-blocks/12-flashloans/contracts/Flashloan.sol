@@ -1,10 +1,10 @@
-pragma solidity ^0.7.2;
+pragma solidity ^0.7.3;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/utils/ReentrancyGuard.sol';
-import './IFlashloanCallee.sol';
+import './IFlashloanUser.sol';
 
-contract Flashloan is ReentrancyGuard {
+contract FlashloanProvider is ReentrancyGuard {
   mapping(address => IERC20) public tokens;
 
   constructor(address[] memory _tokens) {
@@ -28,7 +28,7 @@ contract Flashloan is ReentrancyGuard {
     require(originalBalance >= amount, 'amount too high');
 
     token.transfer(callback, amount);
-    IFlashloanCallee(callback).flashloanCallback(amount, _token, data);
+    IFlashloanUser(callback).flashloanCallback(amount, _token, data);
     require(
       token.balanceOf(address(this)) == originalBalance, 
       'flashloan not reimbursed'

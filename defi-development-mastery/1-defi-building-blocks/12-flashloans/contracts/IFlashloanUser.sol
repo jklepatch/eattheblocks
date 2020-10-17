@@ -1,5 +1,5 @@
-pragma solidity ^0.7.2;
+pragma solidity ^0.7.3;
 
-interface IFlashloanCallee {
+interface IFlashloanUser {
   function flashloanCallback(uint amount, address token, bytes memory data) external;
 }
