@@ -1,10 +1,10 @@
-pragma solidity ^0.7.2;
+pragma solidity ^0.7.3;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import './Flashloan.sol';
-import './IFlashloanCallee.sol';
+import './FlashloanProvider.sol';
+import './IFlashloanUser.sol';
 
-contract ExampleFlashloanCallee is IFlashloanCallee {
+contract ExampleFlashloanUser is IFlashloanUser {
   function startFlashloan(
     address flashloan, 
     uint amount, 
@@ -12,7 +12,7 @@ contract ExampleFlashloanCallee is IFlashloanCallee {
   ) 
     external 
   {
-    Flashloan(flashloan).executeFlashloan(
+    FlashloanProvider(flashloan).executeFlashloan(
       address(this), 
       amount, 
       token, 
@@ -29,6 +29,8 @@ contract ExampleFlashloanCallee is IFlashloanCallee {
     external 
   {
     //do some arbitrage, liquidation, etc..
+
+    //Reimburse borrowed tokens
     IERC20(token).transfer(msg.sender, amount);
   }
 }
