@@ -1,0 +1,4345 @@
+{
+  "contractName": "PredictionMarket",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_oracle",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "enum PredictionMarket.Side",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "name": "bets",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "enum PredictionMarket.Side",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "name": "betsPerGambler",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "oracle",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "enum PredictionMarket.Side",
+          "name": "_side",
+          "type": "uint8"
+        }
+      ],
+      "name": "placeBet",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function",
+      "payable": true
+    },
+    {
+      "inputs": [],
+      "name": "withdrawGain",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "enum PredictionMarket.Side",
+          "name": "_winner",
+          "type": "uint8"
+        },
+        {
+          "internalType": "enum PredictionMarket.Side",
+          "name": "_loser",
+          "type": "uint8"
+        }
+      ],
+      "name": "reportResult",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.3+commit.9bfce1f6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_oracle\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"enum PredictionMarket.Side\",\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"bets\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"enum PredictionMarket.Side\",\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"betsPerGambler\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"oracle\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"enum PredictionMarket.Side\",\"name\":\"_side\",\"type\":\"uint8\"}],\"name\":\"placeBet\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"enum PredictionMarket.Side\",\"name\":\"_winner\",\"type\":\"uint8\"},{\"internalType\":\"enum PredictionMarket.Side\",\"name\":\"_loser\",\"type\":\"uint8\"}],\"name\":\"reportResult\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdrawGain\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/jklepatch/ETB/code/screencast/244-prediction-market-us-elections/contracts/PredictionMarket.sol\":\"PredictionMarket\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/jklepatch/ETB/code/screencast/244-prediction-market-us-elections/contracts/PredictionMarket.sol\":{\"keccak256\":\"0x1e4033d687407ce05ca8e81359820d16e42871e84aad1fa18ac8dc78e6b464a4\",\"urls\":[\"bzz-raw://9c1eabf692ad0e088757aeea933d3209927fefbba4aaa98fad74fd2c5f033dd4\",\"dweb:/ipfs/QmXUqKFyJiHFWYxa9TW1p2TNvd3AFPQ4TPi9RQ68u3vaSg\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506040516108a63803806108a68339818101604052602081101561003357600080fd5b810190808051906020019092919050505080600460006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050610811806100956000396000f3fe6080604052600436106100555760003560e01c80632b539c861461005a57806343046844146100715780634ec942b7146100a25780637dc0d1d0146100ed5780637e0ecc001461012e5780639d5a373914610180575b600080fd5b34801561006657600080fd5b5061006f6101f2565b005b6100a06004803603602081101561008757600080fd5b81019080803560ff169060200190929190505050610516565b005b3480156100ae57600080fd5b506100eb600480360360408110156100c557600080fd5b81019080803560ff169060200190929190803560ff16906020019092919050505061064d565b005b3480156100f957600080fd5b50610102610778565b604051808273ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561013a57600080fd5b5061016a6004803603602081101561015157600080fd5b81019080803560ff16906020019092919050505061079e565b6040518082815260200191505060405180910390f35b34801561018c57600080fd5b506101dc600480360360408110156101a357600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803560ff1690602001909291905050506107b6565b6040518082815260200191505060405180910390f35b6000600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008060000160009054906101000a900460ff16600181111561025257fe5b600181111561025d57fe5b8152602001908152602001600020549050600081116102e4576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601f8152602001807f796f7520646f206e6f74206861766520616e792077696e6e696e67206265740081525060200191505060405180910390fd5b60011515600160009054906101000a900460ff1615151461036d576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260198152602001807f656c656374696f6e206e6f742066696e6973686564207965740000000000000081525060200191505060405180910390fd5b6000600260008060000160009054906101000a900460ff16600181111561039057fe5b600181111561039b57fe5b81526020019081526020016000205482600260008060000160019054906101000a900460ff1660018111156103cc57fe5b60018111156103d757fe5b81526020019081526020016000205402816103ee57fe5b04820190506000600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600080600181111561044257fe5b600181111561044d57fe5b8152602001908152602001600020819055506000600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006001808111156104ae57fe5b60018111156104b957fe5b8152602001908152602001600020819055503373ffffffffffffffffffffffffffffffffffffffff166108fc829081150290604051600060405180830381858888f19350505050158015610511573d6000803e3d6000fd5b505050565b60001515600160009054906101000a900460ff1615151461059f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f656c656374696f6e2069732066696e697368656400000000000000000000000081525060200191505060405180910390fd5b34600260008360018111156105b057fe5b60018111156105bb57fe5b81526020019081526020016000206000828254019250508190555034600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600083600181111561062457fe5b600181111561062f57fe5b81526020019081526020016000206000828254019250508190555050565b3373ffffffffffffffffffffffffffffffffffffffff16600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614610710576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600b8152602001807f6f6e6c79206f7261636c6500000000000000000000000000000000000000000081525060200191505060405180910390fd5b816000800160006101000a81548160ff0219169083600181111561073057fe5b0217905550806000800160016101000a81548160ff0219169083600181111561075557fe5b021790555060018060006101000a81548160ff0219169083151502179055505050565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60026020528060005260406000206000915090505481565b600360205281600052604060002060205280600052604060002060009150915050548156fea264697066735822122011e9fe2dbd93ed653717e23c478e1dda5c01b2a6235dff994beaa4715c1cec3d64736f6c63430007030033",
+  "deployedBytecode": "0x6080604052600436106100555760003560e01c80632b539c861461005a57806343046844146100715780634ec942b7146100a25780637dc0d1d0146100ed5780637e0ecc001461012e5780639d5a373914610180575b600080fd5b34801561006657600080fd5b5061006f6101f2565b005b6100a06004803603602081101561008757600080fd5b81019080803560ff169060200190929190505050610516565b005b3480156100ae57600080fd5b506100eb600480360360408110156100c557600080fd5b81019080803560ff169060200190929190803560ff16906020019092919050505061064d565b005b3480156100f957600080fd5b50610102610778565b604051808273ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561013a57600080fd5b5061016a6004803603602081101561015157600080fd5b81019080803560ff16906020019092919050505061079e565b6040518082815260200191505060405180910390f35b34801561018c57600080fd5b506101dc600480360360408110156101a357600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803560ff1690602001909291905050506107b6565b6040518082815260200191505060405180910390f35b6000600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008060000160009054906101000a900460ff16600181111561025257fe5b600181111561025d57fe5b8152602001908152602001600020549050600081116102e4576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601f8152602001807f796f7520646f206e6f74206861766520616e792077696e6e696e67206265740081525060200191505060405180910390fd5b60011515600160009054906101000a900460ff1615151461036d576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260198152602001807f656c656374696f6e206e6f742066696e6973686564207965740000000000000081525060200191505060405180910390fd5b6000600260008060000160009054906101000a900460ff16600181111561039057fe5b600181111561039b57fe5b81526020019081526020016000205482600260008060000160019054906101000a900460ff1660018111156103cc57fe5b60018111156103d757fe5b81526020019081526020016000205402816103ee57fe5b04820190506000600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600080600181111561044257fe5b600181111561044d57fe5b8152602001908152602001600020819055506000600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006001808111156104ae57fe5b60018111156104b957fe5b8152602001908152602001600020819055503373ffffffffffffffffffffffffffffffffffffffff166108fc829081150290604051600060405180830381858888f19350505050158015610511573d6000803e3d6000fd5b505050565b60001515600160009054906101000a900460ff1615151461059f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f656c656374696f6e2069732066696e697368656400000000000000000000000081525060200191505060405180910390fd5b34600260008360018111156105b057fe5b60018111156105bb57fe5b81526020019081526020016000206000828254019250508190555034600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600083600181111561062457fe5b600181111561062f57fe5b81526020019081526020016000206000828254019250508190555050565b3373ffffffffffffffffffffffffffffffffffffffff16600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614610710576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600b8152602001807f6f6e6c79206f7261636c6500000000000000000000000000000000000000000081525060200191505060405180910390fd5b816000800160006101000a81548160ff0219169083600181111561073057fe5b0217905550806000800160016101000a81548160ff0219169083600181111561075557fe5b021790555060018060006101000a81548160ff0219169083151502179055505050565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60026020528060005260406000206000915090505481565b600360205281600052604060002060205280600052604060002060009150915050548156fea264697066735822122011e9fe2dbd93ed653717e23c478e1dda5c01b2a6235dff994beaa4715c1cec3d64736f6c63430007030033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "25:1202:1:-:0;;;312:57;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;356:7;347:6;;:16;;;;;;;;;;;;;;;;;;312:57;25:1202;;;;;;",
+  "deployedSourceMap": "25:1202:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;575:448;;;;;;;;;;;;;:::i;:::-;;373:198;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;1027;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;286:21;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;182:33;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;219:63;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;575:448;614:15;632:14;:26;647:10;632:26;;;;;;;;;;;;;;;:41;659:6;:13;;;;;;;;;;;;632:41;;;;;;;;;;;;;;;;;;;;;;;;;;;;614:59;;700:1;687:10;:14;679:58;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;773:4;753:24;;:16;;;;;;;;;;;:24;;;745:62;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;813:9;872:4;:19;877:6;:13;;;;;;;;;;;;872:19;;;;;;;;;;;;;;;;;;;;;;;;;;;;859:10;838:4;:18;843:6;:12;;;;;;;;;;;;838:18;;;;;;;;;;;;;;;;;;;;;;;;;;;;:31;:53;;;;;;825:10;:66;813:78;;938:1;897:14;:26;912:10;897:26;;;;;;;;;;;;;;;:38;924:10;897:38;;;;;;;;;;;;;;;;;;;;;;;;;;;:42;;;;986:1;945:14;:26;960:10;945:26;;;;;;;;;;;;;;;:38;972:10;945:38;;;;;;;;;;;;;;;;;;;;;;;;;;;:42;;;;993:10;:19;;:25;1013:4;993:25;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;575:448;;:::o;373:198::-;454:5;434:25;;:16;;;;;;;;;;;:25;;;426:58;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;505:9;490:4;:11;495:5;490:11;;;;;;;;;;;;;;;;;;;;;;;;;;;;:24;;;;;;;;;;;557:9;520:14;:26;535:10;520:26;;;;;;;;;;;;;;;:33;547:5;520:33;;;;;;;;;;;;;;;;;;;;;;;;;;;;:46;;;;;;;;;;;373:198;:::o;1027:::-;1109:10;1099:20;;:6;;;;;;;;;;;:20;;;1091:44;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1157:7;1141:6;:13;;;:23;;;;;;;;;;;;;;;;;;;;;;;;1185:6;1170;:12;;;:21;;;;;;;;;;;;;;;;;;;;;;;;1216:4;1197:16;;:23;;;;;;;;;;;;;;;;;;1027:198;;:::o;286:21::-;;;;;;;;;;;;;:::o;182:33::-;;;;;;;;;;;;;;;;;:::o;219:63::-;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.7.3;\n\ncontract PredictionMarket {\n  enum Side { Biden, Trump }\n  struct Result {\n    Side winner;\n    Side loser;\n  }\n  Result result;\n  bool electionFinished;\n\n  mapping(Side => uint) public bets;\n  mapping(address => mapping(Side => uint)) public betsPerGambler;\n  address public oracle;\n\n  constructor(address _oracle) {\n    oracle = _oracle; \n  }\n\n  function placeBet(Side _side) external payable {\n    require(electionFinished == false, 'election is finished');\n    bets[_side] += msg.value;\n    betsPerGambler[msg.sender][_side] += msg.value;\n  }\n\n  function withdrawGain() external {\n    uint gamblerBet = betsPerGambler[msg.sender][result.winner];\n    require(gamblerBet > 0, 'you do not have any winning bet');  \n    require(electionFinished == true, 'election not finished yet');\n    uint gain = gamblerBet + bets[result.loser] * gamblerBet / bets[result.winner];\n    betsPerGambler[msg.sender][Side.Biden] = 0;\n    betsPerGambler[msg.sender][Side.Trump] = 0;\n    msg.sender.transfer(gain);\n  }\n\n  function reportResult(Side _winner, Side _loser) external {\n    require(oracle == msg.sender, 'only oracle');\n    result.winner = _winner;\n    result.loser = _loser;\n    electionFinished = true;\n  }\n}\n",
+  "sourcePath": "/Users/jklepatch/ETB/code/screencast/244-prediction-market-us-elections/contracts/PredictionMarket.sol",
+  "ast": {
+    "absolutePath": "/Users/jklepatch/ETB/code/screencast/244-prediction-market-us-elections/contracts/PredictionMarket.sol",
+    "exportedSymbols": {
+      "PredictionMarket": [
+        203
+      ]
+    },
+    "id": 204,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34,
+        "literals": [
+          "solidity",
+          "^",
+          "0.7",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:1"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 203,
+        "linearizedBaseContracts": [
+          203
+        ],
+        "name": "PredictionMarket",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "PredictionMarket.Side",
+            "id": 37,
+            "members": [
+              {
+                "id": 35,
+                "name": "Biden",
+                "nodeType": "EnumValue",
+                "src": "67:5:1"
+              },
+              {
+                "id": 36,
+                "name": "Trump",
+                "nodeType": "EnumValue",
+                "src": "74:5:1"
+              }
+            ],
+            "name": "Side",
+            "nodeType": "EnumDefinition",
+            "src": "55:26:1"
+          },
+          {
+            "canonicalName": "PredictionMarket.Result",
+            "id": 42,
+            "members": [
+              {
+                "constant": false,
+                "id": 39,
+                "mutability": "mutable",
+                "name": "winner",
+                "nodeType": "VariableDeclaration",
+                "scope": 42,
+                "src": "104:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Side_$37",
+                  "typeString": "enum PredictionMarket.Side"
+                },
+                "typeName": {
+                  "id": 38,
+                  "name": "Side",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 37,
+                  "src": "104:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 41,
+                "mutability": "mutable",
+                "name": "loser",
+                "nodeType": "VariableDeclaration",
+                "scope": 42,
+                "src": "121:10:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Side_$37",
+                  "typeString": "enum PredictionMarket.Side"
+                },
+                "typeName": {
+                  "id": 40,
+                  "name": "Side",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 37,
+                  "src": "121:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Result",
+            "nodeType": "StructDefinition",
+            "scope": 203,
+            "src": "84:52:1",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 44,
+            "mutability": "mutable",
+            "name": "result",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "139:13:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_Result_$42_storage",
+              "typeString": "struct PredictionMarket.Result"
+            },
+            "typeName": {
+              "id": 43,
+              "name": "Result",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 42,
+              "src": "139:6:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_Result_$42_storage_ptr",
+                "typeString": "struct PredictionMarket.Result"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 46,
+            "mutability": "mutable",
+            "name": "electionFinished",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "156:21:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 45,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "156:4:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "functionSelector": "7e0ecc00",
+            "id": 50,
+            "mutability": "mutable",
+            "name": "bets",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "182:33:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+              "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+            },
+            "typeName": {
+              "id": 49,
+              "keyType": {
+                "id": 47,
+                "name": "Side",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 37,
+                "src": "190:4:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Side_$37",
+                  "typeString": "enum PredictionMarket.Side"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "182:21:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+              },
+              "valueType": {
+                "id": 48,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "198:4:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "functionSelector": "9d5a3739",
+            "id": 56,
+            "mutability": "mutable",
+            "name": "betsPerGambler",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "219:63:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+              "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+            },
+            "typeName": {
+              "id": 55,
+              "keyType": {
+                "id": 51,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "227:7:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "219:41:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+              },
+              "valueType": {
+                "id": 54,
+                "keyType": {
+                  "id": 52,
+                  "name": "Side",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 37,
+                  "src": "246:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "238:21:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                  "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                },
+                "valueType": {
+                  "id": 53,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "254:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                }
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "functionSelector": "7dc0d1d0",
+            "id": 58,
+            "mutability": "mutable",
+            "name": "oracle",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "286:21:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 57,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "286:7:1",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 67,
+              "nodeType": "Block",
+              "src": "341:28:1",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 65,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 63,
+                      "name": "oracle",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 58,
+                      "src": "347:6:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 64,
+                      "name": "_oracle",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 60,
+                      "src": "356:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "347:16:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 66,
+                  "nodeType": "ExpressionStatement",
+                  "src": "347:16:1"
+                }
+              ]
+            },
+            "id": 68,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 61,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 60,
+                  "mutability": "mutable",
+                  "name": "_oracle",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 68,
+                  "src": "324:15:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 59,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "324:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "323:17:1"
+            },
+            "returnParameters": {
+              "id": 62,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "341:0:1"
+            },
+            "scope": 203,
+            "src": "312:57:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 97,
+              "nodeType": "Block",
+              "src": "420:151:1",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 76,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 74,
+                          "name": "electionFinished",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "434:16:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "hexValue": "66616c7365",
+                          "id": 75,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "454:5:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "false"
+                        },
+                        "src": "434:25:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "656c656374696f6e2069732066696e6973686564",
+                        "id": 77,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "461:22:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_b986f5898326f417b081556bd907c58c5b8ef0652fc690b771b44307f001565f",
+                          "typeString": "literal_string \"election is finished\""
+                        },
+                        "value": "election is finished"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_b986f5898326f417b081556bd907c58c5b8ef0652fc690b771b44307f001565f",
+                          "typeString": "literal_string \"election is finished\""
+                        }
+                      ],
+                      "id": 73,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "426:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 78,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "426:58:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 79,
+                  "nodeType": "ExpressionStatement",
+                  "src": "426:58:1"
+                },
+                {
+                  "expression": {
+                    "id": 85,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 80,
+                        "name": "bets",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 50,
+                        "src": "490:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                          "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                        }
+                      },
+                      "id": 82,
+                      "indexExpression": {
+                        "id": 81,
+                        "name": "_side",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 70,
+                        "src": "495:5:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Side_$37",
+                          "typeString": "enum PredictionMarket.Side"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "490:11:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "+=",
+                    "rightHandSide": {
+                      "expression": {
+                        "id": 83,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -15,
+                        "src": "505:3:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 84,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "value",
+                      "nodeType": "MemberAccess",
+                      "src": "505:9:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "490:24:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 86,
+                  "nodeType": "ExpressionStatement",
+                  "src": "490:24:1"
+                },
+                {
+                  "expression": {
+                    "id": 95,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "baseExpression": {
+                          "id": 87,
+                          "name": "betsPerGambler",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "520:14:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                            "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+                          }
+                        },
+                        "id": 91,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 88,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "535:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 89,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "535:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "520:26:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                          "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                        }
+                      },
+                      "id": 92,
+                      "indexExpression": {
+                        "id": 90,
+                        "name": "_side",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 70,
+                        "src": "547:5:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Side_$37",
+                          "typeString": "enum PredictionMarket.Side"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "520:33:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "+=",
+                    "rightHandSide": {
+                      "expression": {
+                        "id": 93,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -15,
+                        "src": "557:3:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 94,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "value",
+                      "nodeType": "MemberAccess",
+                      "src": "557:9:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "520:46:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 96,
+                  "nodeType": "ExpressionStatement",
+                  "src": "520:46:1"
+                }
+              ]
+            },
+            "functionSelector": "43046844",
+            "id": 98,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "placeBet",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 71,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 70,
+                  "mutability": "mutable",
+                  "name": "_side",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 98,
+                  "src": "391:10:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  },
+                  "typeName": {
+                    "id": 69,
+                    "name": "Side",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 37,
+                    "src": "391:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "390:12:1"
+            },
+            "returnParameters": {
+              "id": 72,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "420:0:1"
+            },
+            "scope": 203,
+            "src": "373:198:1",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 169,
+              "nodeType": "Block",
+              "src": "608:415:1",
+              "statements": [
+                {
+                  "assignments": [
+                    102
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 102,
+                      "mutability": "mutable",
+                      "name": "gamblerBet",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 169,
+                      "src": "614:15:1",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 101,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "614:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 110,
+                  "initialValue": {
+                    "baseExpression": {
+                      "baseExpression": {
+                        "id": 103,
+                        "name": "betsPerGambler",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 56,
+                        "src": "632:14:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                          "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+                        }
+                      },
+                      "id": 106,
+                      "indexExpression": {
+                        "expression": {
+                          "id": 104,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": -15,
+                          "src": "647:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 105,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "647:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "632:26:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                        "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                      }
+                    },
+                    "id": 109,
+                    "indexExpression": {
+                      "expression": {
+                        "id": 107,
+                        "name": "result",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 44,
+                        "src": "659:6:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Result_$42_storage",
+                          "typeString": "struct PredictionMarket.Result storage ref"
+                        }
+                      },
+                      "id": 108,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "winner",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 39,
+                      "src": "659:13:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "632:41:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "614:59:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 114,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 112,
+                          "name": "gamblerBet",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 102,
+                          "src": "687:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": ">",
+                        "rightExpression": {
+                          "hexValue": "30",
+                          "id": 113,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "700:1:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          },
+                          "value": "0"
+                        },
+                        "src": "687:14:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "796f7520646f206e6f74206861766520616e792077696e6e696e6720626574",
+                        "id": 115,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "703:33:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_580c326cdba3173fc617bf584c3e1a4fdc48208658005920e02bf236cdbddda5",
+                          "typeString": "literal_string \"you do not have any winning bet\""
+                        },
+                        "value": "you do not have any winning bet"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_580c326cdba3173fc617bf584c3e1a4fdc48208658005920e02bf236cdbddda5",
+                          "typeString": "literal_string \"you do not have any winning bet\""
+                        }
+                      ],
+                      "id": 111,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "679:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 116,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "679:58:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 117,
+                  "nodeType": "ExpressionStatement",
+                  "src": "679:58:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 121,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 119,
+                          "name": "electionFinished",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "753:16:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "hexValue": "74727565",
+                          "id": 120,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "773:4:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        "src": "753:24:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "656c656374696f6e206e6f742066696e697368656420796574",
+                        "id": 122,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "779:27:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_3bf64ace83af0c7f2f5718c99813c9567dda3aba9dcae027a45a0272079acbcb",
+                          "typeString": "literal_string \"election not finished yet\""
+                        },
+                        "value": "election not finished yet"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_3bf64ace83af0c7f2f5718c99813c9567dda3aba9dcae027a45a0272079acbcb",
+                          "typeString": "literal_string \"election not finished yet\""
+                        }
+                      ],
+                      "id": 118,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "745:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 123,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "745:62:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 124,
+                  "nodeType": "ExpressionStatement",
+                  "src": "745:62:1"
+                },
+                {
+                  "assignments": [
+                    126
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 126,
+                      "mutability": "mutable",
+                      "name": "gain",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 169,
+                      "src": "813:9:1",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 125,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "813:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 140,
+                  "initialValue": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 139,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 127,
+                      "name": "gamblerBet",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 102,
+                      "src": "825:10:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "+",
+                    "rightExpression": {
+                      "commonType": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "id": 138,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 133,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "baseExpression": {
+                            "id": 128,
+                            "name": "bets",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 50,
+                            "src": "838:4:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                              "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                            }
+                          },
+                          "id": 131,
+                          "indexExpression": {
+                            "expression": {
+                              "id": 129,
+                              "name": "result",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 44,
+                              "src": "843:6:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Result_$42_storage",
+                                "typeString": "struct PredictionMarket.Result storage ref"
+                              }
+                            },
+                            "id": 130,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "loser",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 41,
+                            "src": "843:12:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Side_$37",
+                              "typeString": "enum PredictionMarket.Side"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "838:18:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "*",
+                        "rightExpression": {
+                          "id": 132,
+                          "name": "gamblerBet",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 102,
+                          "src": "859:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "src": "838:31:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": "/",
+                      "rightExpression": {
+                        "baseExpression": {
+                          "id": 134,
+                          "name": "bets",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 50,
+                          "src": "872:4:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                            "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                          }
+                        },
+                        "id": 137,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 135,
+                            "name": "result",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 44,
+                            "src": "877:6:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Result_$42_storage",
+                              "typeString": "struct PredictionMarket.Result storage ref"
+                            }
+                          },
+                          "id": 136,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "winner",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 39,
+                          "src": "877:13:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_enum$_Side_$37",
+                            "typeString": "enum PredictionMarket.Side"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "872:19:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "src": "838:53:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "825:66:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "813:78:1"
+                },
+                {
+                  "expression": {
+                    "id": 149,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "baseExpression": {
+                          "id": 141,
+                          "name": "betsPerGambler",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "897:14:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                            "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+                          }
+                        },
+                        "id": 146,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 142,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "912:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 143,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "912:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "897:26:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                          "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                        }
+                      },
+                      "id": 147,
+                      "indexExpression": {
+                        "expression": {
+                          "id": 144,
+                          "name": "Side",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 37,
+                          "src": "924:4:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_enum$_Side_$37_$",
+                            "typeString": "type(enum PredictionMarket.Side)"
+                          }
+                        },
+                        "id": 145,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "memberName": "Biden",
+                        "nodeType": "MemberAccess",
+                        "src": "924:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Side_$37",
+                          "typeString": "enum PredictionMarket.Side"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "897:38:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "30",
+                      "id": 148,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "938:1:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "897:42:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 150,
+                  "nodeType": "ExpressionStatement",
+                  "src": "897:42:1"
+                },
+                {
+                  "expression": {
+                    "id": 159,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "baseExpression": {
+                          "id": 151,
+                          "name": "betsPerGambler",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "945:14:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                            "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+                          }
+                        },
+                        "id": 156,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 152,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "960:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 153,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "960:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "945:26:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                          "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                        }
+                      },
+                      "id": 157,
+                      "indexExpression": {
+                        "expression": {
+                          "id": 154,
+                          "name": "Side",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 37,
+                          "src": "972:4:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_enum$_Side_$37_$",
+                            "typeString": "type(enum PredictionMarket.Side)"
+                          }
+                        },
+                        "id": 155,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "memberName": "Trump",
+                        "nodeType": "MemberAccess",
+                        "src": "972:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Side_$37",
+                          "typeString": "enum PredictionMarket.Side"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "945:38:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "30",
+                      "id": 158,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "986:1:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "945:42:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 160,
+                  "nodeType": "ExpressionStatement",
+                  "src": "945:42:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 166,
+                        "name": "gain",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 126,
+                        "src": "1013:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "expression": {
+                          "id": 161,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": -15,
+                          "src": "993:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 164,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "993:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
+                        }
+                      },
+                      "id": 165,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "transfer",
+                      "nodeType": "MemberAccess",
+                      "src": "993:19:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_transfer_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 167,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "993:25:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 168,
+                  "nodeType": "ExpressionStatement",
+                  "src": "993:25:1"
+                }
+              ]
+            },
+            "functionSelector": "2b539c86",
+            "id": 170,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawGain",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 99,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "596:2:1"
+            },
+            "returnParameters": {
+              "id": 100,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "608:0:1"
+            },
+            "scope": 203,
+            "src": "575:448:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 201,
+              "nodeType": "Block",
+              "src": "1085:140:1",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 181,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 178,
+                          "name": "oracle",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 58,
+                          "src": "1099:6:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "expression": {
+                            "id": 179,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "1109:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 180,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "1109:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "src": "1099:20:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "6f6e6c79206f7261636c65",
+                        "id": 182,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1121:13:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_dc6b85902536b0f8487034b3ecf1e60a795dc2f76885f36df68d2eea7b0bd42d",
+                          "typeString": "literal_string \"only oracle\""
+                        },
+                        "value": "only oracle"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_dc6b85902536b0f8487034b3ecf1e60a795dc2f76885f36df68d2eea7b0bd42d",
+                          "typeString": "literal_string \"only oracle\""
+                        }
+                      ],
+                      "id": 177,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "1091:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 183,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1091:44:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 184,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1091:44:1"
+                },
+                {
+                  "expression": {
+                    "id": 189,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "id": 185,
+                        "name": "result",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 44,
+                        "src": "1141:6:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Result_$42_storage",
+                          "typeString": "struct PredictionMarket.Result storage ref"
+                        }
+                      },
+                      "id": 187,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "winner",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 39,
+                      "src": "1141:13:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 188,
+                      "name": "_winner",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 172,
+                      "src": "1157:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "src": "1141:23:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "id": 190,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1141:23:1"
+                },
+                {
+                  "expression": {
+                    "id": 195,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "id": 191,
+                        "name": "result",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 44,
+                        "src": "1170:6:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Result_$42_storage",
+                          "typeString": "struct PredictionMarket.Result storage ref"
+                        }
+                      },
+                      "id": 193,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "loser",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 41,
+                      "src": "1170:12:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 194,
+                      "name": "_loser",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 174,
+                      "src": "1185:6:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "src": "1170:21:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "id": 196,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1170:21:1"
+                },
+                {
+                  "expression": {
+                    "id": 199,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 197,
+                      "name": "electionFinished",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 46,
+                      "src": "1197:16:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "74727565",
+                      "id": 198,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1216:4:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1197:23:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 200,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1197:23:1"
+                }
+              ]
+            },
+            "functionSelector": "4ec942b7",
+            "id": 202,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reportResult",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 175,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 172,
+                  "mutability": "mutable",
+                  "name": "_winner",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 202,
+                  "src": "1049:12:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  },
+                  "typeName": {
+                    "id": 171,
+                    "name": "Side",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 37,
+                    "src": "1049:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 174,
+                  "mutability": "mutable",
+                  "name": "_loser",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 202,
+                  "src": "1063:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  },
+                  "typeName": {
+                    "id": 173,
+                    "name": "Side",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 37,
+                    "src": "1063:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1048:27:1"
+            },
+            "returnParameters": {
+              "id": 176,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1085:0:1"
+            },
+            "scope": 203,
+            "src": "1027:198:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 204,
+        "src": "25:1202:1"
+      }
+    ],
+    "src": "0:1228:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/jklepatch/ETB/code/screencast/244-prediction-market-us-elections/contracts/PredictionMarket.sol",
+    "exportedSymbols": {
+      "PredictionMarket": [
+        203
+      ]
+    },
+    "id": 204,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34,
+        "literals": [
+          "solidity",
+          "^",
+          "0.7",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:1"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 203,
+        "linearizedBaseContracts": [
+          203
+        ],
+        "name": "PredictionMarket",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "PredictionMarket.Side",
+            "id": 37,
+            "members": [
+              {
+                "id": 35,
+                "name": "Biden",
+                "nodeType": "EnumValue",
+                "src": "67:5:1"
+              },
+              {
+                "id": 36,
+                "name": "Trump",
+                "nodeType": "EnumValue",
+                "src": "74:5:1"
+              }
+            ],
+            "name": "Side",
+            "nodeType": "EnumDefinition",
+            "src": "55:26:1"
+          },
+          {
+            "canonicalName": "PredictionMarket.Result",
+            "id": 42,
+            "members": [
+              {
+                "constant": false,
+                "id": 39,
+                "mutability": "mutable",
+                "name": "winner",
+                "nodeType": "VariableDeclaration",
+                "scope": 42,
+                "src": "104:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Side_$37",
+                  "typeString": "enum PredictionMarket.Side"
+                },
+                "typeName": {
+                  "id": 38,
+                  "name": "Side",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 37,
+                  "src": "104:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 41,
+                "mutability": "mutable",
+                "name": "loser",
+                "nodeType": "VariableDeclaration",
+                "scope": 42,
+                "src": "121:10:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Side_$37",
+                  "typeString": "enum PredictionMarket.Side"
+                },
+                "typeName": {
+                  "id": 40,
+                  "name": "Side",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 37,
+                  "src": "121:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Result",
+            "nodeType": "StructDefinition",
+            "scope": 203,
+            "src": "84:52:1",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 44,
+            "mutability": "mutable",
+            "name": "result",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "139:13:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_Result_$42_storage",
+              "typeString": "struct PredictionMarket.Result"
+            },
+            "typeName": {
+              "id": 43,
+              "name": "Result",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 42,
+              "src": "139:6:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_Result_$42_storage_ptr",
+                "typeString": "struct PredictionMarket.Result"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 46,
+            "mutability": "mutable",
+            "name": "electionFinished",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "156:21:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 45,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "156:4:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "functionSelector": "7e0ecc00",
+            "id": 50,
+            "mutability": "mutable",
+            "name": "bets",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "182:33:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+              "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+            },
+            "typeName": {
+              "id": 49,
+              "keyType": {
+                "id": 47,
+                "name": "Side",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 37,
+                "src": "190:4:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Side_$37",
+                  "typeString": "enum PredictionMarket.Side"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "182:21:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+              },
+              "valueType": {
+                "id": 48,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "198:4:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "functionSelector": "9d5a3739",
+            "id": 56,
+            "mutability": "mutable",
+            "name": "betsPerGambler",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "219:63:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+              "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+            },
+            "typeName": {
+              "id": 55,
+              "keyType": {
+                "id": 51,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "227:7:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "219:41:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+              },
+              "valueType": {
+                "id": 54,
+                "keyType": {
+                  "id": 52,
+                  "name": "Side",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 37,
+                  "src": "246:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "238:21:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                  "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                },
+                "valueType": {
+                  "id": 53,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "254:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                }
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "functionSelector": "7dc0d1d0",
+            "id": 58,
+            "mutability": "mutable",
+            "name": "oracle",
+            "nodeType": "VariableDeclaration",
+            "scope": 203,
+            "src": "286:21:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 57,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "286:7:1",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 67,
+              "nodeType": "Block",
+              "src": "341:28:1",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 65,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 63,
+                      "name": "oracle",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 58,
+                      "src": "347:6:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 64,
+                      "name": "_oracle",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 60,
+                      "src": "356:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "347:16:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 66,
+                  "nodeType": "ExpressionStatement",
+                  "src": "347:16:1"
+                }
+              ]
+            },
+            "id": 68,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 61,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 60,
+                  "mutability": "mutable",
+                  "name": "_oracle",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 68,
+                  "src": "324:15:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 59,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "324:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "323:17:1"
+            },
+            "returnParameters": {
+              "id": 62,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "341:0:1"
+            },
+            "scope": 203,
+            "src": "312:57:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 97,
+              "nodeType": "Block",
+              "src": "420:151:1",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 76,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 74,
+                          "name": "electionFinished",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "434:16:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "hexValue": "66616c7365",
+                          "id": 75,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "454:5:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "false"
+                        },
+                        "src": "434:25:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "656c656374696f6e2069732066696e6973686564",
+                        "id": 77,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "461:22:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_b986f5898326f417b081556bd907c58c5b8ef0652fc690b771b44307f001565f",
+                          "typeString": "literal_string \"election is finished\""
+                        },
+                        "value": "election is finished"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_b986f5898326f417b081556bd907c58c5b8ef0652fc690b771b44307f001565f",
+                          "typeString": "literal_string \"election is finished\""
+                        }
+                      ],
+                      "id": 73,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "426:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 78,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "426:58:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 79,
+                  "nodeType": "ExpressionStatement",
+                  "src": "426:58:1"
+                },
+                {
+                  "expression": {
+                    "id": 85,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 80,
+                        "name": "bets",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 50,
+                        "src": "490:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                          "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                        }
+                      },
+                      "id": 82,
+                      "indexExpression": {
+                        "id": 81,
+                        "name": "_side",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 70,
+                        "src": "495:5:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Side_$37",
+                          "typeString": "enum PredictionMarket.Side"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "490:11:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "+=",
+                    "rightHandSide": {
+                      "expression": {
+                        "id": 83,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -15,
+                        "src": "505:3:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 84,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "value",
+                      "nodeType": "MemberAccess",
+                      "src": "505:9:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "490:24:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 86,
+                  "nodeType": "ExpressionStatement",
+                  "src": "490:24:1"
+                },
+                {
+                  "expression": {
+                    "id": 95,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "baseExpression": {
+                          "id": 87,
+                          "name": "betsPerGambler",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "520:14:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                            "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+                          }
+                        },
+                        "id": 91,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 88,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "535:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 89,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "535:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "520:26:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                          "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                        }
+                      },
+                      "id": 92,
+                      "indexExpression": {
+                        "id": 90,
+                        "name": "_side",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 70,
+                        "src": "547:5:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Side_$37",
+                          "typeString": "enum PredictionMarket.Side"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "520:33:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "+=",
+                    "rightHandSide": {
+                      "expression": {
+                        "id": 93,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -15,
+                        "src": "557:3:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 94,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "value",
+                      "nodeType": "MemberAccess",
+                      "src": "557:9:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "520:46:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 96,
+                  "nodeType": "ExpressionStatement",
+                  "src": "520:46:1"
+                }
+              ]
+            },
+            "functionSelector": "43046844",
+            "id": 98,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "placeBet",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 71,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 70,
+                  "mutability": "mutable",
+                  "name": "_side",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 98,
+                  "src": "391:10:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  },
+                  "typeName": {
+                    "id": 69,
+                    "name": "Side",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 37,
+                    "src": "391:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "390:12:1"
+            },
+            "returnParameters": {
+              "id": 72,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "420:0:1"
+            },
+            "scope": 203,
+            "src": "373:198:1",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 169,
+              "nodeType": "Block",
+              "src": "608:415:1",
+              "statements": [
+                {
+                  "assignments": [
+                    102
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 102,
+                      "mutability": "mutable",
+                      "name": "gamblerBet",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 169,
+                      "src": "614:15:1",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 101,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "614:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 110,
+                  "initialValue": {
+                    "baseExpression": {
+                      "baseExpression": {
+                        "id": 103,
+                        "name": "betsPerGambler",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 56,
+                        "src": "632:14:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                          "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+                        }
+                      },
+                      "id": 106,
+                      "indexExpression": {
+                        "expression": {
+                          "id": 104,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": -15,
+                          "src": "647:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 105,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "647:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "632:26:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                        "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                      }
+                    },
+                    "id": 109,
+                    "indexExpression": {
+                      "expression": {
+                        "id": 107,
+                        "name": "result",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 44,
+                        "src": "659:6:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Result_$42_storage",
+                          "typeString": "struct PredictionMarket.Result storage ref"
+                        }
+                      },
+                      "id": 108,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "winner",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 39,
+                      "src": "659:13:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "632:41:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "614:59:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 114,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 112,
+                          "name": "gamblerBet",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 102,
+                          "src": "687:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": ">",
+                        "rightExpression": {
+                          "hexValue": "30",
+                          "id": 113,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "700:1:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          },
+                          "value": "0"
+                        },
+                        "src": "687:14:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "796f7520646f206e6f74206861766520616e792077696e6e696e6720626574",
+                        "id": 115,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "703:33:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_580c326cdba3173fc617bf584c3e1a4fdc48208658005920e02bf236cdbddda5",
+                          "typeString": "literal_string \"you do not have any winning bet\""
+                        },
+                        "value": "you do not have any winning bet"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_580c326cdba3173fc617bf584c3e1a4fdc48208658005920e02bf236cdbddda5",
+                          "typeString": "literal_string \"you do not have any winning bet\""
+                        }
+                      ],
+                      "id": 111,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "679:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 116,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "679:58:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 117,
+                  "nodeType": "ExpressionStatement",
+                  "src": "679:58:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 121,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 119,
+                          "name": "electionFinished",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "753:16:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "hexValue": "74727565",
+                          "id": 120,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "773:4:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        "src": "753:24:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "656c656374696f6e206e6f742066696e697368656420796574",
+                        "id": 122,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "779:27:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_3bf64ace83af0c7f2f5718c99813c9567dda3aba9dcae027a45a0272079acbcb",
+                          "typeString": "literal_string \"election not finished yet\""
+                        },
+                        "value": "election not finished yet"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_3bf64ace83af0c7f2f5718c99813c9567dda3aba9dcae027a45a0272079acbcb",
+                          "typeString": "literal_string \"election not finished yet\""
+                        }
+                      ],
+                      "id": 118,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "745:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 123,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "745:62:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 124,
+                  "nodeType": "ExpressionStatement",
+                  "src": "745:62:1"
+                },
+                {
+                  "assignments": [
+                    126
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 126,
+                      "mutability": "mutable",
+                      "name": "gain",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 169,
+                      "src": "813:9:1",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 125,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "813:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 140,
+                  "initialValue": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 139,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 127,
+                      "name": "gamblerBet",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 102,
+                      "src": "825:10:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "+",
+                    "rightExpression": {
+                      "commonType": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "id": 138,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 133,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "baseExpression": {
+                            "id": 128,
+                            "name": "bets",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 50,
+                            "src": "838:4:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                              "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                            }
+                          },
+                          "id": 131,
+                          "indexExpression": {
+                            "expression": {
+                              "id": 129,
+                              "name": "result",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 44,
+                              "src": "843:6:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Result_$42_storage",
+                                "typeString": "struct PredictionMarket.Result storage ref"
+                              }
+                            },
+                            "id": 130,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "loser",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 41,
+                            "src": "843:12:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Side_$37",
+                              "typeString": "enum PredictionMarket.Side"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "838:18:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "*",
+                        "rightExpression": {
+                          "id": 132,
+                          "name": "gamblerBet",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 102,
+                          "src": "859:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "src": "838:31:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": "/",
+                      "rightExpression": {
+                        "baseExpression": {
+                          "id": 134,
+                          "name": "bets",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 50,
+                          "src": "872:4:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                            "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                          }
+                        },
+                        "id": 137,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 135,
+                            "name": "result",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 44,
+                            "src": "877:6:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Result_$42_storage",
+                              "typeString": "struct PredictionMarket.Result storage ref"
+                            }
+                          },
+                          "id": 136,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "winner",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 39,
+                          "src": "877:13:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_enum$_Side_$37",
+                            "typeString": "enum PredictionMarket.Side"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "872:19:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "src": "838:53:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "825:66:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "813:78:1"
+                },
+                {
+                  "expression": {
+                    "id": 149,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "baseExpression": {
+                          "id": 141,
+                          "name": "betsPerGambler",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "897:14:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                            "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+                          }
+                        },
+                        "id": 146,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 142,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "912:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 143,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "912:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "897:26:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                          "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                        }
+                      },
+                      "id": 147,
+                      "indexExpression": {
+                        "expression": {
+                          "id": 144,
+                          "name": "Side",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 37,
+                          "src": "924:4:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_enum$_Side_$37_$",
+                            "typeString": "type(enum PredictionMarket.Side)"
+                          }
+                        },
+                        "id": 145,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "memberName": "Biden",
+                        "nodeType": "MemberAccess",
+                        "src": "924:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Side_$37",
+                          "typeString": "enum PredictionMarket.Side"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "897:38:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "30",
+                      "id": 148,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "938:1:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "897:42:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 150,
+                  "nodeType": "ExpressionStatement",
+                  "src": "897:42:1"
+                },
+                {
+                  "expression": {
+                    "id": 159,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "baseExpression": {
+                          "id": 151,
+                          "name": "betsPerGambler",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "945:14:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_enum$_Side_$37_$_t_uint256_$_$",
+                            "typeString": "mapping(address => mapping(enum PredictionMarket.Side => uint256))"
+                          }
+                        },
+                        "id": 156,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 152,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "960:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 153,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "960:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "945:26:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_enum$_Side_$37_$_t_uint256_$",
+                          "typeString": "mapping(enum PredictionMarket.Side => uint256)"
+                        }
+                      },
+                      "id": 157,
+                      "indexExpression": {
+                        "expression": {
+                          "id": 154,
+                          "name": "Side",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 37,
+                          "src": "972:4:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_enum$_Side_$37_$",
+                            "typeString": "type(enum PredictionMarket.Side)"
+                          }
+                        },
+                        "id": 155,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "memberName": "Trump",
+                        "nodeType": "MemberAccess",
+                        "src": "972:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Side_$37",
+                          "typeString": "enum PredictionMarket.Side"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "945:38:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "30",
+                      "id": 158,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "986:1:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "945:42:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 160,
+                  "nodeType": "ExpressionStatement",
+                  "src": "945:42:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 166,
+                        "name": "gain",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 126,
+                        "src": "1013:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "expression": {
+                          "id": 161,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": -15,
+                          "src": "993:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 164,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "993:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
+                        }
+                      },
+                      "id": 165,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "transfer",
+                      "nodeType": "MemberAccess",
+                      "src": "993:19:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_transfer_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 167,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "993:25:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 168,
+                  "nodeType": "ExpressionStatement",
+                  "src": "993:25:1"
+                }
+              ]
+            },
+            "functionSelector": "2b539c86",
+            "id": 170,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawGain",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 99,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "596:2:1"
+            },
+            "returnParameters": {
+              "id": 100,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "608:0:1"
+            },
+            "scope": 203,
+            "src": "575:448:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 201,
+              "nodeType": "Block",
+              "src": "1085:140:1",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 181,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 178,
+                          "name": "oracle",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 58,
+                          "src": "1099:6:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "expression": {
+                            "id": 179,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "1109:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 180,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "1109:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "src": "1099:20:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "6f6e6c79206f7261636c65",
+                        "id": 182,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1121:13:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_dc6b85902536b0f8487034b3ecf1e60a795dc2f76885f36df68d2eea7b0bd42d",
+                          "typeString": "literal_string \"only oracle\""
+                        },
+                        "value": "only oracle"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_dc6b85902536b0f8487034b3ecf1e60a795dc2f76885f36df68d2eea7b0bd42d",
+                          "typeString": "literal_string \"only oracle\""
+                        }
+                      ],
+                      "id": 177,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "1091:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 183,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1091:44:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 184,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1091:44:1"
+                },
+                {
+                  "expression": {
+                    "id": 189,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "id": 185,
+                        "name": "result",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 44,
+                        "src": "1141:6:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Result_$42_storage",
+                          "typeString": "struct PredictionMarket.Result storage ref"
+                        }
+                      },
+                      "id": 187,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "winner",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 39,
+                      "src": "1141:13:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 188,
+                      "name": "_winner",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 172,
+                      "src": "1157:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "src": "1141:23:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "id": 190,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1141:23:1"
+                },
+                {
+                  "expression": {
+                    "id": 195,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "id": 191,
+                        "name": "result",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 44,
+                        "src": "1170:6:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Result_$42_storage",
+                          "typeString": "struct PredictionMarket.Result storage ref"
+                        }
+                      },
+                      "id": 193,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "loser",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 41,
+                      "src": "1170:12:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 194,
+                      "name": "_loser",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 174,
+                      "src": "1185:6:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Side_$37",
+                        "typeString": "enum PredictionMarket.Side"
+                      }
+                    },
+                    "src": "1170:21:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "id": 196,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1170:21:1"
+                },
+                {
+                  "expression": {
+                    "id": 199,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 197,
+                      "name": "electionFinished",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 46,
+                      "src": "1197:16:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "74727565",
+                      "id": 198,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1216:4:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1197:23:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 200,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1197:23:1"
+                }
+              ]
+            },
+            "functionSelector": "4ec942b7",
+            "id": 202,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reportResult",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 175,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 172,
+                  "mutability": "mutable",
+                  "name": "_winner",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 202,
+                  "src": "1049:12:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  },
+                  "typeName": {
+                    "id": 171,
+                    "name": "Side",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 37,
+                    "src": "1049:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 174,
+                  "mutability": "mutable",
+                  "name": "_loser",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 202,
+                  "src": "1063:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Side_$37",
+                    "typeString": "enum PredictionMarket.Side"
+                  },
+                  "typeName": {
+                    "id": 173,
+                    "name": "Side",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 37,
+                    "src": "1063:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Side_$37",
+                      "typeString": "enum PredictionMarket.Side"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1048:27:1"
+            },
+            "returnParameters": {
+              "id": 176,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1085:0:1"
+            },
+            "scope": 203,
+            "src": "1027:198:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 204,
+        "src": "25:1202:1"
+      }
+    ],
+    "src": "0:1228:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.3+commit.9bfce1f6.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0xCB2ebb9cE533EA4c8c409a07C3d7829A65E4dbf7",
+      "transactionHash": "0xf3a66267971774124a40bfd5576bac0b86c3a91371c83d708451e0bd8bbb1da0"
+    }
+  },
+  "schemaVersion": "3.3.1",
+  "updatedAt": "2020-10-20T17:19:28.897Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
