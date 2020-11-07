@@ -1,0 +1,20 @@
+{
+  "1": {
+    "title": "Asset Metadata",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Rari sneakers"
+        },
+      "description": {
+        "type": "string",
+        "description": "Beautiful Sneakers"
+        },
+      "image": {
+        "type": "string",
+        "description": "1-img.jpeg"
+      }
+    }
+  }
+}
