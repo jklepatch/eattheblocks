@@ -1,6 +1,7 @@
 pragma solidity ^0.7.3;
 
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 contract CollateralBackedToken is ERC20 {
   IERC20 public collateral;
@@ -17,6 +18,6 @@ contract CollateralBackedToken is ERC20 {
   function withdraw(uint tokenAmount) external {
     require(balanceOf(msg.sender) >= tokenAmount, 'balance too low');
     _burn(msg.sender, tokenAmount);
-    msg.sender.transfer(tokenAmount / price);
+    collateral.transfer(tokenAmount / price);
   }
 }
