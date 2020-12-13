@@ -1,0 +1,19 @@
+{
+  "name": "3-oracles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "truffle exec scripts/price-watcher.js --network develop"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "coingecko-api": "^1.0.10",
+    "web3": "^1.3.0"
+  }
+}
