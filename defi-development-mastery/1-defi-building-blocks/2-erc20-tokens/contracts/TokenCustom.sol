@@ -1,6 +1,6 @@
 pragma solidity ^0.7.3;
 
-contract ERC20Custom {
+contract TokenCustom {
     string public name;
     string public symbol;
     uint8 public decimals;
