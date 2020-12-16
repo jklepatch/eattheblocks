@@ -1,13 +1,6 @@
 pragma solidity ^0.7.3;
 
-library AddressUtils
-{
-
-  /**
-   * @dev Returns whether the target address is a contract.
-   * @param _addr Address to check.
-   * @return True if _addr is a contract, false if not.
-   */
+library AddressUtils {
   function isContract(
     address _addr
   )
@@ -17,13 +10,6 @@ library AddressUtils
   {
     uint256 size;
 
-    /**
-     * XXX Currently there is no better way to check if there is a contract in an address than to
-     * check the size of the code at that address.
-     * See https://ethereum.stackexchange.com/a/14016/36603 for more details about how this works.
-     * TODO: Check this again before the Serenity release, because all addresses will be
-     * contracts then.
-     */
     assembly { size := extcodesize(_addr) } // solhint-disable-line
     addressCheck = size > 0;
   }
@@ -31,18 +17,6 @@ library AddressUtils
 }
 
 interface ERC721TokenReceiver {
-    /// @notice Handle the receipt of an NFT
-    /// @dev The ERC721 smart contract calls this function on the recipient
-    ///  after a `transfer`. This function MAY throw to revert and reject the
-    ///  transfer. Return of other than the magic value MUST result in the
-    ///  transaction being reverted.
-    ///  Note: the contract address is always the message sender.
-    /// @param _operator The address which called `safeTransferFrom` function
-    /// @param _from The address which previously owned the token
-    /// @param _tokenId The NFT identifier which is being transferred
-    /// @param _data Additional data with no specified format
-    /// @return `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`
-    ///  unless throwing
     function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes calldata _data) external returns(bytes4);
 }
 
@@ -59,7 +33,7 @@ contract ERC721Custom {
     event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
     event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
 
-    constructor() public {
+    constructor() {
       admin = msg.sender;
     }
 
