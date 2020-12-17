@@ -3,15 +3,17 @@ pragma solidity ^0.7.3;
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 contract DAO {
+  enum Side { Yes, No }
+  enum Status { Undecided, Approved, Rejected }
   struct Proposal {
     address author;
     bytes32 hash;
     uint createdAt;
-    uint votes;
-    bool approved;
+    uint votesYes;
+    uint votesNo;
+    Status status;
   }
 
-  //mapping(address => bool) public investors;
   mapping(bytes32 => Proposal) public proposals;
   mapping(address => mapping(bytes32 => bool)) public votes;
   mapping(address => uint) public shares;
@@ -48,18 +50,26 @@ contract DAO {
       proposalHash,
       block.timestamp,
       0,
-      false
+      0,
+      Status.Undecided
     );
   }
 
-  function vote(bytes32 proposalHash) external {
+  function vote(bytes32 proposalHash, Side side) external {
     Proposal storage proposal = proposals[proposalHash];
     require(votes[msg.sender][proposalHash] == false, 'investor can only vote once for a proposal');
     require(block.timestamp <= proposal.createdAt + VOTING_PERIOD, 'voting period is over');
     votes[msg.sender][proposalHash] = true;
-    proposal.votes += shares[msg.sender];
-    if(proposal.votes * 100 / totalShares > 50) {
-      proposal.approved = true;
+    if(side == Side.Yes) {
+      proposal.votesYes += shares[msg.sender];
+      if(proposal.votesYes * 100 / totalShares > 50) {
+        proposal.status = Status.Approved;
+      }
+    } else {
+      proposal.votesNo += shares[msg.sender];
+      if(proposal.votesNo * 100 / totalShares > 50) {
+        proposal.status = Status.Rejected;
+      }
     }
   }
 }
