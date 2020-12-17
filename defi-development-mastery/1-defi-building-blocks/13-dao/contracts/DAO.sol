@@ -57,8 +57,9 @@ contract DAO {
 
   function vote(bytes32 proposalHash, Side side) external {
     Proposal storage proposal = proposals[proposalHash];
-    require(votes[msg.sender][proposalHash] == false, 'investor can only vote once for a proposal');
-    require(block.timestamp <= proposal.createdAt + VOTING_PERIOD, 'voting period is over');
+    require(votes[msg.sender][proposalHash] == false, 'already voted');
+    require(proposals[proposalHash].hash != bytes32(0), 'proposal already exist'); 
+    require(block.timestamp <= proposal.createdAt + VOTING_PERIOD, 'voting period over');
     votes[msg.sender][proposalHash] = true;
     if(side == Side.Yes) {
       proposal.votesYes += shares[msg.sender];
