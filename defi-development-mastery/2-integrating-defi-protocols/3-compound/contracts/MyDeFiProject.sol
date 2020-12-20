@@ -20,7 +20,7 @@ contract MyDeFiProject {
   function supply(address cTokenAddress, uint underlyingAmount ) public {
     CTokenInterface cToken = CTokenInterface(cTokenAddress);
     address underlyingAddress = cToken.underlying(); 
-    IERC20(underlyingAddress).approve(address(cDai), underlyingAmount);
+    IERC20(underlyingAddress).approve(cTokenAddress, underlyingAmount);
     cToken.mint(underlyingAmount);
   }
 
