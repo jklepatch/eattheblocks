@@ -1,3 +1,7 @@
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+const privateKey = '';
+const infuraUrl = '';
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -58,6 +62,16 @@ module.exports = {
     // },
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
+    rinkeby: {
+      timeoutBlocks: 200000,
+      networkCheckTimeout: 10000, 
+      provider: () => new HDWalletProvider(
+        privateKey,
+        infuraUrl
+      ),
+      network_id: 4,
+      skipDryRun: true
+    },
     // Useful for private networks
     // private: {
     // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
