@@ -7,66 +7,76 @@ import './PriceOracleInterface.sol';
 
 contract MyDeFiProject {
   ComptrollerInterface public comptroller;
-  PriceOracle public priceOracle;
+  PriceOracleInterface public priceOracle;
 
   constructor(
     address _comptroller,
     address _priceOracle
   ) {
     comptroller = ComptrollerInterface(_comptroller);
-    priceOracle = PriceOracle.sol;
+    priceOracle = PriceOracleInterface(_priceOracle);
   }
 
   function supply(address cTokenAddress, uint underlyingAmount ) public {
     CTokenInterface cToken = CTokenInterface(cTokenAddress);
     address underlyingAddress = cToken.underlying(); 
     IERC20(underlyingAddress).approve(cTokenAddress, underlyingAmount);
-    cToken.mint(underlyingAmount);
+    uint result = cToken.mint(underlyingAmount);
+    require(
+      result == 0, 
+      'cToken#mint() failed. see Compound ErrorReporter.sol for details'
+    );
   }
 
   function redeem(address cTokenAddress, uint cTokenAmount) external {
     CTokenInterface cToken = CTokenInterface(cTokenAddress);
-    uint redeemAmount;
-    //if we dont specify any cTokenAmount, we redeem everything
-    if(cTokenAmount == 0) {
-      redeemAmount = cToken.balanceOf(address(this));  
-    }
-    cToken.redeem(redeemAmount);
+    cToken.redeem(cTokenAmount);
   }
 
-  function borrow(address cTokenAddress, uint supplyAmount, uint borrowAmount) external {
-    CTokenInterface cToken = CTokenInterface(cTokenAddress);
-    address underlyingAddress = cToken.underlying(); 
-
-    //provide some collateral
-    supply(cTokenAddress, supplyAmount);
-
-    //Indicate to Compound we can use DAI as collateral
+  function enterMarket(address cTokenAddress) external {
     address[] memory markets = new address[](1);
     markets[0] = cTokenAddress; 
-    comptroller.enterMarkets(markets);
+    uint[] memory results = comptroller.enterMarkets(markets);
+    require(
+      results[0] == 0, 
+      'comptroller#enterMarket() failed. see Compound ErrorReporter.sol for details'
+    ); 
+  }
 
-    //Make sure we have enough collateral
-    (uint256 error, uint256 liquidity, uint256 shortfall) = comptroller
+  function borrow(address cTokenAddress, uint borrowAmount) external {
+    CTokenInterface cToken = CTokenInterface(cTokenAddress);
+    address underlyingAddress = cToken.underlying(); 
+    uint result = cToken.borrow(borrowAmount);
+    require(
+      result == 0, 
+      'cToken#borrow() failed. see Compound ErrorReporter.sol for details'
+    ); 
+  }
+
+  function repayBorrow(address cTokenAddress, uint underlyingAmount) external {
+    CTokenInterface cToken = CTokenInterface(cTokenAddress);
+    address underlyingAddress = cToken.underlying(); 
+    //bat.approve(address(cBat), underlyingAmount);
+    IERC20(underlyingAddress).approve(cTokenAddress, underlyingAmount);
+    uint result = cToken.repayBorrow(underlyingAmount);
+    require(
+      result == 0, 
+      'cToken#borrow() failed. see Compound ErrorReporter.sol for details'
+    ); 
+  }
+
+  function getMaxBorrow(address cTokenAddress) external view returns(uint) {
+    (uint result, uint liquidity, uint shortfall) = comptroller
       .getAccountLiquidity(address(this));
-    if (error != 0) {
-      revert("Comptroller.getAccountLiquidity failed.");
-    }
-    require(shortfall == 0, "account underwater");
-    require(liquidity > 0, "account does not have collateral");
-    uint256 underlyingPrice = priceFeed.getUnderlyingPrice(cTokenAddress);
-    uint256 maxBorrowUnderlying = liquidity / underlyingPrice;
-    require(borrowAmount <= maxBorrowUnderlying, 'not enough collateral');
-
-    //Borrow
-    cToken.borrow(borrowAmount);
+    require(
+      result == 0, 
+      'comptroller#getAccountLiquidity() failed. see Compound ErrorReporter.sol for details'
+    ); 
+    require(shortfall == 0, 'account underwater');
+    require(liquidity > 0, 'account does not have collateral');
+    uint underlyingPrice = priceOracle.getUnderlyingPrice(cTokenAddress);
+    return liquidity / underlyingPrice;
+    //require(borrowAmount <= maxBorrowUnderlying, 'not enough collateral');
   }
 
-  function repayBorrow() external {
-    bat.approve(address(cBat), 100);
-    cBat.repayBorrow(100);
-    //(optional, if you want to get back collateral)
-    uint balance = cDai.balanceOf(address(this));  
-    cDai.redeem(balance);
-  }
 }

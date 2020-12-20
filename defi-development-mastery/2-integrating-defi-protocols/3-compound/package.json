@@ -1,7 +1,6 @@
 {
   "name": "3-compound",
   "version": "1.0.0",
-  "description": "",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -13,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@openzeppelin/contracts": "^3.2.1-solc-0.7"
-  }
+    "@openzeppelin/contracts": "^3.2.1-solc-0.7",
+    "@truffle/hdwallet-provider": "^1.2.0"
+  },
+  "devDependencies": {},
+  "description": ""
 }
