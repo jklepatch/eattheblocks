@@ -1,65 +1,75 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Compound from '@compound-finance/compound-js';
+import calculateApy from '../apy.js';  
 
-export default function Home() {
+export default function Home({ apys }) {
+  const formatPercent = number => 
+    `${new Number(number).toFixed(2)}%`
+
   return (
-    <div className={styles.container}>
+    <div className='container'>
       <Head>
-        <title>Create Next App</title>
+        <title>Compound dashboard</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <div className='row mt-4'>
+        <div className='col-sm-12'>
+          <div className="jumbotron">
+            <h1 className='text-center'>Compound Dashboard</h1>
+            <h5 className="display-4 text-center">Shows Compound APYs <br/> with COMP token rewards</h5>
+          </div>
         </div>
-      </main>
+      </div>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Supply APY</th>
+            <th>COMP APY</th>
+            <th>Total APY</th>
+          </tr>
+        </thead>
+        <tbody>
+          {apys && apys.map(apy => (
+            <tr key={apy.ticker}>
+              <td>
+                <img 
+                  src={`img/${apy.ticker.toLowerCase()}.png`} 
+                  style={{width: 25, height: 25, marginRight: 10}} 
+                />
+                {apy.ticker.toUpperCase()}
+              </td>
+              <td>
+                {formatPercent(apy.supplyApy)}
+              </td>
+              <td>
+                {formatPercent(apy.compApy)}
+              </td>
+              <td>
+                {formatPercent(parseFloat(apy.supplyApy) + parseFloat(apy.compApy))}
+              </td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  const apys = await Promise.all([
+    calculateApy(Compound.cDAI, 'DAI'),
+    calculateApy(Compound.cUSDC, 'USDC'),
+    calculateApy(Compound.cUSDT, 'USDT'),
+  ]);
+
+  return {
+    props: {
+      apys
+    },
+  }
 }

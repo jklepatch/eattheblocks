@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@compound-finance/compound-js": "^0.2.4",
+    "bootstrap": "^4.5.3",
     "next": "10.0.3",
     "react": "17.0.1",
     "react-dom": "17.0.1"
