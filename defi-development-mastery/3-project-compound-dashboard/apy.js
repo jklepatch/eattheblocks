@@ -10,7 +10,7 @@ const blocksPerDay = 4 * 60 * 24; // 4 blocks in 1 minute
 const daysPerYear = 365;
 const ethMantissa = Math.pow(10, 18); // 1 * 10 ^ 18
 
-async function calculateSupplyApy(cToken, ticker) {
+async function calculateSupplyApy(cToken) {
   const supplyRatePerBlock = await Compound.eth.read(
     cToken,
     'function supplyRatePerBlock() returns (uint)',
@@ -36,6 +36,13 @@ async function calculateCompApy(cToken, ticker, underlyingDecimals) {
     { provider }
   );
 
+  let underlyingPrice = await Compound.eth.read(
+    opf,
+    'function price(string memory symbol) external view returns (uint)',
+    [ ticker ],
+    { provider }
+  );
+
   let totalSupply = await Compound.eth.read(
     cToken,
     'function totalSupply() returns (uint)',
@@ -53,7 +60,8 @@ async function calculateCompApy(cToken, ticker, underlyingDecimals) {
   exchangeRate = +exchangeRate.toString() / ethMantissa; 
   compSpeed = compSpeed / 1e18; // COMP has 18 decimal places
   compPrice = compPrice / 1e6;  // price feed is USD price with 6 decimal places
-  totalSupply = (+totalSupply.toString() * exchangeRate) / (Math.pow(10, underlyingDecimals));
+  underlyingPrice = underlyingPrice / 1e6;
+  totalSupply = (+totalSupply.toString() * exchangeRate * underlyingPrice) / (Math.pow(10, underlyingDecimals));
   const compPerDay = compSpeed * blocksPerDay;
 
   return 100 * (compPrice * compPerDay / totalSupply) * 365;
@@ -63,7 +71,7 @@ async function calculateApy(cToken, ticker) {
   const underlyingDecimals = Compound.decimals[cToken.slice(1, 10)];
   const cTokenAddress = Compound.util.getAddress(cToken);
   const [supplyApy, compApy] = await Promise.all([
-    calculateSupplyApy(cTokenAddress, ticker),
+    calculateSupplyApy(cTokenAddress),
     calculateCompApy(cTokenAddress, ticker, underlyingDecimals)
   ]);
   return {ticker, supplyApy, compApy};
