@@ -21,7 +21,6 @@ module.exports = async done => {
       nonce: txCount,
       gasPrice: web3.utils.toWei('21', 'gwei') 
     });
-    await tx2;
 
     const data = await myContract.methods.data().call();
     console.log(data.toString());
