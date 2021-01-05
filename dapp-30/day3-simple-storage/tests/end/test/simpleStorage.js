@@ -4,7 +4,7 @@ contract('SimpleStorage', () => {
   it('should set the value of data variable in smart contract', async () => {
     const simpleStorage = await SimpleStorage.deployed();
     await simpleStorage.set('this');
-    const result = simpleStorage.get();
+    const result = await simpleStorage.get();
     assert(result, 'this');
   });
 });
