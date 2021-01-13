@@ -1,5 +1,5 @@
 import { ethers, Contract } from 'ethers';
-import Token from './contracts/Token.json';
+import Token from './Token.json';
 
 const getBlockchain = () =>
   new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ const getBlockchain = () =>
         const signer = provider.getSigner();
         const signerAddress = await signer.getAddress();
         const token = new Contract(
-          Token.networks[window.ethereum.networkVersion].address,
+          Token.address,
           Token.abi,
           signer
         );
