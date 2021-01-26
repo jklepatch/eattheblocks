@@ -1,4 +1,4 @@
-pragma solidity ^0.7.3;
+pragma solidity ^0.5.7;
 
 interface CTokenInterface {
   function mint(uint mintAmount) external returns (uint);
@@ -7,4 +7,5 @@ interface CTokenInterface {
   function repayBorrow(uint repayAmount) external returns (uint);
   function borrowBalanceCurrent(address account) external returns (uint);
   function balanceOf(address owner) external view returns (uint);
+  function underlying() external view returns(address);
 }
