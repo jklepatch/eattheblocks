@@ -18,6 +18,6 @@ contract CollateralBackedToken is ERC20 {
   function withdraw(uint tokenAmount) external {
     require(balanceOf(msg.sender) >= tokenAmount, 'balance too low');
     _burn(msg.sender, tokenAmount);
-    collateral.transfer(tokenAmount / price);
+    collateral.transfer(msg.sender, tokenAmount / price);
   }
 }
