@@ -1,0 +1,6 @@
+#numpy==1.19.5
+praw==7.1.0
+pandas==1.2.1
+matplotlib==3.3.3
+squarify==0.4.3
+nltk==3.5
