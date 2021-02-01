@@ -21,24 +21,6 @@ contract YieldFarmer is ICallee, DydxFlashloanBase, Compound {
     owner = msg.sender;
   }
 
-  function callFunction(
-    address sender,
-    Account.Info memory account,
-    bytes memory data
-  ) public {
-    Operation memory operation = abi.decode(data, (Operation));
-
-    if(operation.direction == Direction.Deposit) {
-      supply(operation.cToken, operation.amountProvided + operation.amountBorrowed);
-      enterMarket(operation.cToken);
-      borrow(operation.cToken, operation.amountBorrowed);
-    } else {
-      repayBorrow(operation.cToken, operation.amountBorrowed);
-      uint cTokenBalance = getcTokenBalance(operation.cToken);
-      redeem(operation.cToken, cTokenBalance);
-    }
-  }
-
   function openPosition(
     address _solo, 
     address _token, 
@@ -74,6 +56,24 @@ contract YieldFarmer is ICallee, DydxFlashloanBase, Compound {
     IERC20 token = IERC20(_token);
     uint tokenBalance = token.balanceOf(address(this));
     token.transfer(msg.sender, tokenBalance);
+  }
+
+  function callFunction(
+    address sender,
+    Account.Info memory account,
+    bytes memory data
+  ) public {
+    Operation memory operation = abi.decode(data, (Operation));
+
+    if(operation.direction == Direction.Deposit) {
+      supply(operation.cToken, operation.amountProvided + operation.amountBorrowed);
+      enterMarket(operation.cToken);
+      borrow(operation.cToken, operation.amountBorrowed);
+    } else {
+      repayBorrow(operation.cToken, operation.amountBorrowed);
+      uint cTokenBalance = getcTokenBalance(operation.cToken);
+      redeem(operation.cToken, cTokenBalance);
+    }
   }
 
   function _initiateFlashloan(

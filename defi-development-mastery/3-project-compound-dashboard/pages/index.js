@@ -65,7 +65,6 @@ export async function getServerSideProps(context) {
     calculateApy(Compound.cDAI, 'DAI'),
     calculateApy(Compound.cUSDC, 'USDC'),
     calculateApy(Compound.cUSDT, 'USDT'),
-    calculateApy(Compound.cUSDT, 'BAT'),
   ]);
 
   return {
