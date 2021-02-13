@@ -70,7 +70,8 @@ contract Arbitrage {
       deadline
     )[1];
 
-    token.transfer(msg.sender, amountRequired);
-    token.transfer(tx.origin, amountReceived - amountRequired);
+    IERC20 otherToken = IERC20(_amount0 == 0 ? token0 : token1);
+    otherToken.transfer(msg.sender, amountRequired);
+    otherToken.transfer(tx.origin, amountReceived - amountRequired);
   }
 }
