@@ -70,6 +70,7 @@ contract Arbitrage {
       deadline
     )[1];
 
+    token.transfer(msg.sender, amountRequired));
     token.transfer(tx.origin, amountReceived - amountRequired);
   }
 }
