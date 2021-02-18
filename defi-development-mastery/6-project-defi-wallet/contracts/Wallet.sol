@@ -2,54 +2,85 @@ pragma solidity ^0.7.3;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import './CTokenInterface.sol';
-import './ComptrollerInterface.sol';
-import './Weth.sol';
-//import './PriceOracleInterface.sol';
+import './Compound.sol';
 
-contract Wallet {
-  ComptrollerInterface public comptroller;
-  Weth public weth;
+contract Wallet is Compound {
+  address public admin;
 
-  constructor(address _comptroller, address _weth) {
-    comptroller = ComptrollerInterface(_comptroller);
-    weth = Weth(_weth);
+  constructor(
+    address _comptroller, 
+    address _cEthAddress
+  ) Compound(_comptroller, _cEthAddress) {
+    admin = msg.sender;
   }
 
-  function deposit(address cTokenAddress, uint underlyingAmount) external {
-    _investCompound(cTokenAddress, underlyingAmount);
-    comptroller.claimComp(address(this));
+  function deposit(
+    address cTokenAddress, 
+    uint underlyingAmount
+  ) 
+    onlyAdmin()
+    external 
+  {
+    supply(cTokenAddress, underlyingAmount);
   }
 
-  function depositETH(address cTokenAddress) external payable {
-    weth.deposit{value: msg.value}();
-    _investCompound(cTokenAddress, msg.value);
-    comptroller.claimComp(address(this));
+  function depositEth(uint underlyingAmount) onlyAdmin() external payable {
+    supplyEth(underlyingAmount);
   }
 
-  function _investCompound(address cTokenAddress, uint underlyingAmount) internal {
-    CTokenInterface cToken = CTokenInterface(cTokenAddress);
-    address underlyingAddress = cToken.underlying(); 
-    IERC20 token = IERC20(underlyingAddress);
-    token.transferFrom(msg.sender, address(this), underlyingAmount);
-    token.approve(cTokenAddress, underlyingAmount);
-    cToken.mint(underlyingAmount);
-    comptroller.claimComp(address(this));
+  function withdraw(
+    address cTokenAddress, 
+    uint underlyingAmount,
+    address recipient
+  ) 
+    onlyAdmin()
+    external  
+  {
+    require(
+      getUnderlyingBalance(cTokenAddress) >= underlyingAmount, 
+      'balance too low'
+    );
+    claimComp();
+    redeem(cTokenAddress, underlyingAmount);
+
+    address underlyingAddress = getUnderlyingAddress(cTokenAddress); 
+    IERC20 underlyingToken = IERC20(underlyingAddress);
+    underlyingToken.transfer(recipient, underlyingAmount);
+
+    address compAddress = getCompAddress(); 
+    IERC20 compToken = IERC20(compAddress);
+    uint compAmount = compToken.balanceOf(address(this));
+    compToken.transfer(recipient, compAmount);
   }
 
-  function withdraw(address cTokenAddress, uint cTokenAmount) external {
-    CTokenInterface cToken = CTokenInterface(cTokenAddress);
-    cToken.redeem(cTokenAmount);
-    address underlyingAddress = cToken.underlying(); 
-    IERC20 token = IERC20(underlyingAddress);
-    uint underlyingAmount = token.balanceOf(address(this));
-    token.transfer(msg.sender, underlyingAmount);
+  function withdrawEth(
+    uint underlyingAmount,
+    address payable recipient
+  ) 
+    onlyAdmin()
+    external  
+  {
+    require(
+      getUnderlyingEthBalance() >= underlyingAmount, 
+      'balance too low'
+    );
+    claimComp();
+    redeemEth(underlyingAmount);
+
+    recipient.transfer(underlyingAmount);
+
+    address compAddress = getCompAddress(); 
+    IERC20 compToken = IERC20(compAddress);
+    uint compAmount = compToken.balanceOf(address(this));
+    compToken.transfer(recipient, compAmount);
   }
 
-  function getBalances(address[] memory cTokenAddresses) external returns(uint[] memory) {
-    uint[] memory balances = new uint[](cTokenAddresses.length);
-    for(uint i = 0; i < cTokenAddresses.length; i++) {
-      balances[i] = CTokenInterface(cTokenAddresses[i]).balanceOfUnderlying(address(this)); 
-    }
-    return balances;
+  receive() external payable {
+    supplyEth(msg.value);
+  }
+
+  modifier onlyAdmin() {
+    require(msg.sender == admin);
+    _;
   }
 }

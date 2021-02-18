@@ -73,4 +73,5 @@ interface ComptrollerInterface {
         address cTokenCollateral,
         uint repayAmount) external view returns (uint, uint);
     function claimComp(address holder) external;
+    function getCompAddress() external view returns(address);
 }
