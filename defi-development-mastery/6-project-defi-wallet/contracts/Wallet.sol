@@ -21,6 +21,8 @@ contract Wallet is Compound {
     onlyAdmin()
     external 
   {
+    address underlyingAddress = getUnderlyingAddress(cTokenAddress);
+    IERC20(underlyingAddress).transfer(address(this), underlyingAmount);
     supply(cTokenAddress, underlyingAmount);
   }
 
