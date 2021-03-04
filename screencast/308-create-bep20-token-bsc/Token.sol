@@ -39,5 +39,6 @@ contract Token {
     function approve(address spender, uint value) public returns (bool) {
         allowance[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
+        return true;   
     }
 }
