@@ -32,7 +32,7 @@ contract Arbitrage {
     );
   }
 
-  function uniswapV2Call(
+  function pancakeCall(
     address _sender, 
     uint _amount0, 
     uint _amount1, 
