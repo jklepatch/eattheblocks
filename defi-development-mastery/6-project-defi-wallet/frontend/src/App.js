@@ -4,57 +4,74 @@ import addresses from './addresses.js';
 import { ethers } from 'ethers';
 
 function App() {
+  const [signer, setSigner] = useState(undefined);
   const [wallet, setWallet] = useState(undefined);
   const [dai, setDai] = useState(undefined);
   const [balanceEth, setBalanceEth] = useState(undefined);
   const [balanceDai, setBalanceDai] = useState(undefined);
+  const [depositAmountEth, setDepositAmountEth] = useState('');
+  const [withdrawAmountEth, setWithdrawAmountEth] = useState('');
+  const [withdrawAddressEth, setWithdrawAddressEth] = useState('');
+  const [depositAmountDai, setDepositAmountDai] = useState('');
+  const [withdrawAmountDai, setWithdrawAmountDai] = useState('');
+  const [withdrawAddressDai, setWithdrawAddressDai] = useState('');
 
   useEffect(() => {
     const init = async () => {
-      const { signerAddress, wallet, dai } = await getBlockchain();
-      //const balanceEth = await wallet.callStatic.getUnderlyingEthBalance();
-      //const balanceDai = await wallet.getUnderlyingBalance(addresses.dai);
+      const { signer, wallet, dai } = await getBlockchain();
+      const balanceEth = await wallet.callStatic.getUnderlyingEthBalance();
+      const balanceDai = await wallet.getUnderlyingBalance(addresses.dai);
+      setSigner(signer);
       setWallet(wallet);
       setDai(dai);
-      //setBalanceEth(balanceEth);
-      //setBalanceDai(balanceDai);
+      setBalanceEth(balanceEth);
+      setBalanceDai(balanceDai);
     };
     init();
   }, []);
 
   const depositEth = async e => {
     e.preventDefault();
-    //const amount = ethers.utils.parseUnits(e.target.elements[0].value, 18);
-    //const tx = await wallet.depositEth({value: amount});
-    //await tx.wait();
+    const amount = ethers.utils.parseUnits(depositAmountEth, 18);
+    const tx = await signer.sendTransaction({
+      to: wallet.address,
+      value: amount 
+    });
+    await tx.wait();
+    setDepositAmountEth('');
   };
 
   const depositDai = async e => {
     e.preventDefault();
-    //const amount = ethers.utils.parseUnits(e.target.elements[0].value, 18);
-    //const recipient = e.target.elements[1].value;
-    //const tx1 = await dai.approve(wallet.address, amount);
-    //await tx1.wait();
-    //const tx2 = await wallet.deposit(addresses.cDai, amount);
-    //await tx2.wait();
+    const amount = ethers.utils.parseUnits(depositAmountDai, 18);
+    const tx1 = await dai.approve(wallet.address, amount);
+    await tx1.wait();
+    const tx2 = await wallet.deposit(addresses.cDai, amount);
+    await tx2.wait();
+    setDepositAmountDai('');
   };
 
   const withdrawEth = async e => {
     e.preventDefault();
-    //const amount = ethers.utils.parseUnits(e.target.elements[0].value, 18);
-    //const tx = await wallet.withdrawEth(amount);
-    //await tx.wait();
+    const amount = ethers.utils.parseUnits(withdrawAmountEth, 18);
+    const tx = await wallet.withdrawEth(amount);
+    await tx.wait();
+    setWithdrawAmountEth('');
+    setWithdrawAddressEth('');
   };
 
   const withdrawDai = async e => {
     e.preventDefault();
-    //const amount = ethers.utils.parseUnits(e.target.elements[0].value, 18);
-    //const tx = await wallet.withdraw(addresses.cDai, amount);
-    //await tx.wait();
+    const amount = ethers.utils.parseUnits(withdrawAmountDai, 18);
+    const tx = await wallet.withdrawDai(amount);
+    await tx.wait();
+    setWithdrawAmountDai('');
+    setWithdrawAddressDai('');
   };
 
   if(
-    typeof wallet === 'undefined'
+    typeof signer === 'undefined'
+    || typeof wallet === 'undefined'
     || typeof dai === 'undefined'
   ) {
     return 'Loading...';
@@ -91,12 +108,18 @@ function App() {
             <div className="form-group row">
               <label htmlFor="amount-deposit-eth" className="col-sm-2 col-form-label">Deposit</label>
               <div className="col-sm-3">
-                <input type="text" className="form-control" id="amount-deposit-eth" placeholder="Amount"/>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="amount-deposit-eth" 
+                  placeholder="Amount"
+                  value={depositAmountEth}
+                  onChange={e => setDepositAmountEth(e.target.value)}
+                />
               </div>
               <div className="col-sm-3 offset-sm-3">
                 <button 
                   type="submit" 
-                  className="form-control"
                   className="btn btn-primary mb-2"
                   onClick={e => depositEth(e)}
                 >
@@ -107,14 +130,27 @@ function App() {
             <div className="form-group row">
               <label htmlFor="amount-withdraw-eth" className="col-sm-2 col-form-label">Withdraw</label>
               <div className="col-sm-3">
-                <input type="text" className="form-control" id="amount-withdraw-eth" placeholder="Amount"/>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="amount-withdraw-eth" 
+                  placeholder="Amount"
+                  value={withdrawAmountEth}
+                  onChange={e => setWithdrawAmountEth(e.target.value)}
+                />
               </div>
               <div className="col-sm-3">
-                <input type="text" className="form-control" id="address-withdraw-eth" placeholder="Address"/>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="address-withdraw-eth" 
+                  placeholder="Address"
+                  value={withdrawAddressEth}
+                  onChange={e => setWithdrawAddressEth(e.target.value)}
+                />
               </div>
               <div className="col-sm-4">
                 <button 
-                  className="form-control"
                   className="btn btn-primary mb-2"
                   onClick={e => withdrawEth(e)}
                 >
@@ -145,11 +181,17 @@ function App() {
             <div className="form-group row">
               <label htmlFor="amount-deposit-dai" className="col-sm-2 col-form-label">Deposit</label>
               <div className="col-sm-3">
-                <input type="text" className="form-control" id="amount-deposit-dai" placeholder="Amount"/>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="amount-deposit-dai" 
+                  placeholder="Amount"
+                  value={depositAmountDai}
+                  onChange={e => setDepositAmountDai(e.target.value)}
+                />
               </div>
               <div className="col-sm-3 offset-sm-3">
                 <button 
-                  className="form-control"
                   className="btn btn-primary mb-2"
                   onClick={e => depositDai(e)}
                 >
@@ -160,14 +202,27 @@ function App() {
             <div className="form-group row">
               <label htmlFor="amount-withdraw-dai" className="col-sm-2 col-form-label">Withdraw</label>
               <div className="col-sm-3">
-                <input type="text" className="form-control" id="amount-withdraw-dai" placeholder="Amount"/>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="amount-withdraw-dai" 
+                  placeholder="Amount"
+                  value={withdrawAmountDai}
+                  onChange={e => setWithdrawAmountDai(e.target.value)}
+                />
               </div>
               <div className="col-sm-3">
-                <input type="text" className="form-control" id="address-withdraw-dai" placeholder="Address"/>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="address-withdraw-dai" 
+                  placeholder="Address"
+                  value={withdrawAddressDai}
+                  onChange={e => setWithdrawAddressDai(e.target.value)}
+                />
               </div>
               <div className="col-sm-4">
                 <button 
-                  className="form-control"
                   className="btn btn-primary mb-2"
                   onClick={e => withdrawDai(e)}
                 >

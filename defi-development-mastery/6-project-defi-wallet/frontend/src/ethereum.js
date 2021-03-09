@@ -9,7 +9,6 @@ const getBlockchain = () =>
         await window.ethereum.enable();
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
-        const signerAddress = await signer.getAddress();
 
         const wallet = new Contract(
           Wallet.networks[window.ethereum.networkVersion].address,
@@ -23,9 +22,9 @@ const getBlockchain = () =>
           signer
         );
 
-        resolve({signerAddress, wallet, dai});
+        resolve({signer, wallet, dai});
       }
-      resolve({signerAddress: undefined, wallet: undefined, dai: undefined});
+      resolve({signer: undefined, wallet: undefined, dai: undefined});
     });
   });
 

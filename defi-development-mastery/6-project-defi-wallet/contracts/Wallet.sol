@@ -1,7 +1,6 @@
 pragma solidity ^0.7.3;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import './CTokenInterface.sol';
 import './Compound.sol';
 
 contract Wallet is Compound {
@@ -22,12 +21,8 @@ contract Wallet is Compound {
     external 
   {
     address underlyingAddress = getUnderlyingAddress(cTokenAddress);
-    IERC20(underlyingAddress).transfer(address(this), underlyingAmount);
+    IERC20(underlyingAddress).transferFrom(msg.sender, address(this), underlyingAmount);
     supply(cTokenAddress, underlyingAmount);
-  }
-
-  function depositEth(uint underlyingAmount) onlyAdmin() external payable {
-    supplyEth(underlyingAmount);
   }
 
   function withdraw(
@@ -46,8 +41,7 @@ contract Wallet is Compound {
     redeem(cTokenAddress, underlyingAmount);
 
     address underlyingAddress = getUnderlyingAddress(cTokenAddress); 
-    IERC20 underlyingToken = IERC20(underlyingAddress);
-    underlyingToken.transfer(recipient, underlyingAmount);
+    IERC20(underlyingAddress).transfer(recipient, underlyingAmount);
 
     address compAddress = getCompAddress(); 
     IERC20 compToken = IERC20(compAddress);
@@ -82,7 +76,7 @@ contract Wallet is Compound {
   }
 
   modifier onlyAdmin() {
-    require(msg.sender == admin);
+    require(msg.sender == admin, 'only admin');
     _;
   }
 }
