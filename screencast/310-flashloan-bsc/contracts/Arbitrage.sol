@@ -1,10 +1,10 @@
 pragma solidity ^0.6.6;
 
-import './UniswapV2Library.sol';
-import './interfaces/IUniswapV2Router02.sol';
-import './interfaces/IUniswapV2Pair.sol';
-import './interfaces/IUniswapV2Factory.sol';
-import './interfaces/IERC20.sol';
+import 'https://github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/libraries/UniswapV2Library.sol';
+import 'https://github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/IUniswapV2Router02.sol';
+import 'https://github.com/Uniswap/uniswap-v2-core/blob/master/contracts/interfaces/IUniswapV2Pair.sol';
+import 'https://github.com/Uniswap/uniswap-v2-core/blob/master/contracts/interfaces/IUniswapV2Factory.sol';
+import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/token/ERC20/IERC20.sol';
 
 contract Arbitrage {
   address public pancakeFactory;
