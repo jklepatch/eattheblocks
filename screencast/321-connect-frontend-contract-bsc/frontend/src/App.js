@@ -5,7 +5,6 @@ function App() {
   const [simpleStorage, setSimpleStorage] = useState(undefined);
   const [data, setData] = useState(undefined);
 
-
   useEffect(() => {
     const init = async () => {
       const { simpleStorage } = await getBlockchain();
