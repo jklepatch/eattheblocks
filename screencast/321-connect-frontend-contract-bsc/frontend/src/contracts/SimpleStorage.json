@@ -43,9 +43,9 @@
       "constant": true
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"data\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"readData\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_data\",\"type\":\"uint256\"}],\"name\":\"updateData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/jklepatch/ETB/code/screencast/320-connect-frontend-contract-bsc/contracts/SimpleStorage.sol\":\"SimpleStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/jklepatch/ETB/code/screencast/320-connect-frontend-contract-bsc/contracts/SimpleStorage.sol\":{\"keccak256\":\"0x1fd1813164013541f6690302b241fc99b820af2ced564383cfe637fe4e87c8eb\",\"urls\":[\"bzz-raw://4f0bb71071847fd32e8b84acd7d6a9ee217f9539c857b62962bf78dc2317a297\",\"dweb:/ipfs/QmQy6SV3Un1z9tdXbhncycUpryHE5CxeuqFrRBTTFMNy14\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50610176806100206000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c806309e960081461004657806373d4a13a14610062578063bef55ef314610080575b600080fd5b610060600480360381019061005b91906100cc565b61009e565b005b61006a6100a8565b6040516100779190610104565b60405180910390f35b6100886100ae565b6040516100959190610104565b60405180910390f35b8060008190555050565b60005481565b60008054905090565b6000813590506100c681610129565b92915050565b6000602082840312156100de57600080fd5b60006100ec848285016100b7565b91505092915050565b6100fe8161011f565b82525050565b600060208201905061011960008301846100f5565b92915050565b6000819050919050565b6101328161011f565b811461013d57600080fd5b5056fea26469706673582212204fb116fbe06048cf7ce8c6413d0433c7bb3629be5555b52bd5eec8180d12892964736f6c63430008000033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c806309e960081461004657806373d4a13a14610062578063bef55ef314610080575b600080fd5b610060600480360381019061005b91906100cc565b61009e565b005b61006a6100a8565b6040516100779190610104565b60405180910390f35b6100886100ae565b6040516100959190610104565b60405180910390f35b8060008190555050565b60005481565b60008054905090565b6000813590506100c681610129565b92915050565b6000602082840312156100de57600080fd5b60006100ec848285016100b7565b91505092915050565b6100fe8161011f565b82525050565b600060208201905061011960008301846100f5565b92915050565b6000819050919050565b6101328161011f565b811461013d57600080fd5b5056fea26469706673582212204fb116fbe06048cf7ce8c6413d0433c7bb3629be5555b52bd5eec8180d12892964736f6c63430008000033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"data\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"readData\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_data\",\"type\":\"uint256\"}],\"name\":\"updateData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/jklepatch/ETB/code/screencast/321-connect-frontend-contract-bsc/contracts/SimpleStorage.sol\":\"SimpleStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/jklepatch/ETB/code/screencast/321-connect-frontend-contract-bsc/contracts/SimpleStorage.sol\":{\"keccak256\":\"0x1fd1813164013541f6690302b241fc99b820af2ced564383cfe637fe4e87c8eb\",\"urls\":[\"bzz-raw://4f0bb71071847fd32e8b84acd7d6a9ee217f9539c857b62962bf78dc2317a297\",\"dweb:/ipfs/QmQy6SV3Un1z9tdXbhncycUpryHE5CxeuqFrRBTTFMNy14\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610176806100206000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c806309e960081461004657806373d4a13a14610062578063bef55ef314610080575b600080fd5b610060600480360381019061005b91906100cc565b61009e565b005b61006a6100a8565b6040516100779190610104565b60405180910390f35b6100886100ae565b6040516100959190610104565b60405180910390f35b8060008190555050565b60005481565b60008054905090565b6000813590506100c681610129565b92915050565b6000602082840312156100de57600080fd5b60006100ec848285016100b7565b91505092915050565b6100fe8161011f565b82525050565b600060208201905061011960008301846100f5565b92915050565b6000819050919050565b6101328161011f565b811461013d57600080fd5b5056fea2646970667358221220265795ca0ea17b852729c57409c134974993b3872c0486400da3bfa2c5f9a43264736f6c63430008000033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c806309e960081461004657806373d4a13a14610062578063bef55ef314610080575b600080fd5b610060600480360381019061005b91906100cc565b61009e565b005b61006a6100a8565b6040516100779190610104565b60405180910390f35b6100886100ae565b6040516100959190610104565b60405180910390f35b8060008190555050565b60005481565b60008054905090565b6000813590506100c681610129565b92915050565b6000602082840312156100de57600080fd5b60006100ec848285016100b7565b91505092915050565b6100fe8161011f565b82525050565b600060208201905061011960008301846100f5565b92915050565b6000819050919050565b6101328161011f565b811461013d57600080fd5b5056fea2646970667358221220265795ca0ea17b852729c57409c134974993b3872c0486400da3bfa2c5f9a43264736f6c63430008000033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [
@@ -644,9 +644,9 @@
   "sourceMap": "25:188:1:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "25:188:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;73:64;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;52:16;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;141:70;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;73:64;127:5;120:4;:12;;;;73:64;:::o;52:16::-;;;;:::o;141:70::-;183:4;202;;195:11;;141:70;:::o;7:139:2:-;;91:6;78:20;69:29;;107:33;134:5;107:33;:::i;:::-;59:87;;;;:::o;152:262::-;;260:2;248:9;239:7;235:23;231:32;228:2;;;276:1;273;266:12;228:2;319:1;344:53;389:7;380:6;369:9;365:22;344:53;:::i;:::-;334:63;;290:117;218:196;;;;:::o;420:118::-;507:24;525:5;507:24;:::i;:::-;502:3;495:37;485:53;;:::o;544:222::-;;675:2;664:9;660:18;652:26;;688:71;756:1;745:9;741:17;732:6;688:71;:::i;:::-;642:124;;;;:::o;772:77::-;;838:5;827:16;;817:32;;;:::o;855:122::-;928:24;946:5;928:24;:::i;:::-;921:5;918:35;908:2;;967:1;964;957:12;908:2;898:79;:::o",
   "source": "pragma solidity ^0.8.0;\n\ncontract SimpleStorage {\n  uint public data;\n\n  function updateData(uint _data) external {\n    data = _data;\n  }\n\n  function readData() external view returns(uint) {\n    return data;\n  }\n}\n",
-  "sourcePath": "/Users/jklepatch/ETB/code/screencast/320-connect-frontend-contract-bsc/contracts/SimpleStorage.sol",
+  "sourcePath": "/Users/jklepatch/ETB/code/screencast/321-connect-frontend-contract-bsc/contracts/SimpleStorage.sol",
   "ast": {
-    "absolutePath": "/Users/jklepatch/ETB/code/screencast/320-connect-frontend-contract-bsc/contracts/SimpleStorage.sol",
+    "absolutePath": "/Users/jklepatch/ETB/code/screencast/321-connect-frontend-contract-bsc/contracts/SimpleStorage.sol",
     "exportedSymbols": {
       "SimpleStorage": [
         55
@@ -895,7 +895,7 @@
     "src": "0:214:1"
   },
   "legacyAST": {
-    "absolutePath": "/Users/jklepatch/ETB/code/screencast/320-connect-frontend-contract-bsc/contracts/SimpleStorage.sol",
+    "absolutePath": "/Users/jklepatch/ETB/code/screencast/321-connect-frontend-contract-bsc/contracts/SimpleStorage.sol",
     "exportedSymbols": {
       "SimpleStorage": [
         55
@@ -1151,18 +1151,18 @@
     "97": {
       "events": {},
       "links": {},
-      "address": "0xAfFc370Ac01C4C365F9Ff14ec1D8C6214BF8F868",
-      "transactionHash": "0xb5627053683bea83f0c19ca5008b237dc0a1018cbdb074575e6d0bc240076460"
+      "address": "0x687B35ad868Ac25345a804ee9dFd452B03dbA3FA",
+      "transactionHash": "0x209acbeb00df65bf3853d263a277b85cab831ad3f01aa6a1b9df69c8fd78e6b3"
     },
     "5777": {
       "events": {},
       "links": {},
       "address": "0xCB2ebb9cE533EA4c8c409a07C3d7829A65E4dbf7",
-      "transactionHash": "0x66b7ea6f3a50d22fc5f5acc4d1708cd1ee71cec6a3330053d966321ea4f74daf"
+      "transactionHash": "0xf0be24865266beafc78ab0d38cd3dab4caa1b22a2e1eafdcaafb4a474798d1d2"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-03-26T11:02:08.865Z",
+  "updatedAt": "2021-03-26T12:12:11.264Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
