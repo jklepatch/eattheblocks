@@ -65,7 +65,7 @@ factory.on('PairCreated', async (token0, token1, pairAddress) => {
   `);
   const tx = await router.swapExactTokensForTokens(
     amountIn,
-    amounts[1] // Have to give some margin
+    amountOutMin,
     [tokenIn, tokenOut],
     addresses.recipient,
     Date.now() + 1000 * 60 * 10 //10 minutes
