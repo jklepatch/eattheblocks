@@ -37,12 +37,12 @@ factory.on('PairCreated', async (token0, token1, pairAddress) => {
 
   //The quote currency needs to be WETH (we will pay with WETH)
   let tokenIn, tokenOut;
-  if(token0 === WETH) {
+  if(token0 === addresses.WETH) {
     tokenIn = token0; 
     tokenOut = token1;
   }
 
-  if(token1 == WETH) {
+  if(token1 == addresses.WETH) {
     tokenIn = token1; 
     tokenOut = token0;
   }
