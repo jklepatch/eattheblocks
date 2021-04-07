@@ -1,5 +1,5 @@
 const Token = artifacts.require('ETBToken.sol');
-//const Airdrop = artifacts.require('Aidrop.sol');
+//const Airdrop = artifacts.require('Airdrop.sol');
 
 module.exports = function (deployer) {
   deployer.deploy(Token);
