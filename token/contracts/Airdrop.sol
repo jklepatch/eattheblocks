@@ -1,11 +1,11 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.3;
 
-import './IETBToken.sol';
+import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
 contract Airdrop {
   address public admin;
   mapping(address => bool) public processedAirdrops;
-  IETBToken public token;
+  IERC20 public token;
   uint public currentAirdropAmount;
   uint public maxAirdropAmount = 1000;
 
@@ -15,9 +15,9 @@ contract Airdrop {
     uint date
   );
 
-  constructor(address adminAddress) {
-    admin = adminAddress; 
-    token = IETBToken(msg.sender);
+  constructor(address _token) {
+    admin = msg.sender;
+    token = IERC20(_token);
   }
 
   function updateAdmin(address newAdmin) external {
@@ -39,7 +39,7 @@ contract Airdrop {
     require(currentAirdropAmount <= maxAirdropAmount, 'airdropped 100% of the tokens');
     processedAirdrops[recipient] = true;
     currentAirdropAmount += amount;
-    token.mint(recipient, amount);
+    token.transfer(recipient, amount);
     emit AirdropProcessed(
       recipient,
       amount,
