@@ -1,3 +1,4 @@
+require('@babel/polyfill');
 const LedgerWalletProvider = require('truffle-ledger-provider');
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const mnemonic = '';
@@ -83,6 +84,8 @@ module.exports = {
         },
         'https://bsc-dataseed.binance.org'
       ),
+      gas: 1246759,
+      gasPrice: 5 * 10 ** 9,
       network_id: 56,
       skipDryRun: true
     },
