@@ -1,3 +1,4 @@
+const LedgerWalletProvider = require('truffle-ledger-provider');
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const mnemonic = '';
 /**
@@ -75,8 +76,11 @@ module.exports = {
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
     bsc: {
-      provider: () => new HDWalletProvider(
-        mnemonic, 
+      provider: () => new LedgerWalletProvider(
+        {
+          networkId: 56,
+          accountsOffset: 0
+        },
         'https://bsc-dataseed.binance.org'
       ),
       network_id: 56,
