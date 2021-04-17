@@ -82,7 +82,7 @@ module.exports = {
           networkId: 56,
           accountsOffset: 0
         },
-        'https://bsc-dataseed.binance.org'
+        'https://bsc-dataseed.binance.org/'
       ),
       gas: 1246759,
       gasPrice: 5 * 10 ** 9,
@@ -117,5 +117,11 @@ module.exports = {
       //  evmVersion: "byzantium"
       // }
     }
-  }
+  },
+  plugins: [
+     'truffle-plugin-verify'
+   ],
+   api_keys: {
+     bscscan: BSCSCANAPIKEY
+   },
 };
