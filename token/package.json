@@ -19,6 +19,7 @@
     "truffle-ledger-provider": "^1.0.3"
   },
   "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.10",
     "truffle-plugin-verify": "^0.5.7"
   }
 }

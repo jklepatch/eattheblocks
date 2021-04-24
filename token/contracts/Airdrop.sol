@@ -7,7 +7,7 @@ contract Airdrop {
   mapping(address => bool) public processedAirdrops;
   IERC20 public token;
   uint public currentAirdropAmount;
-  uint public maxAirdropAmount = 1000;
+  uint public maxAirdropAmount = 1000000 * 10 ** 18;
 
   event AirdropProcessed(
     address recipient,
@@ -25,7 +25,7 @@ contract Airdrop {
     admin = newAdmin;
   }
 
-  function getTokens(
+  function claimTokens(
     address recipient,
     uint amount,
     bytes calldata signature
