@@ -1,13 +1,13 @@
 pragma solidity ^0.8.3;
 
-import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 contract Airdrop {
   address public admin;
   mapping(address => bool) public processedAirdrops;
   IERC20 public token;
   uint public currentAirdropAmount;
-  uint public maxAirdropAmount = 1000000 * 10 ** 18;
+  uint public maxAirdropAmount = 100000 * 10 ** 18;
 
   event AirdropProcessed(
     address recipient,
@@ -36,7 +36,7 @@ contract Airdrop {
     )));
     require(recoverSigner(message, signature) == admin , 'wrong signature');
     require(processedAirdrops[recipient] == false, 'airdrop already processed');
-    require(currentAirdropAmount <= maxAirdropAmount, 'airdropped 100% of the tokens');
+    require(currentAirdropAmount + amount <= maxAirdropAmount, 'airdropped 100% of the tokens');
     processedAirdrops[recipient] = true;
     currentAirdropAmount += amount;
     token.transfer(recipient, amount);
