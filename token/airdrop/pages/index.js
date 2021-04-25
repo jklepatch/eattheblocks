@@ -31,7 +31,10 @@ export default function Home() {
   const claimTokens = async e => {
     e.preventDefault();
     const address = e.target.elements[0].value.trim().toLowerCase();
-    setClaimMessage('Checking your address in whitelist...');
+    setClaimMessage({
+      type: 'primary',
+      payload: 'Checking your address in whitelist...'
+    });
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/authorization`, 
