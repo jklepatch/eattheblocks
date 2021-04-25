@@ -34,7 +34,7 @@ contract Wallet {
       to,
       0,
       false
-    );
+    ));
   }
 
   function approveTransfer(uint id) external onlyApprover() {
