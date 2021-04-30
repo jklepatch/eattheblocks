@@ -46,15 +46,17 @@ export default function Home() {
         type: 'primary',
         payload: `
           Claiming token from Airdrop contract...
-          Amount: ${Web3.utils.fromWei(response.data.amount.toString())} ETB
           Address: ${response.data.address}
+          Total Amount: ${Web3.utils.fromWei(response.data.totalAllocation.toString())} ETB
+          -> Basic allocation: ${Web3.utils.fromWei(response.data.basicAllocation.toString())} ETB
+          -> Bonus allocation: ${Web3.utils.fromWei(response.data.bonusAllocation.toString())} ETB
         `
       });
       const receipt = await airdrop
         .methods
         .claimTokens(
           response.data.address, 
-          response.data.amount.toString(),
+          response.data.totalAllocation.toString(),
           response.data.signature
         )
         .send({from: accounts[0]});
@@ -62,8 +64,11 @@ export default function Home() {
         type: 'primary',
         payload: `Airdrop success!
 Tokens successfully in tx ${receipt.transactionHash} 
-Amount: ${Web3.utils.fromWei(response.data.amount.toString())} ETB
-Address: ${response.data.address}`
+Address: ${response.data.address}
+Total Amount: ${Web3.utils.fromWei(response.data.totalAllocation.toString())} ETB
+-> Basic allocation: ${Web3.utils.fromWei(response.data.basicAllocation.toString())} ETB
+-> Bonus allocation: ${Web3.utils.fromWei(response.data.bonusAllocation.toString())} ETB
+        `
       });
     } catch(e) {
       if(e.message === 'Request failed with status code 401') {

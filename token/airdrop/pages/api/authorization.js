@@ -4,15 +4,24 @@ import Web3 from 'web3';
 
 const recipientSchema = new mongoose.Schema({
   address: String,
-  amount: Number
+  basicAllocation: String,
+  bonusAllocation: String,
+  totalAllocation: String
 });
-const Recipient = mongoose.models.Recipient || mongoose.model('Recipient', recipientSchema, 'recipients');
+  const Recipient = mongoose.models.Recipient || mongoose.model(
+    'Recipient', 
+    recipientSchema, 
+    'recipients'
+  );
 
 export default async (req, res) => {
   //1. get record
   await mongoose.connect(
     process.env.DB_URL, 
-    {useNewUrlParser: true}
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
   );
   const recipient = await Recipient
     .findOne({ address: req.body.address })
@@ -21,7 +30,7 @@ export default async (req, res) => {
   if(recipient) {
     const message = Web3.utils.soliditySha3(
       {t: 'address', v: recipient.address},
-      {t: 'uint256', v: recipient.amount.toString()}
+      {t: 'uint256', v: recipient.totalAllocation.toString()}
     ).toString('hex');
     const web3 = new Web3('');
     const { signature } = web3.eth.accounts.sign(
@@ -32,7 +41,9 @@ export default async (req, res) => {
       .status(200)
       .json({ 
         address: req.body.address, 
-        amount: recipient.amount,
+        basicAllocation: recipient.basicAllocation,
+        bonusAllocation: recipient.bonusAllocation,
+        totalAllocation: recipient.totalAllocation,
         signature
       });
     return;
