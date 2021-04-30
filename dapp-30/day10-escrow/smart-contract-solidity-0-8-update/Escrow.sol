@@ -1,4 +1,4 @@
-pragma solidity ^0.5.2;
+pragma solidity ^0.8.0;
 
 contract Escrow{
   address public payer;
@@ -9,8 +9,7 @@ contract Escrow{
   constructor(
     address _payer, 
     address payable _payee, 
-    uint _amount) 
-    public {
+    uint _amount) {
     payer = _payer;
     payee = _payee;
     lawyer = msg.sender; 
