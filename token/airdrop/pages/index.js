@@ -37,7 +37,7 @@ export default function Home() {
     });
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/authorization`, 
+        '/api/authorization', 
         {
           address
         }
