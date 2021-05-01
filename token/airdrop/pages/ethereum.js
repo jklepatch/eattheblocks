@@ -1,6 +1,6 @@
 import detectEthereumProvider from '@metamask/detect-provider';
 import Web3 from 'web3';
-import Airdrop from '../../build/contracts/Airdrop.json';
+import Airdrop from '../../build-truffle/Airdrop.json';
 
 const networks = {
   '56': 'Binance Smart Chain Mainnet', 
