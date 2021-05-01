@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import Web3 from 'web3';
-import getBlockchain from './ethereum.js';
+import getBlockchain from '../lib/ethereum.js';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
