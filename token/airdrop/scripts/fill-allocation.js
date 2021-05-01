@@ -28,14 +28,15 @@ const init = async () => {
     .pipe(parse({
   }));
   for await (const allocation of airdrop) {
-    allocations.push({
-      address: allocation[1],
-      basicAllocation: allocation[5],
-      bonusAllocation: allocation[6],
-      totalAllocation: allocation[7],
-    });
+    if(allocation[1] && allocation[1].trim().length === 42) {
+      allocations.push({
+        address: allocation[1].trim().toLowerCase(),
+        basicAllocation: allocation[5],
+        bonusAllocation: allocation[6],
+        totalAllocation: allocation[7],
+      });
+    }
   }
-  allocations.shift();
   await Recipient.insertMany(allocations)
   console.log(`Inserted ${allocations.length} records`);
 }

@@ -15,8 +15,8 @@ contract Airdrop {
     uint date
   );
 
-  constructor(address _token) {
-    admin = msg.sender;
+  constructor(address _token, address _admin) {
+    admin = _admin; 
     token = IERC20(_token);
   }
 

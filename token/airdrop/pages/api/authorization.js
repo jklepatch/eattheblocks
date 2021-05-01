@@ -24,7 +24,7 @@ export default async (req, res) => {
     }
   );
   const recipient = await Recipient
-    .findOne({ address: req.body.address })
+    .findOne({ address: req.body.address && req.body.address.toLowerCase() })
     .exec();
   //2. if record found, return signature
   if(recipient) {
