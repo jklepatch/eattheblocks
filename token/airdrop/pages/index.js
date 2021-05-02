@@ -79,6 +79,7 @@ Reason: Address not registered`
         });
         return;
       }
+      console.log(e.message);
       setClaimMessage({
         type: 'danger',
         payload: `Airdrop failed
