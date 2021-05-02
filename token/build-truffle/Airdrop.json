@@ -13329,6 +13329,38 @@
     "version": "0.8.3+commit.8d00100c.Emscripten.clang"
   },
   "networks": {
+    "56": {
+      "events": {
+        "0xc0312d3bf25e86c787fa77f4d038213e428dc722e16d38ca9719e987d20f7c7c": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "date",
+              "type": "uint256"
+            }
+          ],
+          "name": "AirdropProcessed",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xb3eE966FF8C19522a3603d6E889d9440Fb4B63a9",
+      "transactionHash": "0x408e725546de5f56fb82a558c64a66005c015051f0a9c6b166ba8b7e09006887"
+    },
     "97": {
       "events": {
         "0xc0312d3bf25e86c787fa77f4d038213e428dc722e16d38ca9719e987d20f7c7c": {
@@ -13395,7 +13427,7 @@
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-05-01T15:43:54.425Z",
+  "updatedAt": "2021-05-02T20:03:17.261Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
