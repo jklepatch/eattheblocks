@@ -27,6 +27,24 @@ const router = new ethers.Contract(
   account
 );
 
+const wbnb = new ethers.Contract(
+  addresses.WBNB,
+  [
+    'function approve(address spender, uint amount) public view returns(bool)',
+  ],
+  account
+);
+
+const init = async () => {
+  const tx = await wbnb.approve(
+    router.address, 
+    'replace by amount covering several trades'
+  );
+  const receipt = await tx.wait(); 
+  console.log('Transaction receipt');
+  console.log(receipt);
+}
+
 factory.on('PairCreated', async (token0, token1, pairAddress) => {
   console.log(`
     New pair detected
@@ -77,3 +95,5 @@ factory.on('PairCreated', async (token0, token1, pairAddress) => {
   console.log('Transaction receipt');
   console.log(receipt);
 });
+
+init();
