@@ -30,7 +30,7 @@ const router = new ethers.Contract(
 const wbnb = new ethers.Contract(
   addresses.WBNB,
   [
-    'function approve(address spender, uint amount) public view returns(bool)',
+    'function approve(address spender, uint amount) public returns(bool)',
   ],
   account
 );
