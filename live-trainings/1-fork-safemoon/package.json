@@ -14,10 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
     "@openzeppelin/contracts": "^3.4.0",
-    "@truffle/hdwallet-provider": "^1.2.3",
-    "truffle-ledger-provider": "^1.0.3"
+    "@truffle/hdwallet-provider": "^1.2.3"
   },
   "devDependencies": {
     "truffle-plugin-verify": "^0.5.7"

@@ -1,7 +1,5 @@
-require('@babel/polyfill');
-const LedgerWalletProvider = require('truffle-ledger-provider');
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const mnemonic = 'MNEMONIC HERE';
+const privateKeys = ['0x + PRIVATE_KEY']; 
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -77,21 +75,17 @@ module.exports = {
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
    bsc: {
-      provider: () => new LedgerWalletProvider(
-        {
-          networkId: 56,
-          accountsOffset: 0
-        },
+      provider: () => new HDWalletProvider(
+        privateKeys, 
         'https://bsc-dataseed.binance.org/'
       ),
-      gas: 1246759,
       gasPrice: 5 * 10 ** 9,
       network_id: 56,
       skipDryRun: true
     },
     bscTestnet: {
       provider: () => new HDWalletProvider(
-        mnemonic, 
+        privateKeys, 
         'https://data-seed-prebsc-1-s1.binance.org:8545'
       ),
       network_id: 97,
