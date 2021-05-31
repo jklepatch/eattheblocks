@@ -80,6 +80,7 @@ module.exports = {
         'https://bsc-dataseed.binance.org/'
       ),
       gasPrice: 5 * 10 ** 9,
+      gas: 8164631,
       network_id: 56,
       skipDryRun: true
     },
@@ -88,6 +89,7 @@ module.exports = {
         privateKeys, 
         'https://data-seed-prebsc-1-s1.binance.org:8545'
       ),
+      gas: 6897127,
       network_id: 97,
       skipDryRun: true
     }
