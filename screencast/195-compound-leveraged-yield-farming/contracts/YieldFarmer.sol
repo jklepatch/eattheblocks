@@ -33,7 +33,7 @@ contract YieldFarmer {
   function _supplyAndBorrow(uint collateralAmount) internal returns(uint) {
     dai.approve(address(cDai), collateralAmount);
     cDai.mint(collateralAmount);
-    uint borrowAmount = (collateralAmount * 70) / 100;
+    uint borrowAmount = (collateralAmount * borrowFactor) / 100;
     cDai.borrow(borrowAmount);
     return borrowAmount;
   }
