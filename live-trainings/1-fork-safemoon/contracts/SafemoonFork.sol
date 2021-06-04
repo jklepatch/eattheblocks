@@ -705,28 +705,28 @@ contract SafemoonFork is Context, IERC20, Ownable {
     address[] private _excluded;
    
     uint256 private constant MAX = ~uint256(0);
-    uint256 private _tTotal = 1000000000 * 10**6 * 10**9;
+    uint256 private _tTotal = 1000000000 * 10**6 * 10**9; //CHANGE_OPTIONAL: total supply of token. Recommended to keep unchanged
     uint256 private _rTotal = (MAX - (MAX % _tTotal));
     uint256 private _tFeeTotal;
 
-    string private _name = "SafemoonFork";
-    string private _symbol = "SAFEMOONFORK";
-    uint8 private _decimals = 9;
+    string private _name = "SafemoonFork";      //CHANGE_REQUIRED: name of token
+    string private _symbol = "SAFEMOONFORK";    //CHANGE_REQUIRED: ticker of token, usually 3 letter
+    uint8 private _decimals = 9;                //CHANGE_OPTIONAL: number of decimals of your token. Recommended to keep unchanged 
     
-    uint256 public _taxFee = 5;
+    uint256 public _taxFee = 5;                 //CHANGE_OPTIONAL: transaction fee redistributed to all holders
     uint256 private _previousTaxFee = _taxFee;
     
-    uint256 public _liquidityFee = 5;
+    uint256 public _liquidityFee = 5;           //CHANGE_OPTIONAL: transaction fee sent to Pancakeswap pool
     uint256 private _previousLiquidityFee = _liquidityFee;
 
     IUniswapV2Router02 public uniswapV2Router;
     address public uniswapV2Pair;
     
     bool inSwapAndLiquify;
-    bool public swapAndLiquifyEnabled = true;
+    bool public swapAndLiquifyEnabled = true;   //CHANGE_OPTIONAL: enable / disable locking `liquidityFee` to Pancakeswap
     
-    uint256 public _maxTxAmount = 5000000 * 10**6 * 10**9;
-    uint256 private numTokensSellToAddToLiquidity = 500000 * 10**6 * 10**9;
+    uint256 public _maxTxAmount = 5000000 * 10**6 * 10**9;                  //CHANGE_OPTIONAL: max amount of tokens that can be transferred per transaction
+    uint256 private numTokensSellToAddToLiquidity = 500000 * 10**6 * 10**9; //CHANGE_OPTIONAL: minimum number of tokens in contract to sent to Pancakeswap pool
     
     event MinTokensBeforeSwapUpdated(uint256 minTokensBeforeSwap);
     event SwapAndLiquifyEnabledUpdated(bool enabled);
