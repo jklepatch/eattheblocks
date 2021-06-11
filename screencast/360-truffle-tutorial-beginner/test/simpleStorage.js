@@ -1,10 +1,10 @@
 const SimpleStorage = artifacts.require('SimpleStorage.sol');
 
-contract('Storage', () => {
-  describe('SimpleStorage', async () => {
-    const storage = await Storage.new();
+contract('SimpleStorage', () => {
+  it('Should update data', async () => {
+    const storage = await SimpleStorage.new();
     await storage.updateData(10);
-    const data = await storage.getData();
-    assert(data.toString() === '3');
+    const data = await storage.readData();
+    assert(data.toString() === '10');
   });
 });
