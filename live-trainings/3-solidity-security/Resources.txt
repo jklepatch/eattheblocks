@@ -1,0 +1,3 @@
+https://consensys.github.io/smart-contract-best-practices/
+https://arxiv.org/pdf/1806.01143.pdf
+https://101blockchains.com/smart-contract-best-practices/
