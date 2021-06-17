@@ -1,0 +1,12 @@
+{
+  "name": "margin-trading",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  },
+  "dependencies": {
+    "ccxt": "^1.51.40"
+  }
+}
