@@ -1,0 +1,12 @@
+{
+  "name": "ccxt-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ccxt": "^1.51.33"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  }
+}
