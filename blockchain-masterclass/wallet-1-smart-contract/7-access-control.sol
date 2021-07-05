@@ -11,7 +11,7 @@ contract Wallet {
     uint approvals;
     bool sent;
   }
-  mapping(uint => Transfer) public transfers;
+  Transfer[] public transfers;
   mapping(address => mapping(uint => bool)) public approvals;
 
   constructor(address[] memory _approvers, uint _quorum) public {
@@ -34,7 +34,7 @@ contract Wallet {
       to,
       0,
       false
-    );
+    ));
   }
 
   function approveTransfer(uint id) external onlyApprover() {
