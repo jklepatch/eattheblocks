@@ -52,8 +52,8 @@ For more information, you can:
 
 ## Project submission
 * For submission, please send an email to julien [at] eattheblocks [dot] com with:
-  * a link to a video demo of the app (no need for any fancy, just record your screen and explain what's going on)
-  * a link to your Github
+  * a link to a video demo of the app (no need for any fancy editing, just record your screen and explain what's going on)
+  * a link to the Github repo of your project
 
 ## Prize
 
