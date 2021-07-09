@@ -1,4 +1,4 @@
-# EaTheBlocks
+# EatTheBlocks
 
 Blockchain tutorials of EatTheBlocks. Learn how to build Decentralized
 Applications (Dapps) on Ethereum and Solidity Smart contracts
