@@ -14,6 +14,7 @@ contract Migrator {
 
   function migrate() external {
     require(migrations[msg.sender] == false, 'migration already done');
+    migrations[msg.sender] = true; 
     v2.transfer(msg.sender, v1.balanceOf(msg.sender));
   }
 }
