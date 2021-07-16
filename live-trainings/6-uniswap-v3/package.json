@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@uniswap/v3-core": "^1.0.0",
+    "@uniswap/v3-periphery": "^1.0.0",
+    "ethers": "^5.4.1",
+    "to-uint-24-x": "^4.1.2"
+  },
+  "devDependencies": {
+    "@uniswap/sdk-core": "^3.0.0",
+    "@uniswap/v3-sdk": "^3.1.0"
+  },
+  "name": "uniswap-v3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
