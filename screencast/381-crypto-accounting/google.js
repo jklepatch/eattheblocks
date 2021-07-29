@@ -6,7 +6,7 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 
 async function init(txs) {
   const credentials = await getCredentials();
-  const oAuth2Client = await authorize(credentials, update);
+  const oAuth2Client = await authorize(credentials);
   const result = await update(oAuth2Client, txs);
   return result.data.updatedRows;
 }
@@ -20,21 +20,21 @@ function getCredentials() {
   });
 }
 
-function authorize(credentials, callback) {
+function authorize(credentials) {
   const {client_secret, client_id, redirect_uris} = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
 
   return new Promise((resolve, reject) => {
     fs.readFile(process.env.GOOGLE_TOKEN_PATH, (err, token) => {
-      if (err) return resolve(getNewToken(oAuth2Client, callback));
+      if (err) return resolve(getNewToken(oAuth2Client));
       oAuth2Client.setCredentials(JSON.parse(token));
       resolve(oAuth2Client);
     });
   });
 }
 
-function getNewToken(oAuth2Client, callback) {
+function getNewToken(oAuth2Client) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
