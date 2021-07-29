@@ -8,3 +8,5 @@ dist
 tags.*
 dapp-30/day99-university
 **/.env
+credentials.json
+google-auth-token.json
