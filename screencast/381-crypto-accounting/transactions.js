@@ -2,10 +2,6 @@ const Web3 = require('web3');
 const axios = require('axios');
 const EthDater = require('ethereum-block-by-date');
 
-//const startDate ='2021-06-01T00:00:00+08:00';
-//const endDate = '2021-06-30T00:00:00+08:00';
-//const address = '0x7393A26c66E6b82944AaD564044dc8Ed28f786b0';
-
 const init = async () => {
   const web3 = new Web3(new Web3.providers.HttpProvider(process.env.INFURA_URL));
   const dater = new EthDater(web3);
