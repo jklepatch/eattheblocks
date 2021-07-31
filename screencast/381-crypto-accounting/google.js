@@ -62,8 +62,10 @@ function getNewToken(oAuth2Client) {
 
 function update(auth, values) {
   const sheets = google.sheets({version: 'v4', auth});
+  const headers = ['txHash', 'date', 'from', 'to', 'assetValue', 'assetName', 'assetAddress', 'gasUsed', 'gasPrice', 'cashflowAssetUSD', 'cashflowTxFeeUSD', 'PnL'];
+  values.unshift(headers);
   const resource = {
-    values,
+    values
   };
   const range = `${process.env.GOOGLE_SHEET}!R1C1:R${values.length}C12`;
 
