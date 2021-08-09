@@ -1,0 +1,19 @@
+{
+  "name": "12-Listen to new blocks with Websockets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run-arbitrage.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "web3": "^1.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
