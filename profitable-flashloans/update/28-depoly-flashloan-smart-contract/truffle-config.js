@@ -47,7 +47,8 @@ module.exports = {
         process.env.WSS_URL
       ),
       network_id: 56,
-
+      gasPrice: 5000000000,
+      skipDryRun: true  
     },
 
     // Useful for testing. The `development` name is special - truffle uses it by default

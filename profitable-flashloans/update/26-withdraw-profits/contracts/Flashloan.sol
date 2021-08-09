@@ -11,7 +11,7 @@ import './interfaces/IPancakeERC20.sol';
 import './libraries/SafeMath.sol';
 import './PancakeLibrary.sol';
 
-contract Arbitrage {
+contract AFlashloan {
     
   IPancakeRouter02 public bakeryRouter;
   IPancakeRouter02 public pancakeRouter;
