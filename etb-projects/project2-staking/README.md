@@ -31,7 +31,7 @@ For more information, you can:
 * attend one of the office hours (timetable below)
 * Send an email to Julien, julien [at] eattheblocks [dot] com
 
-## Timetable
+## Schedule
 
 * Office hours - Aug 20th 11pm UTC+8 
 * Office hours - Aug 27th 11pm UTC+8
@@ -39,15 +39,17 @@ For more information, you can:
 * Demo day - Sep 3rd 11pm UTC+8, livestream on Youtube   
 * Vote from Sep 3rd to Sep 10th midnight UTC+8
 
-## Office hours 
-* Office hours will be done on Zoom, Link will be shared on the FB group of ETB, and by email:
-  * [Link to FB group](https://www.facebook.com/groups/222716919099261)
-  * [By email](https://mailchi.mp/eattheblocks/etb-projects-projects) 
+## How to participate?
 
-## Project submission
-* For submission, please send an email to julien [at] eattheblocks [dot] com with:
-  * a link to a video demo of the app (no need for any fancy editing, just record your screen and explain what's going on)
-  * a link to the Github repo of your project
+Everybody can participate. There is no registration. You can start to work on it on your own, or join the [ETB FB group](https://www.facebook.com/groups/222716919099261) to find teammates.
+
+Once the hackathon has started, there are regular office hours (see schedule above), where you can get some guidance from Julien. Links to the Zoom meeting will be given by [email](https://mailchi.mp/eattheblocks/etb-projects).
+
+At the end of the hackathon, you need to submit your project before the deadline (see schedule above). Please send an email to julien [at] eattheblocks [dot] com with:
+* a link to a video demo of the app (no need for any fancy editing, just record your screen and explain what's going on)
+* a link to the Github repo of your project
+
+If you want to receive updates about the hackathons, you can register to this [mailing list](https://mailchi.mp/eattheblocks/etb-projects) .
 
 ## Prize
 
