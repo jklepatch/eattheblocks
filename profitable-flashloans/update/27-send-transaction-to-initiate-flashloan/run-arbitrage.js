@@ -65,7 +65,7 @@ if (BTP.gt(amountInDai)) {
     let tx = flashloan.methods.startArbitrage(
       addresses.tokens.DAI,
       addresses.tokens.WBNB,
-      AMOUNT_DAI_WEI,
+      amountInDai,
       0,
       DIRECTION.BAKERY_TO_PANCAKE,
       repayAmount.toString()
@@ -98,7 +98,7 @@ if(PTB.gt(amountInDai)) {
     let tx = flashloan.methods.startArbitrage(
       addresses.tokens.DAI,
       addresses.tokens.WBNB,
-      AMOUNT_DAI_WEI,
+      amountInDai,
       0,
       DIRECTION.PANCAKE_TO_BAKERY,
       repayAmount.toString()

@@ -22,8 +22,8 @@ const init = async () => {
   .on('data', async block => {
     console.log(`New block received. Block # ${block.number}`);
 
-    const amountsOut1 = await PancakeSwap.methods.getAmountsOut(amountInDai,[addresses.tokens.WETH, addresses.tokens.DAI] ).call();
-    const amountsOut2 = await PancakeSwap.methods.getAmountsOut(amountsOut1[1], [addresses.tokens.DAI, addresses.tokens.WETH]).call();
+    const amountsOut1 = await PancakeSwap.methods.getAmountsOut(amountInDai,[addresses.tokens.WBNB, addresses.tokens.DAI] ).call();
+    const amountsOut2 = await PancakeSwap.methods.getAmountsOut(amountsOut1[1], [addresses.tokens.DAI, addresses.tokens.WBNB]).call();
 
     console.log(`PancakeSwap Dai input / output: ${web3.utils.fromWei(amountInDai.toString())} / ${web3.utils.fromWei(amountsOut2[1].toString())}`);
   

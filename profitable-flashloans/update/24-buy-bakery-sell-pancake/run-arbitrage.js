@@ -5,7 +5,7 @@ const { mainnet: addresses } = require('./addresses');
 
 
 const web3 = new Web3(
-  new Web3.providers.WebsocketProvider('wss://apis.ankr.com/wss/2f4228f4e81349aa867a933ded82314d/dc5ea8c7558d510a6cfcefa87a23cc99/binance/full/main')
+  new Web3.providers.WebsocketProvider(process.env.WSS_URL)
 );
 web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
 
