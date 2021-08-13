@@ -1,0 +1,55 @@
+## Description
+
+We will build a staking Dapp for the ETB [ETB token](https://bscscan.com/token/0x7ac64008fa000bfdc4494e0bfcc9f4eff3d51d2a):
+
+* By locking ETB in a smart contract, you get a reward in ETB
+* Parameters of the reward mechanism are up to suggestion
+* What to stake:
+ * if ETB tokens itself, it's in competition with liquidity of the Pancakeswap pool
+ * LP token of the Pancakeswap pool
+* What is the reward:
+ * ETB token
+ * calculated proportionally to the time you spent in the pool, and your weight in the pool
+ * rewards work in phases. We will vote periodically for a new phase of the staking reward. For each phase we will decide the amount of token distributed per day, and the duration
+ * These parameters will be controlled by an admin address, controlled by Julien
+* Distribution mechanism:
+ * Since ETB has a fixed supply, the staking smart contract will have to be pre-funded with ETB tokens by the admin (Julien)
+ * Ideally we don't won't to have to triger distributions periodically with a bot
+ * It's better if profits are distributed automatically when someone exist the staking contract 
+
+Deliverables:
+* Smart contract
+* Frontend
+
+Recommended tech:
+* Javascript 
+* NextJS
+* Web3 or Ethers
+* Truffle or Hardhat
+
+For more information, you can:
+* attend one of the office hours (timetable below)
+* Send an email to Julien, julien [at] eattheblocks [dot] com
+
+## Timetable
+
+* Office hours - Aug 20th 11pm UTC+8 
+* Office hours - Aug 27th 11pm UTC+8
+* Deadline for submission - Sep 2nd midnight UTC+8
+* Demo day - Sep 3rd 11pm UTC+8, livestream on Youtube   
+* Vote from Sep 3rd to Sep 10th midnight UTC+8
+
+## Office hours 
+* Office hours will be done on Zoom, Link will be shared on the FB group of ETB, and by email:
+  * [Link to FB group](https://www.facebook.com/groups/222716919099261)
+  * [By email](https://mailchi.mp/eattheblocks/etb-projects-project-1) 
+
+## Project submission
+* For submission, please send an email to julien [at] eattheblocks [dot] com with:
+  * a link to a video demo of the app (no need for any fancy editing, just record your screen and explain what's going on)
+  * a link to the Github repo of your project
+
+## Prize
+
+The winner of the project will receive 500 USD + 500 ETB
+
