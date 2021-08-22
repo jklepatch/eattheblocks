@@ -21,11 +21,14 @@ contract('Token', accounts => {
     const start = timestamp;
     const end = timestamp + 10;
     await token.setRewards(start, end, 2);
-    await token.transfer(investor, 10);
+    await token.transfer(investor, 500);
     await time.increase(10);
     await token.claim(investor, {from: investor});
     const rewardBalance = await reward.balanceOf(investor);
-    console.log(rewardBalance.toString());
-    //to fix: it doesn't distribute token
+    //I fixed the below assertion by increasing the number of tokens transferred to the investor
+    //Before I put a very low number that made the reward amount less than 1, which was rounded down to 0 by a division in the smart contract
+    //This edge case happened because I used very small amounts of tokens for testing (i.e way less than 1 token)
+    //But in real tokens, amounts in wei will be much greater, this edge case will probably never happen and even small investors will always get some rewards
+    assert(rewardBalance.toString() === '10'); //10 * 2 * 500 / 1000 = 10
   });
 });
