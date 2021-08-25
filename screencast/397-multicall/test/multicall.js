@@ -14,20 +14,14 @@ contract('multicall', accounts => {
     provider = new ethers.providers.Web3Provider(web3.currentProvider);
   });
 
-  it('should transfer', async () => {
+  it('should read the 2 token balances', async () => {
     const multi = new MultiCall(provider);
     const callParams = [
       {target: token1.address, function: 'balanceOf', args: [admin]},
       {target: token2.address, function: 'balanceOf', args: [admin]}
     ];
-    const inputs = [];
-    for (let callParam of callParams) {
-      inputs.push({ 
-        target: callParam.target, 
-        function: callParam.function, 
-        args: callParam.args
-      });
-    }
-    const tokenDatas = await multi.multiCall(abi, inputs);
+    const tokenDatas = await multi.multiCall(abi, callParams);
+    assert(tokenDatas[1][0].toString() === '1000');
+    assert(tokenDatas[1][1].toString() === '1000');
   });
 });
