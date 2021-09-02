@@ -7,72 +7,83 @@ const { mainnet: addresses } = require('./addresses');
 const web3 = new Web3(
   new Web3.providers.WebsocketProvider(process.env.WSS_URL)
 );
-web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
+const { address: admin } = web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
 
-const amountInDai = web3.utils.toBN(web3.utils.toWei('1'));
+const amountInBUSD = web3.utils.toBN(web3.utils.toWei('100'));
+const amountInWBNB = web3.utils.toBN(web3.utils.toWei('1'));
 
-  const PancakeSwap = new web3.eth.Contract(
+
+const ApeSwap = new web3.eth.Contract(
+  abis.apeSwap.router,
+  addresses.apeSwap.router
+);
+
+const PancakeSwap = new web3.eth.Contract(
   abis.pancakeSwap.router,
   addresses.pancakeSwap.router
 );
 
-const BakerySwap = new web3.eth.Contract(
-  abis.bakerySwap.router,
-  addresses.bakerySwap.router
-);
-
 const init = async () => {
   const networkId = await web3.eth.net.getId();
+  
+
 
   web3.eth.subscribe('newBlockHeaders')
   .on('data', async block => {
     console.log(`New block received. Block # ${block.number}`);
 
-    const amountsOut1 = await PancakeSwap.methods.getAmountsOut(amountInDai,[addresses.tokens.DAI, addresses.tokens.WBNB] ).call();
-    const amountsOut2 = await BakerySwap.methods.getAmountsOut(amountsOut1[1], [addresses.tokens.WBNB, addresses.tokens.DAI]).call();
-    const amountsOut3 = await BakerySwap.methods.getAmountsOut(amountInDai, [addresses.tokens.DAI, addresses.tokens.WBNB]).call();    // dai to Wbnb bakeryswap
-    const amountsOut4 = await PancakeSwap.methods.getAmountsOut(amountsOut3[1], [addresses.tokens.WBNB, addresses.tokens.DAI]).call();   // Wbnb to dai pancakeswap
-
-    console.log(`PancakeSwap -> BakerySwap. Dai input / output: ${web3.utils.fromWei(amountInDai.toString())} / ${web3.utils.fromWei(amountsOut2[1].toString())}`);
-    console.log(`BakerySwap -> PancakeSwap. Dai input / output: ${web3.utils.fromWei(amountInDai.toString())} / ${web3.utils.fromWei(amountsOut4[1].toString())}`);
-
-    const BTP = web3.utils.toBN(amountsOut2[1])
-    const PTB = web3.utils.toBN(amountsOut4[1])
-
-if (BTP.gt(amountInDai)) {
-  const gasPrice = await web3.eth.getGasPrice();
-      //200000 is picked arbitrarily, have to be replaced by actual tx cost in next lectures, with Web3 estimateGas()
-  const txCost = 200000 * parseInt(gasPrice);
-  const profit = amountsOut2[1].sub(amountInDai).sub(txCost);
-
-  if(profit > 0) {
-    console.log('Arb opportunity found Kyber -> Uniswap!');
-    console.log(`Expected profit: ${web3.utils.fromWei(profit.toString)} Dai`);
+     
+    const amountsOut1 = await ApeSwap.methods.getAmountsOut(amountInBUSD,[addresses.tokens.BUSD, addresses.tokens.WBNB] ).call();
+    const amountsOut2 = await ApeSwap.methods.getAmountsOut(amountInWBNB, [addresses.tokens.WBNB, addresses.tokens.BUSD]).call();
    
-  }
-}
-
-if(PTB.gt(amountInDai)) {
-  const gasPrice = await web3.eth.getGasPrice();
-      //200000 is picked arbitrarily, have to be replaced by actual tx cost in next lectures, with Web3 estimateGas()
-  const txCost = 200000 * parseInt(gasPrice);
-  const profit = amountsOut4[1].sub(amountInDai).sub(txCost);
-
-  if(profit > 0) {
-    console.log('Arb opportunity found Uniswap -> Kyber!');
-    console.log(`Expected profit: ${web3.utils.fromWei(profit.toString())} Dai`);
     
-  }
 
-}
+    const amountsOut3 = await PancakeSwap.methods.getAmountsOut(amountInBUSD, [addresses.tokens.BUSD, addresses.tokens.WBNB]).call();
+    const amountsOut4 = await PancakeSwap.methods.getAmountsOut(amountInWBNB, [addresses.tokens.WBNB, addresses.tokens.BUSD]).call();    
+    
+
+    const aperesults = {
+      buy: (amountInBUSD / amountsOut1[1]),
+      sell: (amountsOut2[1] / amountInWBNB)
+    }
+
+    const Pancakeresults = {
+      buy: (amountInBUSD / amountsOut3[1]),
+      sell: (amountsOut4[1] / amountInWBNB )
+    }
+    
+    
+    
+    
 
 
+
+    const gasPrice = await web3.eth.getGasPrice();
+      //200000 is picked arbitrarily
+      const txCost = 200000 * parseInt(gasPrice);
+      const currentBNBPrice = (Pancakeresults.buy + Pancakeresults.sell) / 2; 
+      const profit1 = (amountInWBNB * (aperesults.sell - Pancakeresults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
+      const profit2 = (amountInWBNB * (Pancakeresults.sell - aperesults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
+     
+
+      
+      if(profit1 > 0) {
+        console.log('Arb opportunity found!');
+        console.log(`Flashloan WBNB on Apeswap at ${aperesults.buy} `);
+        console.log(`Sell WBNB on PancakeSwap at ${Pancakeresults.sell} `);
+        console.log(`Expected profit: ${profit1} BUSD`);
+        //Execute arb Kyber <=> Uniswap
+      }  
+      if(profit2 > 0) {
+        console.log('Arb opportunity found!');
+        console.log(`Buy WBNB from PancakeSwap at ${Pancakeresults.buy} `);
+        console.log(`Sell WBNB from ApeSwap at ${aperesults.sell}`);
+        console.log(`Expected profit: ${profit2} BUSD`);
+        //Execute arb Uniswap <=> Kyber
+      }
   })
   .on('error', error => {
     console.log(error);
   });
-
-  
 }
 init();
-

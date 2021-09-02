@@ -1,0 +1,16 @@
+{
+  "name": "26-withdraw-profits-from-flashloan-smart-contract",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run-arbitrage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^1.5.2",
+    "dotenv": "^10.0.0"
+    
+  }
+}

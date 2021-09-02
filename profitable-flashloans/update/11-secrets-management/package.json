@@ -1,18 +1,15 @@
 {
-  "name": "11-Secrets Management (Private Key & Websocket URL)",
+  "name": "11-secrets-management",
   "version": "1.0.0",
   "description": "",
   "main": "run-arbitrage.js",
-  "directories": {
-    "test": "test"
-  },
-  "dependencies": {
-    "web3": "^1.4.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^1.5.2",
+    "dotenv": "^10.0.0"
+  }
 }
