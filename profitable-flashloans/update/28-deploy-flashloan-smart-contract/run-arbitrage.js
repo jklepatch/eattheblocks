@@ -2,7 +2,7 @@ require('dotenv').config();
 const Web3 = require('web3');
 const abis = require('./abis');
 const { mainnet: addresses } = require('./addresses');
-
+const Flashloan = require('./build/contracts/FlashSwap.json');
 
 const web3 = new Web3(
   new Web3.providers.WebsocketProvider(process.env.WSS_URL)
@@ -25,13 +25,16 @@ const PancakeSwap = new web3.eth.Contract(
 
 const init = async () => {
   const networkId = await web3.eth.net.getId();
-  
+  const flashloan = new web3.eth.Contract(
+    Flashloan.abi,
+    Flashloan.networks[networkId].address
+  );
 
 
   web3.eth.subscribe('newBlockHeaders')
   .on('data', async block => {
     console.log(`New block received. Block # ${block.number}`);
-
+    
      
     const amountsOut1 = await ApeSwap.methods.getAmountsOut(amountInBUSD,[addresses.tokens.BUSD, addresses.tokens.WBNB] ).call();
     const amountsOut2 = await ApeSwap.methods.getAmountsOut(amountInWBNB, [addresses.tokens.WBNB, addresses.tokens.BUSD]).call();
@@ -47,30 +50,34 @@ const init = async () => {
       sell: (amountsOut2[1] / amountInWBNB)
     }
 
-    const Pancakeresults = {
+    const pancakeresults = {
       buy: (amountInBUSD / amountsOut3[1]),
       sell: (amountsOut4[1] / amountInWBNB )
     }
     
     
     
+    console.log('ApeSwap BUSD/WBNB');
+    console.log(aperesults);
     
+    console.log('PancakeSwap BUSD/WBNB')
+    console.log(pancakeresults)
 
 
 
     const gasPrice = await web3.eth.getGasPrice();
       //200000 is picked arbitrarily
       const txCost = 200000 * parseInt(gasPrice);
-      const currentBNBPrice = (Pancakeresults.buy + Pancakeresults.sell) / 2; 
-      const profit1 = (amountInWBNB * (aperesults.sell - Pancakeresults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
-      const profit2 = (amountInWBNB * (Pancakeresults.sell - aperesults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
+      const currentBNBPrice = (pancakeresults.buy + pancakeresults.sell) / 2; 
+      const profit1 = (amountInWBNB * (aperesults.sell - pancakeresults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
+      const profit2 = (amountInWBNB * (pancakeresults.sell - aperesults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
        
 
       
       if(profit1 > 0 && profit1 > profit2) {
         console.log('Arb opportunity found!');
         console.log(`Flashloan WBNB on Apeswap at ${aperesults.buy} `);
-        console.log(`Sell WBNB on PancakeSwap at ${Pancakeresults.sell} `);
+        console.log(`Sell WBNB on PancakeSwap at ${pancakeresults.sell} `);
         console.log(`Expected profit: ${profit1} BUSD`);
     
         let tx = flashloan.methods.startArbitrage(
@@ -81,6 +88,7 @@ const init = async () => {
           0,        //direction
           0       //slippage
           );
+
         const data = tx.encodeABI();
         const txData = {
           from: admin,
@@ -89,12 +97,13 @@ const init = async () => {
           gas: gas,
           gasPrice: gasPrice
          };
-       const receipt = await web3.eth.sendTransaction(txData);
+        const receipt = await web3.eth.sendTransaction(txData);
         console.log(`Transaction hash: ${receipt.transactionHash}`);
-      }  
+      }
+
       if(profit2 > 0 && profit2 > profit1) {
         console.log('Arb opportunity found!');
-        console.log(`Buy WBNB from PancakeSwap at ${Pancakeresults.buy} `);
+        console.log(`Buy WBNB from PancakeSwap at ${pancakeresults.buy} `);
         console.log(`Sell WBNB from ApeSwap at ${aperesults.sell}`);
         console.log(`Expected profit: ${profit2} BUSD`);
         
@@ -107,6 +116,7 @@ const init = async () => {
           1,        //direction
           0         //slippage
           );
+      
         const data = tx.encodeABI();
         const txData = {
           from: admin,
@@ -115,9 +125,10 @@ const init = async () => {
           gas: gas,
           gasPrice: gasPrice
          };
-       const receipt = await web3.eth.sendTransaction(txData);
+        const receipt = await web3.eth.sendTransaction(txData);
         console.log(`Transaction hash: ${receipt.transactionHash}`);
       }
+
   })
   .on('error', error => {
     console.log(error);

@@ -41,18 +41,24 @@ const init = async () => {
     const amountsOut4 = await PancakeSwap.methods.getAmountsOut(amountInWBNB, [addresses.tokens.WBNB, addresses.tokens.BUSD]).call();    
     
 
+    
     const aperesults = {
       buy: (amountInBUSD / amountsOut1[1]),
       sell: (amountsOut2[1] / amountInWBNB)
     }
 
-    const Pancakeresults = {
+    const pancakeresults = {
       buy: (amountInBUSD / amountsOut3[1]),
       sell: (amountsOut4[1] / amountInWBNB )
     }
     
     
     
+    console.log('ApeSwap BUSD/WBNB');
+    console.log(aperesults);
+    
+    console.log('PancakeSwap BUSD/WBNB')
+    console.log(pancakeresults)
     
 
 
@@ -60,22 +66,22 @@ const init = async () => {
     const gasPrice = await web3.eth.getGasPrice();
       //200000 is picked arbitrarily
       const txCost = 200000 * parseInt(gasPrice);
-      const currentBNBPrice = (Pancakeresults.buy + Pancakeresults.sell) / 2; 
-      const profit1 = (amountInWBNB * (aperesults.sell - Pancakeresults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
-      const profit2 = (amountInWBNB * (Pancakeresults.sell - aperesults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
+      const currentBNBPrice = (pancakeresults.buy + pancakeresults.sell) / 2; 
+      const profit1 = (amountInWBNB * (aperesults.sell - pancakeresults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
+      const profit2 = (amountInWBNB * (pancakeresults.sell - aperesults.buy) - (txCost / 10 ** 18) * currentBNBPrice );
      
 
       
       if(profit1 > 0) {
         console.log('Arb opportunity found!');
         console.log(`Flashloan WBNB on Apeswap at ${aperesults.buy} `);
-        console.log(`Sell WBNB on PancakeSwap at ${Pancakeresults.sell} `);
+        console.log(`Sell WBNB on PancakeSwap at ${pancakeresults.sell} `);
         console.log(`Expected profit: ${profit1} BUSD`);
         //Execute arb Kyber <=> Uniswap
       }  
       if(profit2 > 0) {
         console.log('Arb opportunity found!');
-        console.log(`Buy WBNB from PancakeSwap at ${Pancakeresults.buy} `);
+        console.log(`Buy WBNB from PancakeSwap at ${pancakeresults.buy} `);
         console.log(`Sell WBNB from ApeSwap at ${aperesults.sell}`);
         console.log(`Expected profit: ${profit2} BUSD`);
         //Execute arb Uniswap <=> Kyber

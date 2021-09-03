@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "web3": "^1.5.2",
     "@truffle/hdwallet-provider": "^1.4.3",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "web3": "^1.5.2"
   }
 }

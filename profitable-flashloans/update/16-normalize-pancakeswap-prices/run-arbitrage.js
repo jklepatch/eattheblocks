@@ -46,8 +46,8 @@ const init = async () => {
       sell: (amountsOut2[1] / amountInWBNB)
     }
 
-    const Pancakeresults = {
-      buy: (amountInBusd / amountsOut3[1]),
+    const pancakeresults = {
+      buy: (amountInBUSD / amountsOut3[1]),
       sell: (amountsOut4[1] / amountInWBNB) 
     }
     
@@ -56,14 +56,8 @@ const init = async () => {
     console.log(aperesults);
     
     console.log('PancakeSwap BUSD/WBNB')
-    console.log(Pancakeresults)
-
-    
-
-
-
-    
-    
+    console.log(pancakeresults)
+   
   })
   .on('error', error => {
     console.log(error);
