@@ -49,5 +49,5 @@ If you want to receive updates about the hackathons, you can register to this [m
 
 ## Prize
 
-* The winner of the project will receive 500 ETB
-* A pool of 500 ETB will be shared among all participants (participant = someone who submit a complete project)
+* The winner of the project will receive 500 ETB, plus some of the rarest NFTs of the collection
+* A pool of 500 ETB will be shared among all participants, plus some NFTs of the collection (participant = someone who submit a complete project)
