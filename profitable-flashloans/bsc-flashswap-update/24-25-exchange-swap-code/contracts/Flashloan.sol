@@ -17,7 +17,7 @@ import './interfaces/IWETH.sol';
 
 contract FlashSwap {
     IWETH immutable WETH;
-    address beneficiary;
+    address Beneficiary;
     address ApeSwapFactory;
     address PancakeFactory;
     address PancakeRouter;
