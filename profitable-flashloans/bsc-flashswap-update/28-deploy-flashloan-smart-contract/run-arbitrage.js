@@ -10,6 +10,7 @@ const web3 = new Web3(
 const { address: admin } = web3.eth.accounts.wallet.add(
   process.env.PRIVATE_KEY
 );
+const Flashloan = require("./build/contracts/FlashSwap.json");
 
 const amountInBUSD = web3.utils.toBN(web3.utils.toWei("480"));
 const amountInWBNB = web3.utils.toBN(web3.utils.toWei("1"));
