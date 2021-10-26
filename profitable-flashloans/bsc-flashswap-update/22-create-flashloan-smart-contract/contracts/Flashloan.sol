@@ -17,7 +17,7 @@ import './interfaces/IWETH.sol';
 
 contract FlashSwap {
     IWETH immutable WETH;
-    address beneficiary;
+    address Beneficiary;
 
     constructor(address wethAddress , address beneficiaryAddress) public {
         
