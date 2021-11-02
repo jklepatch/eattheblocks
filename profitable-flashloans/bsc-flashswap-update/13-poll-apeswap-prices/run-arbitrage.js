@@ -6,9 +6,10 @@ const web3 = new Web3(
   new Web3.providers.WebsocketProvider(process.env.WSS_URL)
 );
 
-const amountInBUSD = web3.utils.toBN(web3.utils.toWei("480"));
-const amountInWBNB = web3.utils.toBN(web3.utils.toWei("1"));
-
+const flashloanBUSD = "10000";
+const flashloanWBNB = "100";
+const amountInBUSD = web3.utils.toBN(web3.utils.toWei(flashloanBUSD));
+const amountInWBNB = web3.utils.toBN(web3.utils.toWei(flashloanWBNB));
 const ApeSwap = new web3.eth.Contract(
   abis.apeSwap.router,
   addresses.apeSwap.router

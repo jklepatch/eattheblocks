@@ -6,8 +6,10 @@ const web3 = new Web3(
   new Web3.providers.WebsocketProvider(process.env.WSS_URL)
 );
 
-const amountInBUSD = web3.utils.toBN(web3.utils.toWei("480"));
-const amountInWBNB = web3.utils.toBN(web3.utils.toWei("1"));
+const flashloanBUSD = "10000";
+const flashloanWBNB = "100";
+const amountInBUSD = web3.utils.toBN(web3.utils.toWei(flashloanBUSD));
+const amountInWBNB = web3.utils.toBN(web3.utils.toWei(flashloanWBNB));
 
 const ApeSwap = new web3.eth.Contract(
   abis.apeSwap.router,
@@ -36,12 +38,12 @@ const init = async () => {
         .call();
 
       const aperesults = {
-        buy: ((amountInBUSD / amountsOut1[1]) * amountInWBNB) / 10 ** 18,
-        sell: ((amountsOut2[1] / amountInWBNB) * amountInWBNB) / 10 ** 18,
+        buy: (amountInBUSD / amountsOut1[1]) * amountInWBNB,
+        sell: (amountsOut2[1] / amountInWBNB) * amountInWBNB,
       };
       const aperesults2 = {
-        buy: ((amountInWBNB / amountsOut2[1]) * amountInBUSD) / 10 ** 18,
-        sell: ((amountsOut1[1] / amountInBUSD) * amountInBUSD) / 10 ** 18,
+        buy: (amountInWBNB / amountsOut2[1]) * amountInBUSD,
+        sell: (amountsOut1[1] / amountInBUSD) * amountInBUSD,
       };
 
       console.log("ApeSwap WBNB/BUSD");

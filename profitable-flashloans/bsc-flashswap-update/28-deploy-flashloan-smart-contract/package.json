@@ -1,5 +1,5 @@
 {
-  "name": "27-send-transaction-to-initiate-flashloan",
+  "name": "28-deploy-flashloan-smart-contract",
   "description": "",
   "main": "run-arbitrage.js",
   "scripts": {

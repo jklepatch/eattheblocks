@@ -53,7 +53,7 @@ contract FlashSwap {
        ( address endRouter, uint repay) = abi.decode(data, (address, uint));
         uint amountToken;
         uint amountEth;
-        IERC20 token;
+        
         
         // scope for token{0,1}, avoids stack too deep errors
         {
@@ -64,9 +64,8 @@ contract FlashSwap {
 
         amountToken = token0 == address(WETH) ? amount1 : amount0;    
         amountEth = token0 == address(WETH) ? amount0 : amount1;
-        token = IERC20(path[0] == address(WETH) ? path[1] : path[0]);
 
         }
-
+        IERC20 token = IERC20(path[0] == address(WETH) ? path[1] : path[0]);
  }
 }

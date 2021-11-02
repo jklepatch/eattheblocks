@@ -59,7 +59,7 @@ contract FlashSwap {
        ( address endRouter, uint repay) = abi.decode(data, (address, uint));
         uint amountToken;
         uint amountEth;
-        IERC20 token;
+        
         
         // scope for token{0,1}, avoids stack too deep errors
         {
@@ -70,23 +70,28 @@ contract FlashSwap {
 
         amountToken = token0 == address(WETH) ? amount1 : amount0;    
         amountEth = token0 == address(WETH) ? amount0 : amount1;
-        token = IERC20(path[0] == address(WETH) ? path[1] : path[0]);
 
         }
-       if (amountToken > 0) {
+        IERC20 token = IERC20(path[0] == address(WETH) ? path[1] : path[0]);
+
+        if (amountToken > 0) {
             token.approve(endRouter, amountToken);
             uint[] memory amountReceived = IUniswapV2Router02(endRouter).swapExactTokensForETH(amountToken, 0, path,address(this),now);
-            require(amountReceived[1] >= repay,"Failed to get enough from swap to repay"); 
-            WETH.deposit{value: repay}();
-            WETH.transfer(msg.sender, repay); // return WETH to V2 pair
-            WETH.transfer(Beneficiary , address(this).balance); // keep the rest! (ETH)
-            
+            WETH.deposit{value: amountReceived[1]}();
+            require(WETH.transfer(msg.sender, repay), "Could Not Repay loan amount!"); // return WETH to V2 pair
+              if(amountReceived[1] - repay > 0) {
+                WETH.transfer(Beneficiary, (amountReceived[1] - repay));
+              }
         } else {
             WETH.withdraw(amountEth);
             uint [] memory amountReceived = IUniswapV2Router02(endRouter).swapExactETHForTokens{value: address(this).balance}(0, path, address(this), now);
             require(amountReceived[1] > repay, "Failed to get enough from swap to repay"); // fail if we didn't get enough tokens back to repay our flash loan
             token.transfer(msg.sender, repay); // return tokens to V2 pair
-            token.transfer(Beneficiary, token.balanceOf(address(this))); 
+            if(amountReceived[1] - repay > 0) {
+              token.transfer(Beneficiary, token.balanceOf(address(this))); 
+              }
+            
         }
  }
 }
+
