@@ -185,7 +185,7 @@ const init = async () => {
           0, //amount1
           addresses.pancakeSwap.factory, //pancakefactory
           addresses.apeSwap.router, // aperouter
-          repayBusdPancakeswap[1].toString()
+          apeswapPaybackCalcBusd.toString()
         );
 
         const data = tx.encodeABI();
