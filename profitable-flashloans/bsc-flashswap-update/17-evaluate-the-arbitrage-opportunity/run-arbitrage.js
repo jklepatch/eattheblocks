@@ -196,7 +196,7 @@ const init = async () => {
           amountInBUSD.toString(), //amount1
           addresses.pancakeSwap.factory, //pancakeFactory
           addresses.apeSwap.router, //apeRouter
-          repayWbnbPancakeFee.toString()
+          pancakePaybackCalcWbnb.toString()
         );
       }
     })
