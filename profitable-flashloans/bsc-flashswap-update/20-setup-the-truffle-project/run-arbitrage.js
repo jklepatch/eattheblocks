@@ -194,8 +194,8 @@ const init = async () => {
           addresses.tokens.BUSD, //token2
           0, //amount0
           amountInBUSD.toString(), //amount1
-          addresses.apeSwap.factory, //apefactory
           addresses.pancakeSwap.router, //pancakerouter
+          addresses.apeSwap.factory, //apefactory
           repayWbnbPancakeFee.toString()
         );
       }
