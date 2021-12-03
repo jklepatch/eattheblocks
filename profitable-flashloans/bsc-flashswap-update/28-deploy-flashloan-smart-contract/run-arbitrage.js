@@ -26,16 +26,6 @@ const PancakeSwap = new web3.eth.Contract(
   addresses.pancakeSwap.router
 );
 
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
-function stop(reason) {
-  throw new Error(reason);
-}
-
 const init = async () => {
   const networkId = await web3.eth.net.getId();
   const flashloan = new web3.eth.Contract(
@@ -49,60 +39,86 @@ const init = async () => {
       console.log(`New block received. Block # ${block.number}`);
 
       const amountsOut1 = await ApeSwap.methods
-        .getAmountsOut(amountInBUSD, [
-          addresses.tokens.BUSD,
-          addresses.tokens.WBNB,
-        ])
-        .call();
-      const amountsOut2 = await ApeSwap.methods
-        .getAmountsOut(amountInWBNB, [
-          addresses.tokens.WBNB,
-          addresses.tokens.BUSD,
-        ])
-        .call();
+      .getAmountsIn(amountInBUSD, [
+        addresses.tokens.WBNB,
+        addresses.tokens.BUSD,
+      ])
+      .call();
+    const amountsOut2 = await ApeSwap.methods
+      .getAmountsOut(amountInBUSD, [
+        addresses.tokens.BUSD,
+        addresses.tokens.WBNB,
+      ])
+      .call();
 
-      const amountsOut3 = await PancakeSwap.methods
-        .getAmountsOut(amountInBUSD, [
-          addresses.tokens.BUSD,
-          addresses.tokens.WBNB,
-        ])
-        .call();
-      const amountsOut4 = await PancakeSwap.methods
-        .getAmountsOut(amountInWBNB, [
-          addresses.tokens.WBNB,
-          addresses.tokens.BUSD,
-        ])
-        .call();
+    const amountsOut3 = await PancakeSwap.methods
+      .getAmountsIn(amountInBUSD, [
+        addresses.tokens.WBNB,
+        addresses.tokens.BUSD,
+      ])
+      .call();
+    const amountsOut4 = await PancakeSwap.methods
+      .getAmountsOut(amountInBUSD, [
+        addresses.tokens.BUSD,
+        addresses.tokens.WBNB,
+      ])
+      .call();
 
-      const aperesults = {
-        buy: (amountInBUSD / amountsOut1[1]) * flashloanWBNB,
-        sell: (amountsOut2[1] / amountInWBNB) * flashloanWBNB,
-      };
-      const aperesults2 = {
-        buy: (amountInWBNB / amountsOut2[1]) * flashloanBUSD,
-        sell: (amountsOut1[1] / amountInBUSD) * flashloanBUSD,
-      };
+    const amountsOut5 = await ApeSwap.methods
+      .getAmountsIn(amountInWBNB, [
+        addresses.tokens.BUSD,
+        addresses.tokens.WBNB,
+      ])
+      .call();
+    const amountsOut6 = await ApeSwap.methods
+      .getAmountsOut(amountInWBNB, [
+        addresses.tokens.WBNB,
+        addresses.tokens.BUSD,
+      ])
+      .call();
 
-      const pancakeresults = {
-        buy: (amountInBUSD / amountsOut3[1]) * flashloanWBNB,
-        sell: (amountsOut4[1] / amountInWBNB) * flashloanWBNB,
-      };
-      const pancakeresults2 = {
-        buy: (amountInWBNB / amountsOut4[1]) * flashloanBUSD,
-        sell: (amountsOut3[1] / amountInBUSD) * flashloanBUSD,
-      };
+    const amountsOut7 = await PancakeSwap.methods
+      .getAmountsIn(amountInWBNB, [
+        addresses.tokens.BUSD,
+        addresses.tokens.WBNB,
+      ])
+      .call();
+    const amountsOut8 = await PancakeSwap.methods
+      .getAmountsOut(amountInWBNB, [
+        addresses.tokens.WBNB,
+        addresses.tokens.BUSD,
+      ])
+      .call();
 
-      console.log(`ApeSwap ${flashloanWBNB} WBNB/BUSD`);
-      console.log(aperesults);
+    const aperesults = {
+      buy: amountsOut1[0] / 10 ** 18,
+      sell: amountsOut2[1] / 10 ** 18,
+    };
+    const aperesults2 = {
+      buy: amountsOut5[0] / 10 ** 18,
+      sell: amountsOut6[1] / 10 ** 18,
+    };
 
-      console.log(`PancakeSwap ${flashloanWBNB} WBNB/BUSD`);
-      console.log(pancakeresults);
+    const pancakeresults = {
+      buy: amountsOut3[0] / 10 ** 18,
+      sell: amountsOut4[1] / 10 ** 18,
+    };
+    const pancakeresults2 = {
+      buy: amountsOut7[0] / 10 ** 18,
+      sell: amountsOut8[1] / 10 ** 18,
+    };
 
-      console.log(`ApeSwap ${flashloanBUSD} BUSD/WBNB`);
-      console.log(aperesults2);
+    console.log(`ApeSwap ${flashloanBUSD} BUSD/WBNB `);
+    console.log(aperesults);
 
-      console.log(`PancakeSwap ${flashloanBUSD} BUSD/WBNB`);
-      console.log(pancakeresults2);
+    console.log(`PancakeSwap ${flashloanBUSD} BUSD/WBNB`);
+    console.log(pancakeresults);
+
+    console.log(`ApeSwap ${flashloanWBNB} WBNB/BUSD`);
+    console.log(aperesults2);
+
+    console.log(`PancakeSwap${flashloanWBNB} WBNB/BUSD `);
+    console.log(pancakeresults2);
 
       //Payback fee calc
 
