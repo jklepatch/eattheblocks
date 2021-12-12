@@ -77,8 +77,9 @@ contract FlashSwap {
         if (amountToken > 0) {
             token.approve(endRouter, amountToken);
             uint[] memory amountReceived = IUniswapV2Router02(endRouter).swapExactTokensForETH(amountToken, 0, path,address(this),now);
+            require(amountReceived[1] > repay, "Failed to get enough from swap to repay"); 
             WETH.deposit{value: amountReceived[1]}();
-            require(WETH.transfer(msg.sender, repay), "Could Not Repay loan amount!"); // return WETH to V2 pair
+            WETH.transfer(msg.sender, repay);
               if(amountReceived[1] - repay > 0) {
                 WETH.transfer(Beneficiary, (amountReceived[1] - repay));
               }
