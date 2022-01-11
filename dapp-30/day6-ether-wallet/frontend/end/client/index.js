@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import EtherWallet from '../build/contracts/EtherWallet.json';
 
 let web3;
-let EtherWallet;
+let etherWallet;
 
 const initWeb3 = () => {
   return new Promise((resolve, reject) => {
