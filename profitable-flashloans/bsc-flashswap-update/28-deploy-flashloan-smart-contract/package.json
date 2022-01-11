@@ -9,6 +9,7 @@
   "license": "ISC",
   "dependencies": {
     "web3": "^1.5.2",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "@truffle/hdwallet-provider": "^2.0.0"
   }
 }
