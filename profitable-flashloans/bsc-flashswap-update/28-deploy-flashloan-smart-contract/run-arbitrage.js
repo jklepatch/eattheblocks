@@ -2,6 +2,7 @@ require("dotenv").config();
 const Web3 = require("web3");
 const abis = require("./abis");
 const { mainnet: addresses } = require("./addresses");
+// const { testnet: addresses } = require("./addresses");  added for testing on testnet
 const Flashloan = require("./build/contracts/FlashSwap.json");
 
 const web3 = new Web3(
