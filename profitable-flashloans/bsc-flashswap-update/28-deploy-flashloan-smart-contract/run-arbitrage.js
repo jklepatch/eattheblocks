@@ -12,8 +12,8 @@ const { address: admin } = web3.eth.accounts.wallet.add(
   process.env.PRIVATE_KEY
 );
 
-const flashloanBUSD = "10000";
-const flashloanWBNB = "100";
+const flashloanBUSD = "100";
+const flashloanWBNB = "1";
 const amountInBUSD = web3.utils.toBN(web3.utils.toWei(flashloanBUSD));
 const amountInWBNB = web3.utils.toBN(web3.utils.toWei(flashloanWBNB));
 
@@ -172,7 +172,7 @@ const init = async () => {
           0, //amount1
           addresses.apeSwap.factory, //apefactory
           addresses.pancakeSwap.router, //pancakerouter
-          pancakePaybackCalcBusd.toString()
+          apePaybackCalcWbnb.toString()
         );
 
         const data = tx.encodeABI();
@@ -202,7 +202,7 @@ const init = async () => {
           0, //amount1
           addresses.pancakeSwap.factory, //pancakefactory
           addresses.apeSwap.router, // aperouter
-          apeswapPaybackCalcBusd.toString()
+          pancakePaybackCalcWbnb.toString()
         );
 
         const data = tx.encodeABI();
@@ -232,7 +232,7 @@ const init = async () => {
           amountInBUSD.toString(), //amount1
           addresses.apeSwap.factory, //apefactory
           addresses.pancakeSwap.router, //pancakerouter
-          apePaybackCalcWbnb.toString()
+          apeswapPaybackCalcBusd.toString()
         );
 
         const data = tx.encodeABI();
@@ -263,7 +263,7 @@ const init = async () => {
           amountInBUSD.toString(), //amount1
           addresses.pancakeSwap.factory, //pancakeFactory
           addresses.apeSwap.router, //apeRouter
-          pancakePaybackCalcWbnb.toString()
+          pancakePaybackCalcBusd.toString()
         );
 
         const data = tx.encodeABI();
