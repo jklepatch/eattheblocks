@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const main = async () => {
   try {
-    const result = await axios.post('https://api.thegraph.com/subgraphs/name/aave/protocol', {
+    const result = await axios.post('https://api.thegraph.com/subgraphs/name/aave/protocol-v2', {
       query: `
       {
         flashLoans(first: 10, orderBy: timestamp, orderDirection: desc) {
