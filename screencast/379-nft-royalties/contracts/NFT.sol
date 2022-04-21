@@ -46,9 +46,6 @@ contract NFT is ERC721 {
     address to,
     uint256 tokenId
    ) public override {
-     if(excludedList[from] == false) {
-       _payTxFee(from);
-     }
      safeTransferFrom(from, to, tokenId, '');
    }
 
