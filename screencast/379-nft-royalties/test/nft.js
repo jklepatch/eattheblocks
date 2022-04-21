@@ -118,4 +118,57 @@ describe('NFT', async () =>  {
     await expect(nft.setExcluded(owner2.address, true))
       .to.be.revertedWith('artist only');
   });
+
+  it('Safe Transfer From', async () => {
+    let ownerNFT, balanceSender, balanceArtist;
+
+    nft =  nft.connect(artist);
+    await nft.transferFrom(
+      artist.address, 
+      owner1.address, 
+      0
+    );
+    ownerNFT = await nft.ownerOf(0)
+    expect(ownerNFT)
+      .to
+      .equal(owner1.address);
+    await token.connect(owner1).approve(nft.address, txFee);  
+    await nft.connect(owner1)['safeTransferFrom(address,address,uint256)'](
+      owner1.address, 
+      owner2.address, 
+      0
+    );
+    ownerNFT = await nft.ownerOf(0);
+    balanceSender = await token.balanceOf(owner1.address);
+    balanceArtist = await token.balanceOf(artist.address);
+    expect(ownerNFT)
+      .to
+      .equal(owner2.address);
+    expect(balanceSender.toString())
+      .to
+      .equal(ethers.utils.parseUnits('499', 'ether'));
+    expect(balanceArtist.toString())
+      .to
+      .equal(ethers.utils.parseUnits('1', 'ether'));
+
+    await token.connect(owner2).approve(nft.address, txFee);
+    await nft.connect(owner2)['safeTransferFrom(address,address,uint256,bytes)'](
+      owner2.address, 
+      owner1.address, 
+      0,
+      [1,2,3]
+    );
+    ownerNFT = await nft.ownerOf(0);
+    balanceSender = await token.balanceOf(owner1.address);
+    balanceArtist = await token.balanceOf(artist.address);
+    expect(ownerNFT)
+      .to
+      .equal(owner1.address);
+    expect(balanceSender.toString())
+      .to
+      .equal(ethers.utils.parseUnits('499', 'ether'));
+    expect(balanceArtist.toString())
+      .to
+      .equal(ethers.utils.parseUnits('2', 'ether'));
+  });
 });
