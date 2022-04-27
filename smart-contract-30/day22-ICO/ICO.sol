@@ -145,6 +145,7 @@ contract ICO {
         onlyAdmin()
         icoEnded()
         tokensNotReleased() {
+        released = true;
         ERC20Token tokenInstance = ERC20Token(token);
         for(uint i = 0; i < sales.length; i++) {
             Sale storage sale = sales[i];
