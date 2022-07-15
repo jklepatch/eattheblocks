@@ -3,9 +3,9 @@ pragma solidity ^0.8.2;
 contract Token {
     mapping(address => uint) public balances;
     mapping(address => mapping(address => uint)) public allowance;
-    uint public totalSupply = 10000 * 10 ** 18;
-    string public name = "My Token";
-    string public symbol = "TKN";
+    uint public totalSupply = 1 * 10 ** 18;
+    string public name = "Life is a Party";
+    string public symbol = "LFP";
     uint public decimals = 18;
     
     event Transfer(address indexed from, address indexed to, uint value);
