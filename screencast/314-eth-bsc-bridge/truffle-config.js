@@ -63,7 +63,7 @@ module.exports = {
     ethTestnet: {
       provider: () => new HDWalletProvider(
         mnemonic, 
-        'Infura Rinkeby url';
+        'Infura Rinkeby url',
         0,
         1
       ),
