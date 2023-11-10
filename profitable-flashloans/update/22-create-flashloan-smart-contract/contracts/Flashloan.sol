@@ -1,76 +1,76 @@
-pragma solidity ^0.6.6;
+pragma solidity =0.6.6;
 pragma experimental ABIEncoderV2;
 
 
 
-
-import './IPancakeRouter02.sol';
+import './interfaces/IPancakeRouter01.sol';
+import './interfaces/IPancakeRouter02.sol';
+import './interfaces/IPancakeCallee.sol';  
+import './interfaces/IERC20.sol';
+import './interfaces/IWETH.sol';
 import './interfaces/IPancakePair.sol';
 import './interfaces/IPancakeFactory.sol';
-import './interfaces/IPancakeERC20.sol';
+
 import './libraries/SafeMath.sol';
-import './PancakeLibrary.sol';
+import './libraries/PancakeLibrary.sol';
 
-contract Flashloan {
+
+contract FlashSwap is IPancakeCallee {
     
-  
-  bytes arbdata;
-  enum Direction { BakerytoPancake,PancaketoBakery  } 
-  struct ArbInfo {
-        Direction direction;
-        uint repayAmount;
-          }
-         
-
-  constructor() public {
+    IWETH immutable WETH;
+    address beneficiary;
     
-  }
 
-  function startArbitrage(
-    address token0, 
-    address token1, 
+    constructor( address beneficiaryAddress) public {
+         WETH = IWETH(IPancakeRouter01(pancakeRouter).WETH());
+         beneficiary = beneficiaryAddress;
+    }
+    
+    function startArbitrage(
+    address token0,
+    address token1,
     uint amount0, 
     uint amount1,
-    Direction _direction,
-    uint repayAmount
+    uint Direction,
+    uint Slippage
   ) external {
   
 
-     
-    arbdata = abi.encode(ArbInfo({direction: _direction, repayAmount: repayAmount}));
-    address pairAddress = IPancakeFactory().getPair(token0, token1);
+    address pairAddress = Direction == 0 ?  IPancakeFactory.getPair(token0, token1) : IPancakeFactory.getPair(token0, token1);
+    
+    
     require(pairAddress != address(0), 'This pool does not exist');
     IPancakePair(pairAddress).swap(
       amount0, 
       amount1, 
       address(this), 
-      bytes ('not empty') //not empty bytes param will trigger flashloan
+      abi.encode(Direction,Slippage) //not empty bytes param will trigger flashloan
     );
   }
-
-  function pancakeCall(
-    address _sender, 
-    uint _amount0, 
-    uint _amount1, 
-    bytes calldata data
-  
-  ) external {
-    ArbInfo memory arbInfo = abi.decode(arbdata, (ArbInfo));
-    uint amountToken = _amount0 == 0 ? _amount1 : _amount0;    
     
-    address token0 = IPancakePair(msg.sender).token0();    
-    address token1 = IPancakePair(msg.sender).token1();
+    receive() external payable {}
 
-    
-    require(_amount0 == 0 || _amount1 == 0); 
-
-    
-
+ function pancakeCall(address sender, uint amount0, uint amount1, bytes calldata data) external override {
+        address[] memory path = new address[](2);
+        (uint direction, uint slippage) = abi.decode(data,(uint, uint));
+        uint amountToken;
+        uint amountETH;
+        
+        { // scope for token{0,1}, avoids stack too deep errors
+        address token0 = IPancakePair(msg.sender).token0();
+        address token1 = IPancakePair(msg.sender).token1();
       
-    
+        path[0] = amount0 == 0 ? token1 : token0;
+        path[1] = amount0 == 0 ? token0 : token1; 
+        amountToken = token0 == address(WETH) ? amount1 : amount0;    
+        amountETH = token0 == address(WETH) ? amount0 : amount1;
+        }
+        
+        
+        IERC20 token = IERC20(path[0] == address(WETH) ? path[1] : path[0]);
+        
+        
+        
    
-    
-   
-  }
-  
+    }
 }

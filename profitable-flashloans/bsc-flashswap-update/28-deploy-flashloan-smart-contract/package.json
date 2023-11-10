@@ -1,0 +1,15 @@
+{
+  "name": "28-deploy-flashloan-smart-contract",
+  "description": "",
+  "main": "run-arbitrage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^1.5.2",
+    "dotenv": "^10.0.0",
+    "@truffle/hdwallet-provider": "^2.0.0"
+  }
+}
